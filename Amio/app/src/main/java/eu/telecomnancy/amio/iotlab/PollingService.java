@@ -24,7 +24,7 @@ public class PollingService extends Service {
     /**
      * Android logging tag for this class
      */
-    private static final String TAG = PollingService.class.getName();
+    private static final String TAG = PollingService.class.getSimpleName();
 
     /**
      * Inner-timer used for firing events

@@ -12,7 +12,7 @@ public class PollingTimerTask extends TimerTask {
     /**
      * Android logging tag for this class
      */
-    private static final String TAG = PollingTimerTask.class.getName();
+    private static final String TAG = PollingTimerTask.class.getSimpleName();
 
     @Override
     public void run() {
