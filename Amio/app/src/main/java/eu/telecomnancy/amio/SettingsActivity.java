@@ -1,12 +1,18 @@
 package eu.telecomnancy.amio;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
+import eu.telecomnancy.amio.iotlab.PollingService;
+
 public class SettingsActivity extends AppCompatActivity {
+
+    // TODO: move to main activity once created
+    private Intent pollingServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +26,18 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // TODO: move to main activity once created
+        pollingServiceIntent = new Intent(this, PollingService.class);
+        startService(pollingServiceIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // TODO: move to main activity once created
+        stopService(pollingServiceIntent);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
