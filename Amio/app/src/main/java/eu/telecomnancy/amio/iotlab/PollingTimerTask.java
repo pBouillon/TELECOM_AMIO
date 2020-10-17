@@ -1,6 +1,7 @@
 package eu.telecomnancy.amio.iotlab;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.TimerTask;
 
@@ -18,7 +19,8 @@ public class PollingTimerTask extends TimerTask {
     public void run() {
         Log.i(TAG, "Polling task triggered");
 
-        // Implement polling
+        // TODO: Implement polling
+        Log.v(TAG, "Dummy polling");
 
         Log.i(TAG, "Polling task successfully executed");
     }
