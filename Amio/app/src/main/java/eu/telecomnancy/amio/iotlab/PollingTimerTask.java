@@ -1,7 +1,6 @@
 package eu.telecomnancy.amio.iotlab;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.TimerTask;
 

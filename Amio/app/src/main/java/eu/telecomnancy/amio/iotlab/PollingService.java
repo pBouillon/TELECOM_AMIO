@@ -19,7 +19,7 @@ public class PollingService extends Service {
      * Elapsed milliseconds between each request to the server
      */
     @SuppressWarnings("FieldCanBeLocal")
-    private final long POLLING_DELAY_MS = 2_000;
+    private final long POLLING_DELAY = 2_000;
 
     /**
      * Android logging tag for this class
@@ -47,6 +47,7 @@ public class PollingService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        // No binding provided in this case
         return null;
     }
 
@@ -54,6 +55,7 @@ public class PollingService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
+        // Clear the timer and its planned tasks
         _timer.cancel();
 
         Log.d(TAG, "Service destroyed");
@@ -63,11 +65,13 @@ public class PollingService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
+        // Create the timer and plan the polling task every POLLING_DELAY ms
         _timer = new Timer();
-        schedulePollingTask(0, POLLING_DELAY_MS);
+        schedulePollingTask(0, POLLING_DELAY);
 
         Log.i(TAG, "Service started");
 
+        // If the service get killed, after returning from here, restart it
         return START_STICKY;
     }
 
