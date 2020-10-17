@@ -32,14 +32,19 @@ public class PollingService extends Service {
     private Timer _timer;
 
     /**
+     * TimerTask to be run by the timer
+     */
+    private TimerTask _timerTask;
+
+    /**
      * Schedule the polling task
      * @param delay Delay in milliseconds before task is to be executed
      * @param period Time in milliseconds between successive task executions
      */
     @SuppressWarnings("SameParameterValue")
     private void schedulePollingTask(long delay, long period) {
-        TimerTask task = new PollingTimerTask();
-        _timer.scheduleAtFixedRate(task, delay, period);
+        _timerTask = new PollingTimerTask();
+        _timer.scheduleAtFixedRate(_timerTask, delay, period);
 
         Log.i(TAG, String.format("Task schedule for %d ms, every %d ms", delay, period));
     }
@@ -55,8 +60,14 @@ public class PollingService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        // Clear the timer and its planned tasks
+        // Cancel the running / scheduled task
+        _timerTask.cancel();
+
+        // Cancel the timer
         _timer.cancel();
+
+        // Remove all canceled tasks from the timer's task queue
+        _timer.purge();
 
         Log.d(TAG, "Service destroyed");
     }
