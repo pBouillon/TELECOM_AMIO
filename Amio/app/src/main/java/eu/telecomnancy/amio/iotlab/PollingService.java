@@ -8,7 +8,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Polling service who will periodically fetch data from the server
@@ -19,7 +18,7 @@ public class PollingService extends Service {
      * Elapsed milliseconds between each request to the server
      */
     @SuppressWarnings("FieldCanBeLocal")
-    private final long POLLING_DELAY = 2_000;
+    private final long POLLING_DELAY = 3_000;
 
     /**
      * Android logging tag for this class
@@ -34,7 +33,7 @@ public class PollingService extends Service {
     /**
      * TimerTask to be run by the timer
      */
-    private TimerTask _timerTask;
+    private PollingTaskBase _pollingTask;
 
     /**
      * Schedule the polling task
@@ -43,8 +42,16 @@ public class PollingService extends Service {
      */
     @SuppressWarnings("SameParameterValue")
     private void schedulePollingTask(long delay, long period) {
-        _timerTask = new PollingTimerTask();
-        _timer.scheduleAtFixedRate(_timerTask, delay, period);
+        // Create a new task and define its callback in order to access the data it may provide
+        // as parameter
+        _pollingTask = new PollingTaskBase() {
+            @Override
+            public void callback() {
+                Log.d(TAG, "Callback called");
+            }
+        };
+
+        _timer.scheduleAtFixedRate(_pollingTask, delay, period);
 
         Log.i(TAG, String.format("Task schedule for %d ms, every %d ms", delay, period));
     }
@@ -61,7 +68,7 @@ public class PollingService extends Service {
         super.onDestroy();
 
         // Cancel the running / scheduled task
-        _timerTask.cancel();
+        _pollingTask.cancel();
 
         // Cancel the timer
         _timer.cancel();
