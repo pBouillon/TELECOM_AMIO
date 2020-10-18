@@ -55,6 +55,7 @@ public class Mote {
      * Merge a mote DTO's data into the mote
      * @param moteDto The DTO to be merged
      */
+    // FIXME: reflect current instance and not a new one
     public void merge(MoteDto moteDto) {
         // Get the instance of the current class
         Class<?> instance = this.getClass();
@@ -63,9 +64,14 @@ public class Mote {
             // Retrieve the appropriate field
             instance.getField(moteDto.label)
                     // Assign the mote DTO value to this field
-                    .set(instance, moteDto.value);
+                    .setFloat(instance, moteDto.value);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
+        }
+
+        // Update the timestamp if needed
+        if (timestamp < moteDto.timestamp) {
+            timestamp = moteDto.timestamp;
         }
     }
 
