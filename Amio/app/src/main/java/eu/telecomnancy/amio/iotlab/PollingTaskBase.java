@@ -2,16 +2,18 @@ package eu.telecomnancy.amio.iotlab;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimerTask;
 
-import eu.telecomnancy.amio.iotlab.entities.MoteCollection;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import eu.telecomnancy.amio.iotlab.cqrs.IotLabAggregator;
+import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesBrightnessQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesHumidityQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesTemperatureQuery;
+import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
+import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
+import eu.telecomnancy.amio.iotlab.entities.Mote;
 
 /**
  * Custom task to be executed to poll the iot lab's server
@@ -19,24 +21,9 @@ import okhttp3.ResponseBody;
 public abstract class PollingTaskBase extends TimerTask {
 
     /**
-     * Inner HttpClient used for HTTP requests
+     * Default number of motes queried when querying several entities on the IoTLab API
      */
-    private final OkHttpClient _httpClient = new OkHttpClient();
-
-    /**
-     * Primary link to the API
-     */
-    private final Request iotLabPrimary = new Request.Builder()
-            .url("http://iotlab.telecomnancy.eu/rest/data/1/light1/last")
-            .build();
-
-    /**
-     * Secondary link to the API in case of failure of the first one (fallback)
-     */
-    private final Request iotLabSecondary = new Request.Builder()
-            .url("https://gist.githubusercontent.com/pBouillon/c07f123dc466cb45f198bcebf072ddfb/" +
-                    "raw/ddf75605ea49f024b2bf3fbdcea52faf9f730454/iotlab-light1-1-last")
-            .build();
+    private static final int DEFAULT_MOTES_QUERIED_AMOUNT = 50;
 
     /**
      * Android logging tag for this class
@@ -44,47 +31,86 @@ public abstract class PollingTaskBase extends TimerTask {
     private static final String TAG = PollingTaskBase.class.getSimpleName();
 
     /**
+     * CQRS aggregator to handle command and queries
+     */
+    private final IotLabAggregator _aggregator = new IotLabAggregator();
+
+    /**
+     * Motes retrieved and handled by the polling task
+     */
+    private List<Mote> _motes = new ArrayList<>();
+
+    /**
      * Define a custom callback method to be executed when the task has run its job
      *
      * This custom callback methods allows the caller to use all data provided as parameter in its
      * scope without exposing any property
      */
-    public abstract void callback(MoteCollection motes);
+    public abstract void callback(List<Mote> motes);
+
+    /**
+     * Populate the inner-collection of the motes handled by the task
+     *
+     * This will query the temperature, the humidity and the brightness of all motes and aggregate
+     * them in `_motes`
+     */
+    private void populateMotes() {
+        // Prepare all queries
+        GetMotesBrightnessQuery getBrightnessQuery =
+                new GetMotesBrightnessQuery(DEFAULT_MOTES_QUERIED_AMOUNT);
+
+        GetMotesHumidityQuery getHumidityQuery =
+                new GetMotesHumidityQuery(DEFAULT_MOTES_QUERIED_AMOUNT);
+
+        GetMotesTemperatureQuery getTemperaturesQuery =
+                new GetMotesTemperatureQuery(DEFAULT_MOTES_QUERIED_AMOUNT);
+
+        // Create the aggregator which will retrieve and merge all DTOs
+        MoteCollectionDtoAggregator dtoAggregator = new MoteCollectionDtoAggregator();
+
+        // Perform all queries
+        try {
+            dtoAggregator.setBrightnessCollectionDto(
+                    _aggregator.handleGetMotesBrightnessQuery(getBrightnessQuery));
+
+            dtoAggregator.setHumidityCollectionDto(
+                    _aggregator.handleGetMotesHumidityQuery(getHumidityQuery));
+
+            dtoAggregator.setTemperatureCollectionDto(
+                    _aggregator.handleGetMotesTemperatureQuery(getTemperaturesQuery));
+        } catch (IOException e) {
+            // In case of failure, pass a nutshell to the callback
+            Log.e(TAG, "Failed to perform the HTTP requests", e);
+        }
+
+        // Aggregate all motes and retrieve them
+        _motes = dtoAggregator.generateMotesFromAggregatedValues();
+    }
 
     @Override
     public void run() {
         Log.i(TAG, "Polling task triggered");
 
-        MoteCollection motes = new MoteCollection();
-
-        try {
-            Log.d(TAG, "Sending request to " + iotLabSecondary.url());
-
-            // Send the HTTP GET request to the API
-            Response response = _httpClient
-                    .newCall(iotLabSecondary)
-                    .execute();
-
-            // Retrieve the payload of the request
-            ResponseBody payload = response.body();
-
-            if (payload != null) {
-                // If any data is fetched, deserialize it into the appropriate object
-                motes = new Gson().fromJson(payload.string(), MoteCollection.class);
-            } else {
-                Log.w(TAG, "Unable to retrieve the body from the response");
-            }
-
-        } catch (IOException e) {
-            // In case of failure, pass a nutshell to the callback
-            Log.e(TAG, "Failed to perform the HTTP request", e);
+        if (_motes.isEmpty()) {
+            populateMotes();
+        } else {
+            updateLastMotes();
         }
 
         // Call the used-defined callback
-        // If no data were fetched / deserialized, `motes` will still be an initialized empty object
-        callback(motes);
+        callback(_motes);
 
         Log.i(TAG, "Polling task successfully executed");
+    }
+
+    /**
+     * Update the lastly updates motes
+     *
+     * For all motes of the collection this will update the ones with the most recent data for the
+     * temperature, the humidity and the brightness
+     */
+    private void updateLastMotes() {
+        // TODO
     }
 
 }

@@ -7,9 +7,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.util.List;
 import java.util.Timer;
 
-import eu.telecomnancy.amio.iotlab.entities.MoteCollection;
+import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
+import eu.telecomnancy.amio.iotlab.entities.Mote;
 
 /**
  * Polling service who will periodically fetch data from the server
@@ -49,8 +51,8 @@ public class PollingService extends Service {
         // as parameter
         _pollingTask = new PollingTaskBase() {
             @Override
-            public void callback(MoteCollection motes) {
-                Log.d(TAG, motes.data.size() + " mote(s) received");
+            public void callback(List<Mote> motes) {
+                Log.d(TAG, motes.size() + " mote(s) received");
             }
         };
 
