@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 
 import java.util.Timer;
 
+import eu.telecomnancy.amio.iotlab.entities.MoteCollection;
+
 /**
  * Polling service who will periodically fetch data from the server
  */
@@ -42,12 +44,13 @@ public class PollingService extends Service {
      */
     @SuppressWarnings("SameParameterValue")
     private void schedulePollingTask(long delay, long period) {
+
         // Create a new task and define its callback in order to access the data it may provide
         // as parameter
         _pollingTask = new PollingTaskBase() {
             @Override
-            public void callback() {
-                Log.d(TAG, "Callback called");
+            public void callback(MoteCollection motes) {
+                Log.d(TAG, motes.data.size() + " mote(s) received");
             }
         };
 
