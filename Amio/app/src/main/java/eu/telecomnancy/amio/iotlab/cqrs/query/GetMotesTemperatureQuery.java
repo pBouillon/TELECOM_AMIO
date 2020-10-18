@@ -7,7 +7,7 @@ public class GetMotesTemperatureQuery extends MotesQuery {
 
     /**
      * Default constructor
-     * @param numberOfQueriedMotes Number of queried motes
+     * @param numberOfQueriedMotes Number of queried motes, should be more than 0
      */
     public GetMotesTemperatureQuery(int numberOfQueriedMotes) {
         super(numberOfQueriedMotes);

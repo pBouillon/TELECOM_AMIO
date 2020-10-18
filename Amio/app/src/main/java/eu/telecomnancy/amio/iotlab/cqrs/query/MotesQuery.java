@@ -12,15 +12,21 @@ abstract class MotesQuery {
 
     /**
      * Default constructor
-     * @param numberOfQueriedMotes Number of queried motes
+     * @param numberOfQueriedMotes Number of queried motes, should be more than 0
      */
     protected MotesQuery(int numberOfQueriedMotes) {
+        if (numberOfQueriedMotes <= 0) {
+            throw new IllegalArgumentException(
+                    "The number of queried mote should be more than 0 " +
+                            "(actual: " + numberOfQueriedMotes + ")");
+        }
+
         _numberOfQueriedMotes = numberOfQueriedMotes;
     }
 
     /**
      * Getter for the number of queried motes
-     * @return The number of queried motes
+     * @return The number of queried motes, guaranteed to be more than 0
      */
     public int getNumberOfQueriedMotes() {
         return _numberOfQueriedMotes;

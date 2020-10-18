@@ -33,21 +33,13 @@ public class IotLabAggregator {
      */
     public MoteDtoCollection handleGetMotesBrightnessQuery(GetMotesBrightnessQuery query)
             throws IllegalArgumentException, IOException {
-        // TODO: keep it DRY
-        // Ensure that a valid number of motes to be queried is provided
-        if (query.getNumberOfQueriedMotes() <= 0) {
-            throw new IllegalArgumentException(
-                    "The number of queried mote should be more than 0 " +
-                            "(actual: " + query.getNumberOfQueriedMotes() + ")");
-        }
-
-        // Build the HTTP Request
+        // Build the HTTP Request based on the query
         Request request = new Request.Builder()
                 // TODO: create constant
                 .url(Constants.Urls.LOCAL + "/light1/" + query.getNumberOfQueriedMotes())
                 .build();
 
-        return performAndRetrieveQueryResult(request);
+        return performAndRetrieveMoteCollectionQueryResult(request);
     }
 
     /**
@@ -59,21 +51,13 @@ public class IotLabAggregator {
      */
     public MoteDtoCollection handleGetMotesHumidityQuery(GetMotesHumidityQuery query)
             throws IllegalArgumentException, IOException {
-        // TODO: keep it DRY
-        // Ensure that a valid number of motes to be queried is provided
-        if (query.getNumberOfQueriedMotes() <= 0) {
-            throw new IllegalArgumentException(
-                    "The number of queried mote should be more than 0 " +
-                            "(actual: " + query.getNumberOfQueriedMotes() + ")");
-        }
-
-        // Build the HTTP Request
+        // Build the HTTP Request based on the query
         Request request = new Request.Builder()
                 // TODO: create constant
                 .url(Constants.Urls.LOCAL + "/humidity/" + query.getNumberOfQueriedMotes())
                 .build();
 
-        return performAndRetrieveQueryResult(request);
+        return performAndRetrieveMoteCollectionQueryResult(request);
     }
 
     /**
@@ -85,24 +69,23 @@ public class IotLabAggregator {
      */
     public MoteDtoCollection handleGetMotesTemperatureQuery(GetMotesTemperatureQuery query)
             throws IllegalArgumentException, IOException {
-        // TODO: keep it DRY
-        // Ensure that a valid number of motes to be queried is provided
-        if (query.getNumberOfQueriedMotes() <= 0) {
-            throw new IllegalArgumentException(
-                    "The number of queried mote should be more than 0 " +
-                            "(actual: " + query.getNumberOfQueriedMotes() + ")");
-        }
-
-        // Build the HTTP Request
+        // Build the HTTP Request based on the query
         Request request = new Request.Builder()
                 // TODO: create constant
                 .url(Constants.Urls.LOCAL + "/temperature/" + query.getNumberOfQueriedMotes())
                 .build();
 
-        return performAndRetrieveQueryResult(request);
+        return performAndRetrieveMoteCollectionQueryResult(request);
     }
 
-    private MoteDtoCollection performAndRetrieveQueryResult(Request request) throws IOException {
+    /**
+     * Performs the HTTP Call to retrieve a mote collection
+     * @param request Request to be executed
+     * @return A mote collection with its object mapped to the JSON response of the request
+     * @throws IOException If any issue happened with the HTTP call
+     */
+    private MoteDtoCollection performAndRetrieveMoteCollectionQueryResult(Request request)
+            throws IOException {
         // Send the HTTP GET request to the API
         Response response = _httpClient
                 .newCall(request)

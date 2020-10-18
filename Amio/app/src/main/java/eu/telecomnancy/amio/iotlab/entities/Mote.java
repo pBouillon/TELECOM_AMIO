@@ -62,7 +62,7 @@ public class Mote {
         try {
             // Retrieve the appropriate field
             instance.getField(moteDto.label)
-                    // Assign the mote DTO's value to this field
+                    // Assign the mote DTO value to this field
                     .set(instance, moteDto.value);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
