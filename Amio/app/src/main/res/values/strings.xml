@@ -20,4 +20,5 @@
     <string name="sensor_id_text_holder">Sensor %1$s</string>
     <string name="light_text_holder">Light : %1$s</string>
     <string name="humidity_text_holder">Temperature : %1$d</string>
+    <string name="settings">Settings</string>
 </resources>
