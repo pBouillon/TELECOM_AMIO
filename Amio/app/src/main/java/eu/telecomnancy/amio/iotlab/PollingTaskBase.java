@@ -12,8 +12,9 @@ import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesBrightnessQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesHumidityQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesTemperatureQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
-import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
 
 /**
  * Custom task to be executed to poll the iot lab's server
@@ -38,7 +39,7 @@ public abstract class PollingTaskBase extends TimerTask {
     /**
      * Motes retrieved and handled by the polling task
      */
-    private List<Mote> _motes = new ArrayList<>();
+    private IMoteCollection _motes = new MoteCollection();
 
     /**
      * Define a custom callback method to be executed when the task has run its job
@@ -84,7 +85,7 @@ public abstract class PollingTaskBase extends TimerTask {
         }
 
         // Aggregate all motes and retrieve them
-        _motes = dtoAggregator.generateMotesFromAggregatedValues();
+        _motes = dtoAggregator.generateMoteCollectionFromAggregated();
     }
 
     @Override
@@ -92,13 +93,15 @@ public abstract class PollingTaskBase extends TimerTask {
         Log.i(TAG, "Polling task triggered");
 
         if (_motes.isEmpty()) {
+            // If no motes are registered, populate the collection
             populateMotes();
         } else {
+            // Otherwise, update its content
             updateLastMotes();
         }
 
         // Call the used-defined callback
-        callback(_motes);
+        callback(_motes.toList());
 
         Log.i(TAG, "Polling task successfully executed");
     }
