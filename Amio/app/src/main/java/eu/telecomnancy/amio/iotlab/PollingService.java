@@ -52,6 +52,7 @@ public class PollingService extends Service {
         _pollingTask = new PollingTaskBase() {
             @Override
             public void callback(List<Mote> motes) {
+                // TODO: bind to rendering
                 Log.d(TAG, motes.size() + " mote(s) received");
             }
         };

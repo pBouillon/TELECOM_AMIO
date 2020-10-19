@@ -13,27 +13,27 @@ public class Mote {
     /**
      * Brightness value retrieved by the mote
      */
-    public float brightness;
+    private float brightness;
 
     /**
      * Humidity value retrieved by the mote
      */
-    public float humidity;
+    private float humidity;
 
     /**
      * Mote's name
      */
-    public String name;
+    private String name;
 
     /**
      * Temperature value retrieved by the mote
      */
-    public float temperature;
+    private float temperature;
 
     /**
      * Timestamp of the last update of this mote
      */
-    public long timestamp;
+    private long timestamp;
 
     /**
      * Default constructor
@@ -41,6 +41,26 @@ public class Mote {
      */
     public Mote(String name) {
         this.name = name;
+    }
+
+    public float getBrightness() {
+        return brightness;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public float getTemperature() {
+        return temperature;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 
     /**
@@ -55,18 +75,23 @@ public class Mote {
      * Merge a mote DTO's data into the mote
      * @param moteDto The DTO to be merged
      */
-    // FIXME: reflect current instance and not a new one
     public void merge(MoteDto moteDto) {
-        // Get the instance of the current class
-        Class<?> instance = this.getClass();
+        float measure = moteDto.value;
 
-        try {
-            // Retrieve the appropriate field
-            instance.getField(moteDto.label)
-                    // Assign the mote DTO value to this field
-                    .setFloat(instance, moteDto.value);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+        // FIXME: messy switch, use reflection to keep it DRY ?
+        switch (moteDto.label) {
+            // TODO: use constants
+            case "light1":
+                brightness = measure;
+                break;
+            case "humidity":
+                humidity = measure;
+                break;
+            case "temperature":
+                temperature = measure;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown property '" + moteDto.label +"'");
         }
 
         // Update the timestamp if needed
