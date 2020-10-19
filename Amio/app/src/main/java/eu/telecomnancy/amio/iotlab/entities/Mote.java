@@ -43,24 +43,36 @@ public class Mote {
         this.name = name;
     }
 
+    /**
+     * Getter for the brightness
+     * @return The brightness measured by the mote
+     */
     public float getBrightness() {
         return brightness;
     }
 
+    /**
+     * Getter for the humidity
+     * @return The humidity measured by the mote
+     */
     public float getHumidity() {
         return humidity;
     }
 
+    /**
+     * Getter for the name
+     * @return The mote's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter for the temperature
+     * @return The temperature measured by the mote
+     */
     public float getTemperature() {
         return temperature;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
     }
 
     /**
