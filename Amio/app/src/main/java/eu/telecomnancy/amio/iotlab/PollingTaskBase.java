@@ -80,7 +80,6 @@ public abstract class PollingTaskBase extends TimerTask {
             dtoAggregator.setTemperatureCollectionDto(
                     _aggregator.handleGetMotesTemperatureQuery(getTemperaturesQuery));
         } catch (IOException e) {
-            // In case of failure, pass a nutshell to the callback
             Log.e(TAG, "Failed to perform the HTTP requests", e);
         }
 
