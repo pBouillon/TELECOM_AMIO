@@ -25,6 +25,24 @@ public class IotLabAggregator {
     private final OkHttpClient _httpClient = new OkHttpClient();
 
     /**
+     * Raw url prebuilt for fetching brightness
+     */
+    private final static String BRIGHTNESS_RAW_URL =
+            Constants.Urls.LOCAL + "/" + Constants.Labels.BRIGHTNESS;
+
+    /**
+     * Raw url prebuilt for fetching humidity
+     */
+    private final static String HUMIDITY_RAW_URL =
+            Constants.Urls.LOCAL + "/" + Constants.Labels.HUMIDITY;
+
+    /**
+     * Raw url prebuilt for fetching temperature
+     */
+    private final static String TEMPERATURE_RAW_URL =
+            Constants.Urls.LOCAL + "/" + Constants.Labels.TEMPERATURE;
+
+    /**
      * Retrieve the brightness of all desired motes
      * @param query GetMotesBrightnessQuery query
      * @return The MoteDtoCollection holding all requested data
@@ -35,8 +53,7 @@ public class IotLabAggregator {
             throws IllegalArgumentException, IOException {
         // Build the HTTP Request based on the query
         Request request = new Request.Builder()
-                // TODO: create constant
-                .url(Constants.Urls.LOCAL + "/light1/" + query.getNumberOfQueriedMotes())
+                .url(BRIGHTNESS_RAW_URL+ "/" + query.getNumberOfQueriedMotes())
                 .build();
 
         return performAndRetrieveMoteCollectionQueryResult(request);
@@ -53,8 +70,7 @@ public class IotLabAggregator {
             throws IllegalArgumentException, IOException {
         // Build the HTTP Request based on the query
         Request request = new Request.Builder()
-                // TODO: create constant
-                .url(Constants.Urls.LOCAL + "/humidity/" + query.getNumberOfQueriedMotes())
+                .url(HUMIDITY_RAW_URL + "/" + query.getNumberOfQueriedMotes())
                 .build();
 
         return performAndRetrieveMoteCollectionQueryResult(request);
@@ -71,8 +87,7 @@ public class IotLabAggregator {
             throws IllegalArgumentException, IOException {
         // Build the HTTP Request based on the query
         Request request = new Request.Builder()
-                // TODO: create constant
-                .url(Constants.Urls.LOCAL + "/temperature/" + query.getNumberOfQueriedMotes())
+                .url(TEMPERATURE_RAW_URL + "/" + query.getNumberOfQueriedMotes())
                 .build();
 
         return performAndRetrieveMoteCollectionQueryResult(request);

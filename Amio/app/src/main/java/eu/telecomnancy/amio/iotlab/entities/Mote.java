@@ -2,6 +2,7 @@ package eu.telecomnancy.amio.iotlab.entities;
 
 import java.util.Date;
 
+import eu.telecomnancy.amio.iotlab.Constants;
 import eu.telecomnancy.amio.iotlab.dto.MoteDto;
 
 /**
@@ -90,16 +91,14 @@ public class Mote {
     public void merge(MoteDto moteDto) {
         float measure = moteDto.value;
 
-        // FIXME: messy switch, use reflection to keep it DRY ?
         switch (moteDto.label) {
-            // TODO: use constants
-            case "light1":
+            case Constants.Labels.BRIGHTNESS:
                 brightness = measure;
                 break;
-            case "humidity":
+            case Constants.Labels.HUMIDITY:
                 humidity = measure;
                 break;
-            case "temperature":
+            case Constants.Labels.TEMPERATURE:
                 temperature = measure;
                 break;
             default:
