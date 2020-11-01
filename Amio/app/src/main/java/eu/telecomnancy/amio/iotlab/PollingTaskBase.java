@@ -57,14 +57,11 @@ public abstract class PollingTaskBase extends TimerTask {
      */
     private void populateMotes() {
         // Prepare all queries
-        GetMotesBrightnessQuery getBrightnessQuery =
-                new GetMotesBrightnessQuery(DEFAULT_MOTES_QUERIED_AMOUNT);
+        GetMotesBrightnessQuery getBrightnessQuery = new GetMotesBrightnessQuery();
 
-        GetMotesHumidityQuery getHumidityQuery =
-                new GetMotesHumidityQuery(DEFAULT_MOTES_QUERIED_AMOUNT);
+        GetMotesHumidityQuery getHumidityQuery = new GetMotesHumidityQuery();
 
-        GetMotesTemperatureQuery getTemperaturesQuery =
-                new GetMotesTemperatureQuery(DEFAULT_MOTES_QUERIED_AMOUNT);
+        GetMotesTemperatureQuery getTemperaturesQuery = new GetMotesTemperatureQuery();
 
         // Create the aggregator which will retrieve and merge all DTOs
         MoteCollectionDtoAggregator dtoAggregator = new MoteCollectionDtoAggregator();

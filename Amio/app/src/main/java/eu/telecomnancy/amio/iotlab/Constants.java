@@ -27,16 +27,24 @@ public final class Constants {
 
     }
 
+    public static final class Polling {
+
+        /**
+         * Elapsed milliseconds between each the polling event
+         */
+        public final static long POLLING_DELAY = 3_000;
+
+    }
+
     /**
      * IoTLab custom URLs
      */
     public static final class Urls {
 
         /**
-         * Local API, with the loopback IP
-         * see: https://developer.android.com/studio/run/emulator-networking#networkaddresses
+         * Deployed web service, live at: http://iotlab.telecomnancy.eu:8080/iotlab/
          */
-        public final static String LOCAL = "http://10.0.2.2:25578/iotlab/rest/data/1";
+        public final static String Api = "http://iotlab.telecomnancy.eu:8080/iotlab/rest/data/1";
 
     }
 

@@ -28,19 +28,19 @@ public class IotLabAggregator {
      * Raw url prebuilt for fetching brightness
      */
     private final static String BRIGHTNESS_RAW_URL =
-            Constants.Urls.LOCAL + "/" + Constants.Labels.BRIGHTNESS;
+            Constants.Urls.Api + "/" + Constants.Labels.BRIGHTNESS + "/last";
 
     /**
      * Raw url prebuilt for fetching humidity
      */
     private final static String HUMIDITY_RAW_URL =
-            Constants.Urls.LOCAL + "/" + Constants.Labels.HUMIDITY;
+            Constants.Urls.Api + "/" + Constants.Labels.HUMIDITY + "/last";
 
     /**
      * Raw url prebuilt for fetching temperature
      */
     private final static String TEMPERATURE_RAW_URL =
-            Constants.Urls.LOCAL + "/" + Constants.Labels.TEMPERATURE;
+            Constants.Urls.Api + "/" + Constants.Labels.TEMPERATURE + "/last";
 
     /**
      * Retrieve the brightness of all desired motes
@@ -53,7 +53,7 @@ public class IotLabAggregator {
             throws IllegalArgumentException, IOException {
         // Build the HTTP Request based on the query
         Request request = new Request.Builder()
-                .url(BRIGHTNESS_RAW_URL+ "/" + query.getNumberOfQueriedMotes())
+                .url(BRIGHTNESS_RAW_URL)
                 .build();
 
         return performAndRetrieveMoteCollectionQueryResult(request);
@@ -70,7 +70,7 @@ public class IotLabAggregator {
             throws IllegalArgumentException, IOException {
         // Build the HTTP Request based on the query
         Request request = new Request.Builder()
-                .url(HUMIDITY_RAW_URL + "/" + query.getNumberOfQueriedMotes())
+                .url(HUMIDITY_RAW_URL)
                 .build();
 
         return performAndRetrieveMoteCollectionQueryResult(request);
@@ -87,7 +87,7 @@ public class IotLabAggregator {
             throws IllegalArgumentException, IOException {
         // Build the HTTP Request based on the query
         Request request = new Request.Builder()
-                .url(TEMPERATURE_RAW_URL + "/" + query.getNumberOfQueriedMotes())
+                .url(TEMPERATURE_RAW_URL)
                 .build();
 
         return performAndRetrieveMoteCollectionQueryResult(request);

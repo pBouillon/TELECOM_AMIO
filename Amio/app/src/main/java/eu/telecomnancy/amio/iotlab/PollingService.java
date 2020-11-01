@@ -19,12 +19,6 @@ import eu.telecomnancy.amio.iotlab.entities.Mote;
 public class PollingService extends Service {
 
     /**
-     * Elapsed milliseconds between each request to the server
-     */
-    @SuppressWarnings("FieldCanBeLocal")
-    private final long POLLING_DELAY = 3_000;
-
-    /**
      * Android logging tag for this class
      */
     private static final String TAG = PollingService.class.getSimpleName();
@@ -82,7 +76,7 @@ public class PollingService extends Service {
         // Remove all canceled tasks from the timer's task queue
         _timer.purge();
 
-        Log.d(TAG, "Service destroyed");
+        Log.i(TAG, "Service destroyed");
     }
 
     @Override
@@ -91,7 +85,7 @@ public class PollingService extends Service {
 
         // Create the timer and plan the polling task every POLLING_DELAY ms
         _timer = new Timer();
-        schedulePollingTask(0, POLLING_DELAY);
+        schedulePollingTask(0, Constants.Polling.POLLING_DELAY);
 
         Log.i(TAG, "Service started");
 
