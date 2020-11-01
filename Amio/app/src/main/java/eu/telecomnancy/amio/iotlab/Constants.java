@@ -27,6 +27,9 @@ public final class Constants {
 
     }
 
+    /**
+     * Polling task and parameters
+     */
     public static final class Polling {
 
         /**
