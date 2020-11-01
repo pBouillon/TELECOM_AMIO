@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.iotlab;
+package eu.telecomnancy.amio.polling;
 
 import android.app.Service;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import java.util.List;
 import java.util.Timer;
 
-import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 
 /**
@@ -48,6 +47,7 @@ public class PollingService extends Service {
             public void callback(List<Mote> motes) {
                 // TODO: bind to rendering
                 Log.d(TAG, motes.size() + " mote(s) received");
+                motes.forEach(mote -> Log.d(TAG, mote.toString()));
             }
         };
 

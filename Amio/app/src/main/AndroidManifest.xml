@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <service
-            android:name=".iotlab.PollingService"
+            android:name=".polling.PollingService"
             android:enabled="true"
             android:exported="true"></service>
 

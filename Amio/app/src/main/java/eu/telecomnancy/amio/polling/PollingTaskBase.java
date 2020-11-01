@@ -1,9 +1,8 @@
-package eu.telecomnancy.amio.iotlab;
+package eu.telecomnancy.amio.polling;
 
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -20,11 +19,6 @@ import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
  * Custom task to be executed to poll the iot lab's server
  */
 public abstract class PollingTaskBase extends TimerTask {
-
-    /**
-     * Default number of motes queried when querying several entities on the IoTLab API
-     */
-    private static final int DEFAULT_MOTES_QUERIED_AMOUNT = 50;
 
     /**
      * Android logging tag for this class
@@ -50,12 +44,14 @@ public abstract class PollingTaskBase extends TimerTask {
     public abstract void callback(List<Mote> motes);
 
     /**
-     * Populate the inner-collection of the motes handled by the task
+     * Retrieve the latest motes data from the remote API and returns a structured IMoteCollection
      *
      * This will query the temperature, the humidity and the brightness of all motes and aggregate
      * them in `_motes`
+     *
+     * @see IMoteCollection
      */
-    private void populateMotes() {
+    private IMoteCollection getLatestMotes() {
         // Prepare all queries
         GetMotesBrightnessQuery getBrightnessQuery = new GetMotesBrightnessQuery();
 
@@ -81,35 +77,20 @@ public abstract class PollingTaskBase extends TimerTask {
         }
 
         // Aggregate all motes and retrieve them
-        _motes = dtoAggregator.generateMoteCollectionFromAggregated();
+        return dtoAggregator.generateMoteCollectionFromAggregated();
     }
 
     @Override
     public void run() {
         Log.i(TAG, "Polling task triggered");
 
-        if (_motes.isEmpty()) {
-            // If no motes are registered, populate the collection
-            populateMotes();
-        } else {
-            // Otherwise, update its content
-            updateLastMotes();
-        }
+        // Retrieve the latest data from the motes
+        _motes = getLatestMotes();
 
         // Call the used-defined callback
         callback(_motes.toList());
 
         Log.i(TAG, "Polling task successfully executed");
-    }
-
-    /**
-     * Update the lastly updates motes
-     *
-     * For all motes of the collection this will update the ones with the most recent data for the
-     * temperature, the humidity and the brightness
-     */
-    private void updateLastMotes() {
-        // TODO
     }
 
 }

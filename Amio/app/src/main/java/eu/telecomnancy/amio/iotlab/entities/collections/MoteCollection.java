@@ -17,7 +17,7 @@ public class MoteCollection implements IMoteCollection {
     /**
      * Inner-collection to keep track of the registered motes
      */
-    private HashMap<String, Mote> _moteMap = new HashMap<>();
+    private final HashMap<String, Mote> _moteMap = new HashMap<>();
 
     @Override
     public void addAndMergeFromDto(MoteDto dto) {
@@ -27,7 +27,6 @@ public class MoteCollection implements IMoteCollection {
         // Retrieve the stored value
         // This is guaranteed not to be null because in the worst case, the new Mote has just been
         // added previously
-        //noinspection ConstantConditions
         _moteMap.get(dto.mote)
                 // Since we updated the object reference, we do not need to put the updated object
                 // in the map

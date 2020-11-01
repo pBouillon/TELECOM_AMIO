@@ -1,5 +1,7 @@
 package eu.telecomnancy.amio.iotlab.entities;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Date;
 
 import eu.telecomnancy.amio.iotlab.Constants;
@@ -105,10 +107,22 @@ public class Mote {
                 throw new IllegalArgumentException("Unknown property '" + moteDto.label +"'");
         }
 
-        // Update the timestamp if needed
+        // Update the timestamp to the most recent measure
         if (timestamp < moteDto.timestamp) {
             timestamp = moteDto.timestamp;
         }
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "Mote { " +
+                "brightness=" + brightness +
+                ", humidity=" + humidity +
+                ", name='" + name + '\'' +
+                ", temperature=" + temperature +
+                ", timestamp=" + timestamp +
+                " }";
     }
 
 }
