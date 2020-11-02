@@ -7,7 +7,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
 
-import eu.telecomnancy.amio.iotlab.PollingService;
+import eu.telecomnancy.amio.polling.PollingService;
 
 public class SettingsActivity extends AppCompatActivity {
 
