@@ -1,8 +1,10 @@
 package eu.telecomnancy.amio.ui.main;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -28,10 +30,11 @@ import eu.telecomnancy.amio.ui.main.dummy.DummyContent;
 public class SensorFragment extends Fragment{
 
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private int mColumnCount = 1;
+    private int mColumnCount = 3;
 
     private MainViewModel mViewModel;
     private SensorRecyclerViewAdapter sensorRecyclerViewAdapter;
+    private RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -60,13 +63,8 @@ public class SensorFragment extends Fragment{
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+            recyclerView = (RecyclerView) view;
+            updateRecyclerLayer();
             sensorRecyclerViewAdapter = new SensorRecyclerViewAdapter(new ArrayList<DummyContent.DummySensor>(), getContext());
             recyclerView.setAdapter(sensorRecyclerViewAdapter);
         }
@@ -83,5 +81,20 @@ public class SensorFragment extends Fragment{
                 sensorRecyclerViewAdapter.setValues(dummySensors);
             }
         });
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        updateRecyclerLayer();
+        super.onConfigurationChanged(newConfig);
+    }
+
+    private void updateRecyclerLayer() {
+        Context context = recyclerView.getContext();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        }
     }
 }

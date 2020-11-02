@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="2sp"
+    android:layout_marginLeft="4sp"
     android:layout_marginTop="4sp"
-    android:layout_marginRight="2sp"
+    android:layout_marginRight="4sp"
     android:layout_marginBottom="4sp"
     app:cardBackgroundColor="#FAF5F5" >
 
@@ -23,19 +23,16 @@
             android:layout_height="wrap_content"
             android:button="@android:drawable/btn_star"
             android:gravity="end"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <ImageView
             android:id="@+id/light_bulb_icon"
-            android:layout_width="52dp"
-            android:layout_height="51dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="99dp"
+            android:layout_height="93dp"
             android:contentDescription="@string/light_bulb"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_light_bulb_off" />
@@ -44,37 +41,31 @@
             android:id="@+id/humidity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="coucou"
+            android:text="humidity"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/light_bulb_icon"
-            app:layout_constraintTop_toBottomOf="@+id/sensorId" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/light" />
 
         <TextView
             android:id="@+id/sensorId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="coucou"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintStart_toEndOf="@+id/light_bulb_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/light_bulb_icon" />
 
         <TextView
             android:id="@+id/light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:text="light"
             android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/favorite_checkbox"
-            app:layout_constraintStart_toEndOf="@+id/humidity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sensorId" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
