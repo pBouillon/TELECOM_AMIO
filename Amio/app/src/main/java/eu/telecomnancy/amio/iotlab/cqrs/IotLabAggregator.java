@@ -6,11 +6,8 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 
 import eu.telecomnancy.amio.iotlab.Constants;
-import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBrightnessQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesHumidityQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesTemperatureQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.IQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
