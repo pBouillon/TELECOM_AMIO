@@ -3,15 +3,13 @@ package eu.telecomnancy.amio.polling;
 import android.util.Log;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
 
 import eu.telecomnancy.amio.iotlab.cqrs.IotLabAggregator;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesBrightnessQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesHumidityQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesTemperatureQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBrightnessQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesHumidityQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesTemperatureQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;

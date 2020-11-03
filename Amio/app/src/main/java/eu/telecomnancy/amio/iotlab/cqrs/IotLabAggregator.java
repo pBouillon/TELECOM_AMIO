@@ -6,9 +6,10 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 
 import eu.telecomnancy.amio.iotlab.Constants;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesBrightnessQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesHumidityQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesTemperatureQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBrightnessQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesHumidityQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesTemperatureQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.IQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import okhttp3.OkHttpClient;
@@ -18,6 +19,7 @@ import okhttp3.ResponseBody;
 
 /**
  * IotLab CQRS aggregator to handle command and queries
+ * @see IQuery
  */
 public class IotLabAggregator {
 
@@ -25,24 +27,6 @@ public class IotLabAggregator {
      * Inner HttpClient used for HTTP requests
      */
     private final OkHttpClient _httpClient = new OkHttpClient();
-
-    /**
-     * Raw url prebuilt for fetching brightness
-     */
-    private final static String BRIGHTNESS_QUERY_URL =
-            Constants.Urls.API + "/" + Constants.Labels.BRIGHTNESS + "/last";
-
-    /**
-     * Raw url prebuilt for fetching humidity
-     */
-    private final static String HUMIDITY_QUERY_URL =
-            Constants.Urls.API + "/" + Constants.Labels.HUMIDITY + "/last";
-
-    /**
-     * Raw url prebuilt for fetching temperature
-     */
-    private final static String TEMPERATURE_QUERY_URL =
-            Constants.Urls.API + "/" + Constants.Labels.TEMPERATURE + "/last";
 
     /**
      * Handle the provided IQuery and execute it
@@ -53,60 +37,33 @@ public class IotLabAggregator {
      */
     public MoteDtoCollection handle(IQuery query)
             throws IOException, InvalidParameterException {
-        // Query the brightness
-        if (query instanceof GetMotesBrightnessQuery) {
-            return handleGetMotesBrightnessQuery((GetMotesBrightnessQuery) query);
+        // Flag to check whether or not this query is forged to request a specific value from all
+        // motes
+        boolean isMoteDataTypeQuery = query instanceof GetMotesDataTypeQuery;
+
+        // This aggregator is only fetching mote data, all other types are not handled by it
+        if (!isMoteDataTypeQuery) {
+            throw new InvalidParameterException(
+                    "Unhandled query of type " + query.getClass().getTypeName());
         }
 
-        // Query the humidity
-        if (query instanceof GetMotesHumidityQuery) {
-            return handleGetMotesHumidityQuery((GetMotesHumidityQuery) query);
-        }
+        // Cast the query to access the data type's label
+        GetMotesDataTypeQuery getMotesDataTypeQuery = (GetMotesDataTypeQuery) query;
 
-        // Query the temperature
-        if (query instanceof GetMotesTemperatureQuery) {
-            return handleGetMotesTemperatureQuery((GetMotesTemperatureQuery) query);
-        }
+        // Generate the associated route from the query's label
+        String associatedRoute = generateRouteForLabel(getMotesDataTypeQuery.label);
 
-        // Unknown IQuery or unhandled by the aggregator
-        throw new InvalidParameterException(
-                "Unhandled query of type " + query.getClass().getTypeName());
+        // Return the fetched data from the route
+        return fetchAndRetrieveMoteCollectionFromUrl(associatedRoute);
     }
 
     /**
-     * Retrieve the brightness of all desired motes
-     * @param query GetMotesBrightnessQuery query
-     * @return The MoteDtoCollection holding all requested data
-     * @throws IOException If any issue happened with the HTTP call
+     * (Pure) Generate the API route to fetch all data relative to the provided label
+     * @param label Type of data to be fetched
+     * @return The associated API route
      */
-    private MoteDtoCollection handleGetMotesBrightnessQuery(
-            @SuppressWarnings("unused") GetMotesBrightnessQuery query)
-            throws IOException {
-        return fetchAndRetrieveMoteCollectionFromUrl(BRIGHTNESS_QUERY_URL);
-    }
-
-    /**
-     * Retrieve the humidity of all desired motes
-     * @param query GetMotesHumidityQuery query
-     * @return The MoteDtoCollection holding all requested data
-     * @throws IOException If any issue happened with the HTTP call
-     */
-    private MoteDtoCollection handleGetMotesHumidityQuery(
-            @SuppressWarnings("unused") GetMotesHumidityQuery query)
-            throws IOException {
-        return fetchAndRetrieveMoteCollectionFromUrl(HUMIDITY_QUERY_URL);
-    }
-
-    /**
-     * Retrieve the temperature of all desired motes
-     * @param query GetMotesTemperatureQuery query
-     * @return The MoteDtoCollection holding all requested data
-     * @throws IOException If any issue happened with the HTTP call
-     */
-    private MoteDtoCollection handleGetMotesTemperatureQuery(
-            @SuppressWarnings("unused") GetMotesTemperatureQuery query)
-            throws IOException {
-        return fetchAndRetrieveMoteCollectionFromUrl(TEMPERATURE_QUERY_URL);
+    private static String generateRouteForLabel(String label) {
+        return Constants.Urls.API + "/" + label + "/last";
     }
 
     /**
