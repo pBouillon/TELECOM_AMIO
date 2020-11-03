@@ -3,14 +3,17 @@ package eu.telecomnancy.amio.polling;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
 
 import eu.telecomnancy.amio.iotlab.cqrs.IotLabAggregator;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBrightnessQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesHumidityQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesTemperatureQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
+import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
 import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
@@ -53,28 +56,24 @@ public abstract class PollingTaskBase extends TimerTask {
      */
     private IMoteCollection getLatestMotes() {
         // Prepare all queries
-        GetMotesBrightnessQuery getBrightnessQuery = new GetMotesBrightnessQuery();
-
-        GetMotesHumidityQuery getHumidityQuery = new GetMotesHumidityQuery();
-
-        GetMotesTemperatureQuery getTemperaturesQuery = new GetMotesTemperatureQuery();
+        List<GetMotesDataTypeQuery> motesDataTypeQueries = Arrays.asList(
+                new GetMotesBrightnessQuery(),
+                new GetMotesHumidityQuery(),
+                new GetMotesTemperatureQuery()
+        );
 
         // Create the aggregator which will retrieve and merge all DTOs
         MoteCollectionDtoAggregator dtoAggregator = new MoteCollectionDtoAggregator();
 
         // Perform all queries
-        try {
-            dtoAggregator.setBrightnessCollectionDto(
-                    _aggregator.handle(getBrightnessQuery));
-
-            dtoAggregator.setHumidityCollectionDto(
-                    _aggregator.handle(getHumidityQuery));
-
-            dtoAggregator.setTemperatureCollectionDto(
-                    _aggregator.handle(getTemperaturesQuery));
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to perform the HTTP requests", e);
-        }
+        motesDataTypeQueries.forEach(query -> {
+            try {
+                MoteDtoCollection associatedMoteDtos = _aggregator.handle(query);
+                dtoAggregator.aggregateMotesFor(query.label, associatedMoteDtos);
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to perform the HTTP requests", e);
+            }
+        });
 
         // Aggregate all motes and retrieve them
         return dtoAggregator.generateMoteCollectionFromAggregated();
