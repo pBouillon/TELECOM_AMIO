@@ -30,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         startService(pollingServiceIntent);
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
