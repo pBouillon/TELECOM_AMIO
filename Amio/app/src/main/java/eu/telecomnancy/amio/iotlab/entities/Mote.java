@@ -16,34 +16,34 @@ public class Mote {
     /**
      * Brightness value retrieved by the mote
      */
-    private float brightness;
+    private float _brightness;
 
     /**
      * Humidity value retrieved by the mote
      */
-    private float humidity;
+    private float _humidity;
 
     /**
      * Mote's name
      */
-    private String name;
+    private final String _name;
 
     /**
      * Temperature value retrieved by the mote
      */
-    private float temperature;
+    private float _temperature;
 
     /**
      * Timestamp of the last update of this mote
      */
-    private long timestamp;
+    private long _timestamp;
 
     /**
      * Default constructor
      * @param name Mote's name
      */
     public Mote(String name) {
-        this.name = name;
+        _name = name;
     }
 
     /**
@@ -51,7 +51,7 @@ public class Mote {
      * @return The brightness measured by the mote
      */
     public float getBrightness() {
-        return brightness;
+        return _brightness;
     }
 
     /**
@@ -59,7 +59,7 @@ public class Mote {
      * @return The humidity measured by the mote
      */
     public float getHumidity() {
-        return humidity;
+        return _humidity;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Mote {
      * @return The mote's name
      */
     public String getName() {
-        return name;
+        return _name;
     }
 
     /**
@@ -75,7 +75,7 @@ public class Mote {
      * @return The temperature measured by the mote
      */
     public float getTemperature() {
-        return temperature;
+        return _temperature;
     }
 
     /**
@@ -83,7 +83,7 @@ public class Mote {
      * @return A Date object from the `timestamp` property
      */
     public Date lastUpdatedOn() {
-        return new Date(timestamp);
+        return new Date(_timestamp);
     }
 
     /**
@@ -95,21 +95,21 @@ public class Mote {
 
         switch (moteDto.label) {
             case Constants.Labels.BRIGHTNESS:
-                brightness = measure;
+                _brightness = measure;
                 break;
             case Constants.Labels.HUMIDITY:
-                humidity = measure;
+                _humidity = measure;
                 break;
             case Constants.Labels.TEMPERATURE:
-                temperature = measure;
+                _temperature = measure;
                 break;
             default:
                 throw new IllegalArgumentException("Unknown property '" + moteDto.label +"'");
         }
 
         // Update the timestamp to the most recent measure
-        if (timestamp < moteDto.timestamp) {
-            timestamp = moteDto.timestamp;
+        if (_timestamp < moteDto.timestamp) {
+            _timestamp = moteDto.timestamp;
         }
     }
 
@@ -117,11 +117,11 @@ public class Mote {
     @Override
     public String toString() {
         return "Mote { " +
-                "brightness=" + brightness +
-                ", humidity=" + humidity +
-                ", name='" + name + '\'' +
-                ", temperature=" + temperature +
-                ", timestamp=" + timestamp +
+                "brightness=" + _brightness +
+                ", humidity=" + _humidity +
+                ", name='" + _name + '\'' +
+                ", temperature=" + _temperature +
+                ", timestamp=" + _timestamp +
                 " }";
     }
 

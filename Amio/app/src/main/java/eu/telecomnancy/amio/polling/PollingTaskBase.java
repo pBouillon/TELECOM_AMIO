@@ -34,11 +34,6 @@ public abstract class PollingTaskBase extends TimerTask {
     private final IotLabAggregator _aggregator = new IotLabAggregator();
 
     /**
-     * Motes retrieved and handled by the polling task
-     */
-    private IMoteCollection _motes = new MoteCollection();
-
-    /**
      * Define a custom callback method to be executed when the task has run its job
      *
      * This custom callback methods allows the caller to use all data provided as parameter in its
@@ -84,7 +79,7 @@ public abstract class PollingTaskBase extends TimerTask {
         Log.i(TAG, "Polling task triggered");
 
         // Retrieve the latest data from the motes
-        _motes = getLatestMotes();
+        IMoteCollection _motes = getLatestMotes();
 
         // Call the used-defined callback
         callback(_motes.toList());
