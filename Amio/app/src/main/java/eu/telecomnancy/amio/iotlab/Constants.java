@@ -35,7 +35,7 @@ public final class Constants {
         /**
          * Deployed web service, live at: http://iotlab.telecomnancy.eu:8080/iotlab/
          */
-        public final static String Api = "http://iotlab.telecomnancy.eu:8080/iotlab/rest/data/1";
+        public final static String API = "http://iotlab.telecomnancy.eu:8080/iotlab/rest/data/1";
 
     }
 

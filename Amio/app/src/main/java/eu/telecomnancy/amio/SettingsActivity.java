@@ -11,7 +11,6 @@ import eu.telecomnancy.amio.polling.PollingService;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    // TODO: move to main activity once created
     private Intent pollingServiceIntent;
 
     @Override
@@ -27,7 +26,6 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // TODO: move to main activity once created
         pollingServiceIntent = new Intent(this, PollingService.class);
         startService(pollingServiceIntent);
     }
@@ -36,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        // TODO: move to main activity once created
         stopService(pollingServiceIntent);
     }
 

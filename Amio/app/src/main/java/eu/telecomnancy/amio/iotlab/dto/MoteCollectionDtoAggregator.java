@@ -1,6 +1,7 @@
 package eu.telecomnancy.amio.iotlab.dto;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
@@ -12,19 +13,9 @@ import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
 public class MoteCollectionDtoAggregator {
 
     /**
-     * The mote collection of the DTOs holding the brightness value
+     * Inner-collection to track MoteDtoCollection per label
      */
-    private MoteDtoCollection _brightnessCollectionDto = new MoteDtoCollection();
-
-    /**
-     * The mote collection of the DTOs holding the humidity value
-     */
-    private MoteDtoCollection _humidityCollectionDto = new MoteDtoCollection();
-
-    /**
-     * The mote collection of the DTOs holding the temperature value
-     */
-    private MoteDtoCollection _temperatureCollectionDto = new MoteDtoCollection();
+    private final Map<String, MoteDtoCollection> _motesDtoByData = new HashMap<>();
 
     /**
      * Merge all DTOs held by this aggregator and create fully completed Motes
@@ -35,7 +26,7 @@ public class MoteCollectionDtoAggregator {
         IMoteCollection moteCollection = new MoteCollection();
 
         // From all our data sources
-        Arrays.asList(_brightnessCollectionDto, _humidityCollectionDto, _temperatureCollectionDto)
+        _motesDtoByData.values()
                 // Merge their respected values into the mote collection
                 .forEach(list -> list.data.forEach(moteCollection::addAndMergeFromDto));
 
@@ -43,27 +34,12 @@ public class MoteCollectionDtoAggregator {
     }
 
     /**
-     * Brightness motes DTO setter
-     * @param brightnessCollectionDto The mote collection of the DTOs holding the brightness value
+     * Associate a mote collection to specific label
+     * @param label Label categorizing the mote collection
+     * @param associatedMotes Associated collection of motes
      */
-    public void setBrightnessCollectionDto(MoteDtoCollection brightnessCollectionDto) {
-        _brightnessCollectionDto = brightnessCollectionDto;
-    }
-
-    /**
-     * Humidity motes DTO setter
-     * @param humidityCollectionDto The mote collection of the DTOs holding the humidity value
-     */
-    public void setHumidityCollectionDto(MoteDtoCollection humidityCollectionDto) {
-        _humidityCollectionDto = humidityCollectionDto;
-    }
-
-    /**
-     * Temperature motes DTO setter
-     * @param temperatureCollectionDto The mote collection of the DTOs holding the temperature value
-     */
-    public void setTemperatureCollectionDto(MoteDtoCollection temperatureCollectionDto) {
-        _temperatureCollectionDto = temperatureCollectionDto;
+    public void aggregateMotesFor(String label, MoteDtoCollection associatedMotes) {
+        _motesDtoByData.put(label, associatedMotes);
     }
 
 }

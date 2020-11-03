@@ -3,17 +3,19 @@ package eu.telecomnancy.amio.polling;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
 
 import eu.telecomnancy.amio.iotlab.cqrs.IotLabAggregator;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesBrightnessQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesHumidityQuery;
-import eu.telecomnancy.amio.iotlab.cqrs.query.GetMotesTemperatureQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBrightnessQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesHumidityQuery;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesTemperatureQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
+import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
-import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
 
 /**
  * Custom task to be executed to poll the iot lab's server
@@ -29,11 +31,6 @@ public abstract class PollingTaskBase extends TimerTask {
      * CQRS aggregator to handle command and queries
      */
     private final IotLabAggregator _aggregator = new IotLabAggregator();
-
-    /**
-     * Motes retrieved and handled by the polling task
-     */
-    private IMoteCollection _motes = new MoteCollection();
 
     /**
      * Define a custom callback method to be executed when the task has run its job
@@ -53,28 +50,24 @@ public abstract class PollingTaskBase extends TimerTask {
      */
     private IMoteCollection getLatestMotes() {
         // Prepare all queries
-        GetMotesBrightnessQuery getBrightnessQuery = new GetMotesBrightnessQuery();
-
-        GetMotesHumidityQuery getHumidityQuery = new GetMotesHumidityQuery();
-
-        GetMotesTemperatureQuery getTemperaturesQuery = new GetMotesTemperatureQuery();
+        List<GetMotesDataTypeQuery> motesDataTypeQueries = Arrays.asList(
+                new GetMotesBrightnessQuery(),
+                new GetMotesHumidityQuery(),
+                new GetMotesTemperatureQuery()
+        );
 
         // Create the aggregator which will retrieve and merge all DTOs
         MoteCollectionDtoAggregator dtoAggregator = new MoteCollectionDtoAggregator();
 
         // Perform all queries
-        try {
-            dtoAggregator.setBrightnessCollectionDto(
-                    _aggregator.handleGetMotesBrightnessQuery(getBrightnessQuery));
-
-            dtoAggregator.setHumidityCollectionDto(
-                    _aggregator.handleGetMotesHumidityQuery(getHumidityQuery));
-
-            dtoAggregator.setTemperatureCollectionDto(
-                    _aggregator.handleGetMotesTemperatureQuery(getTemperaturesQuery));
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to perform the HTTP requests", e);
-        }
+        motesDataTypeQueries.forEach(query -> {
+            try {
+                MoteDtoCollection associatedMoteDtos = _aggregator.handle(query);
+                dtoAggregator.aggregateMotesFor(query.label, associatedMoteDtos);
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to perform the HTTP requests", e);
+            }
+        });
 
         // Aggregate all motes and retrieve them
         return dtoAggregator.generateMoteCollectionFromAggregated();
@@ -85,7 +78,7 @@ public abstract class PollingTaskBase extends TimerTask {
         Log.i(TAG, "Polling task triggered");
 
         // Retrieve the latest data from the motes
-        _motes = getLatestMotes();
+        IMoteCollection _motes = getLatestMotes();
 
         // Call the used-defined callback
         callback(_motes.toList());
