@@ -3,6 +3,8 @@ package eu.telecomnancy.amio.polling;
 import android.util.Log;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -65,13 +67,13 @@ public abstract class PollingTaskBase extends TimerTask {
         // Perform all queries
         try {
             dtoAggregator.setBrightnessCollectionDto(
-                    _aggregator.handleGetMotesBrightnessQuery(getBrightnessQuery));
+                    _aggregator.handle(getBrightnessQuery));
 
             dtoAggregator.setHumidityCollectionDto(
-                    _aggregator.handleGetMotesHumidityQuery(getHumidityQuery));
+                    _aggregator.handle(getHumidityQuery));
 
             dtoAggregator.setTemperatureCollectionDto(
-                    _aggregator.handleGetMotesTemperatureQuery(getTemperaturesQuery));
+                    _aggregator.handle(getTemperaturesQuery));
         } catch (IOException e) {
             Log.e(TAG, "Failed to perform the HTTP requests", e);
         }
