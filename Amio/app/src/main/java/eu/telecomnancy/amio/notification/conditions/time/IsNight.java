@@ -2,6 +2,8 @@ package eu.telecomnancy.amio.notification.conditions.time;
 
 import java.util.Calendar;
 
+import eu.telecomnancy.amio.notification.Constants;
+
 /**
  * Condition to check if it is currently the night
  */
@@ -19,9 +21,8 @@ public class IsNight extends CurrentTimeCondition {
     public boolean evaluate() {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
-        // TODO: constant
-        return hour == 23
-                || hour < 7;
+        return hour >= Constants.TimeSpans.Night.BEGINNING
+                || hour < Constants.TimeSpans.Night.END;
     }
 
 }
