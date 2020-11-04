@@ -23,4 +23,4 @@ jobs:
         ./gradlew build
     - name: Test with Gradle
       run: |
-      ./gradlew test
+        ./gradlew test
