@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.TimerTask;
 
 import eu.telecomnancy.amio.iotlab.cqrs.IotLabAggregator;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBatteryQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBrightnessQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesHumidityQuery;
@@ -57,6 +58,7 @@ public abstract class PollingTaskBase extends TimerTask {
     private IMoteCollection getLatestMotes() {
         // Prepare all queries
         List<GetMotesDataTypeQuery> motesDataTypeQueries = Arrays.asList(
+                new GetMotesBatteryQuery(),
                 new GetMotesBrightnessQuery(),
                 new GetMotesHumidityQuery(),
                 new GetMotesTemperatureQuery()

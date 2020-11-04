@@ -11,6 +11,11 @@ public final class Constants {
     public static final class Labels {
 
         /**
+         * IoTLab label for the battery level
+         */
+        public final static String BATTERY = "battery_indicator";
+
+        /**
          * IoTLab label for brightness
          */
         public final static String BRIGHTNESS = "light1";
