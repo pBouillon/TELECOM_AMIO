@@ -13,27 +13,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import eu.telecomnancy.amio.R;
-import eu.telecomnancy.amio.ui.main.dummy.DummyContent.DummySensor;
+import eu.telecomnancy.amio.iotlab.entities.Mote;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummySensor}.
+ * {@link RecyclerView.Adapter} that can display a {@link Mote}.
  */
 public class SensorRecyclerViewAdapter extends RecyclerView.Adapter<SensorRecyclerViewAdapter.ViewHolder> {
 
-    private List<DummySensor> mValues;
+    private List<Mote> mMotes;
     //Needed to get the parametrized ressource string
     private final Context context;
 
-    public SensorRecyclerViewAdapter(List<DummySensor> items, Context context) {
-        mValues = items;
+    public SensorRecyclerViewAdapter(List<Mote> items, Context context) {
+        mMotes = items;
         this.context = context;
     }
 
-    public void setValues(List<DummySensor> sensors){
-        mValues = sensors;
+    public void setMotes(List<Mote> motes){
+        mMotes = motes;
         notifyDataSetChanged();
     }
 
@@ -50,15 +50,17 @@ public class SensorRecyclerViewAdapter extends RecyclerView.Adapter<SensorRecycl
         DecimalFormat df2 = new DecimalFormat("#.##");
 
         //Bind values of the item at the given position to the holder assigned to it
-        holder.mItem = mValues.get(position);
+        holder.mItem = mMotes.get(position);
         //Bind the texts to the view
         holder.mIdView.setText(context.getString(
                 R.string.sensor_id_text_holder,
-                mValues.get(position).id));
+                mMotes.get(position).getName()));
         holder.mLightView.setText(context.getString(
                 R.string.light_text_holder,
-                df2.format(mValues.get(position).brightness)));
-        if(mValues.get(position).brightness < DummySensor.BRIGHTNESS_CEIL_ON_OFF){
+                df2.format(mMotes.get(position).getBrightness())));
+
+        //TODO use a constant
+        if(mMotes.get(position).getBrightness() < 200 ){
             holder.mLightBulb.setImageResource(R.drawable.ic_light_bulb_off);
         }else{
             holder.mLightBulb.setImageResource(R.drawable.ic_light_bulb_on);
@@ -66,21 +68,21 @@ public class SensorRecyclerViewAdapter extends RecyclerView.Adapter<SensorRecycl
 
         holder.mHumidityView.setText(context.getString(
                 R.string.humidity_text_holder,
-                df2.format(mValues.get(position).temperature)));
-        holder.mStarView.setChecked(mValues.get(position).starred);
+                df2.format(mMotes.get(position).getTemperature())));
+        //holder.mStarView.setChecked(mMotes.get(position).starred);
 
         //Set the listener on the star checkbox that update the model
         holder.mStarView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                mValues.get(position).starred = false;
+                //mMotes.get(position).starred = false;
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mMotes.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -90,7 +92,7 @@ public class SensorRecyclerViewAdapter extends RecyclerView.Adapter<SensorRecycl
         public final TextView mIdView;
         public final CheckBox mStarView;
         public final ImageView mLightBulb;
-        public DummySensor mItem;
+        public Mote mItem;
 
         public ViewHolder(View view) {
             super(view);

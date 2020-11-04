@@ -2,11 +2,13 @@ package eu.telecomnancy.amio.polling;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Timer;
 
@@ -21,6 +23,9 @@ public class PollingService extends Service {
      * Android logging tag for this class
      */
     private static final String TAG = PollingService.class.getSimpleName();
+    public static final String MOTE_DATA_UPDATE_ACTION = "MoteDataUpdate";
+    public static final String MOTES_EXTRA_IDENTIFIER = "Motes";
+    public static final String MOTES_BUNDLE_IDENTIFIER = "MotesBundle";
 
     /**
      * Inner-timer used for firing events
@@ -48,12 +53,26 @@ public class PollingService extends Service {
                 // TODO: bind to rendering
                 Log.d(TAG, motes.size() + " mote(s) received");
                 motes.forEach(mote -> Log.d(TAG, mote.toString()));
+                sendBroadcastMessage(motes);
             }
         };
 
         _timer.scheduleAtFixedRate(_pollingTask, delay, period);
 
         Log.i(TAG, String.format("Task schedule for %d ms, every %d ms", delay, period));
+    }
+
+    /**
+     * Send a broadcast message that contain the mote list
+     * @param motes updated motes list
+     */
+    private void sendBroadcastMessage(List<Mote> motes){
+        Intent broadcastMessage = new Intent(MOTE_DATA_UPDATE_ACTION);
+        Bundle moteBundle = new Bundle();
+        moteBundle.putSerializable(MOTES_EXTRA_IDENTIFIER, (Serializable) motes);
+        broadcastMessage.putExtra(MOTES_BUNDLE_IDENTIFIER, moteBundle);
+        sendBroadcast(broadcastMessage);
+        Log.d(TAG, "Broadcast Sent");
     }
 
     @Nullable

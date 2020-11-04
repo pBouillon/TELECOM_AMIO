@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.telecomnancy.amio.R;
-import eu.telecomnancy.amio.ui.main.dummy.DummyContent;
+import eu.telecomnancy.amio.iotlab.entities.Mote;
 
 /**
  * A fragment representing a list of Items.
@@ -32,7 +31,6 @@ public class SensorFragment extends Fragment{
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 3;
 
-    private MainViewModel mViewModel;
     private SensorRecyclerViewAdapter sensorRecyclerViewAdapter;
     private RecyclerView recyclerView;
 
@@ -65,7 +63,7 @@ public class SensorFragment extends Fragment{
         if (view instanceof RecyclerView) {
             recyclerView = (RecyclerView) view;
             updateRecyclerLayer();
-            sensorRecyclerViewAdapter = new SensorRecyclerViewAdapter(new ArrayList<DummyContent.DummySensor>(), getContext());
+            sensorRecyclerViewAdapter = new SensorRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
             recyclerView.setAdapter(sensorRecyclerViewAdapter);
         }
         return view;
@@ -74,11 +72,11 @@ public class SensorFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        mViewModel.getSensors().observe(getViewLifecycleOwner(), new Observer<List<DummyContent.DummySensor>>() {
+        MainViewModel viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        viewModel.getMotes().observe(getViewLifecycleOwner(), new Observer<List<Mote>>() {
             @Override
-            public void onChanged(List<DummyContent.DummySensor> dummySensors) {
-                sensorRecyclerViewAdapter.setValues(dummySensors);
+            public void onChanged(List<Mote> dummySensors) {
+                sensorRecyclerViewAdapter.setMotes(dummySensors);
             }
         });
     }
@@ -89,6 +87,9 @@ public class SensorFragment extends Fragment{
         super.onConfigurationChanged(newConfig);
     }
 
+    /**
+     * Update the recycler view to mach the current orientation
+     */
     private void updateRecyclerLayer() {
         Context context = recyclerView.getContext();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

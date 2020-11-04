@@ -2,6 +2,7 @@ package eu.telecomnancy.amio.iotlab.entities;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import eu.telecomnancy.amio.iotlab.Constants;
@@ -11,7 +12,7 @@ import eu.telecomnancy.amio.iotlab.dto.MoteDto;
  * Logical representation of a mote
  * @see MoteDto For the its API representation
  */
-public class Mote {
+public class Mote implements Serializable {
 
     /**
      * Brightness value retrieved by the mote
