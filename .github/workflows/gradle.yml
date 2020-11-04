@@ -23,4 +23,6 @@ jobs:
         ./gradlew build
     - name: Test with Gradle
       run: |
+        cd Amio/
+        chmod +x gradlew
         ./gradlew test
