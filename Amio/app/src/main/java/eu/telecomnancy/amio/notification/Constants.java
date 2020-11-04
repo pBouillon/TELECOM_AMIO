@@ -6,6 +6,25 @@ package eu.telecomnancy.amio.notification;
 public final class Constants {
 
     /**
+     * Define fixed thresholds for specific domains
+     */
+    public static final class Thresholds {
+
+        /**
+         * Constants for lux thresholds
+         */
+        public static final class Lux {
+
+            /**
+             * Threshold value at which we can consider the room as lit
+             */
+            public static final int LIGHTED_ROOM = 200;
+
+        }
+
+    }
+
+    /**
      * Define all time spans for specific period of times
      */
     public static final class TimeSpans {

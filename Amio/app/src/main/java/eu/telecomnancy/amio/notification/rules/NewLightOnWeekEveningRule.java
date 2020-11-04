@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import eu.telecomnancy.amio.notification.EventContext;
 import eu.telecomnancy.amio.notification.EventDispatcher;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
-import eu.telecomnancy.amio.notification.conditions.sensors.IsNewLightOn;
+import eu.telecomnancy.amio.notification.conditions.motes.IsAnyNewLightOn;
 import eu.telecomnancy.amio.notification.conditions.time.IsEvening;
 import eu.telecomnancy.amio.notification.conditions.time.IsNotWeekEnd;
 
@@ -27,7 +27,10 @@ public class NewLightOnWeekEveningRule implements IRule {
     public boolean when(@Fact(EventDispatcher.ContextTag) EventContext context) {
         long currentTime = context.currentTime;
 
-        return Stream.of(new IsNewLightOn(), new IsNotWeekEnd(currentTime), new IsEvening(currentTime))
+        return Stream.of(
+                new IsAnyNewLightOn(context.motes),
+                new IsNotWeekEnd(currentTime),
+                new IsEvening(currentTime))
                 .allMatch(ICondition::evaluate);
     }
 
