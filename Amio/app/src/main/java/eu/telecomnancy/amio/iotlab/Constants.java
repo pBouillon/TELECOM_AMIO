@@ -11,6 +11,11 @@ public final class Constants {
     public static final class Labels {
 
         /**
+         * IoTLab label for the battery level
+         */
+        public final static String BATTERY = "battery_indicator";
+
+        /**
          * IoTLab label for brightness
          */
         public final static String BRIGHTNESS = "light1";
@@ -35,7 +40,7 @@ public final class Constants {
         /**
          * Deployed web service, live at: http://iotlab.telecomnancy.eu:8080/iotlab/
          */
-        public final static String Api = "http://iotlab.telecomnancy.eu:8080/iotlab/rest/data/1";
+        public final static String API = "http://iotlab.telecomnancy.eu:8080/iotlab/rest/data/1";
 
     }
 

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import eu.telecomnancy.amio.R;
+import eu.telecomnancy.amio.notification.Constants;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 
 import java.text.DecimalFormat;
@@ -59,8 +60,7 @@ public class SensorRecyclerViewAdapter extends RecyclerView.Adapter<SensorRecycl
                 R.string.light_text_holder,
                 df2.format(mMotes.get(position).getBrightness())));
 
-        //TODO use a constant
-        if(mMotes.get(position).getBrightness() < 200 ){
+        if(mMotes.get(position).getBrightness() < Constants.Thresholds.Lux.LIGHTED_ROOM){
             holder.mLightBulb.setImageResource(R.drawable.ic_light_bulb_off);
         }else{
             holder.mLightBulb.setImageResource(R.drawable.ic_light_bulb_on);
@@ -69,15 +69,7 @@ public class SensorRecyclerViewAdapter extends RecyclerView.Adapter<SensorRecycl
         holder.mHumidityView.setText(context.getString(
                 R.string.humidity_text_holder,
                 df2.format(mMotes.get(position).getTemperature())));
-        //holder.mStarView.setChecked(mMotes.get(position).starred);
 
-        //Set the listener on the star checkbox that update the model
-        holder.mStarView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                //mMotes.get(position).starred = false;
-            }
-        });
     }
 
     @Override
@@ -90,7 +82,6 @@ public class SensorRecyclerViewAdapter extends RecyclerView.Adapter<SensorRecycl
         public final TextView mLightView;
         public final TextView mHumidityView;
         public final TextView mIdView;
-        public final CheckBox mStarView;
         public final ImageView mLightBulb;
         public Mote mItem;
 
@@ -100,7 +91,6 @@ public class SensorRecyclerViewAdapter extends RecyclerView.Adapter<SensorRecycl
             mIdView = view.findViewById(R.id.sensorId);
             mLightView = view.findViewById(R.id.light);
             mHumidityView = view.findViewById(R.id.humidity);
-            mStarView = view.findViewById(R.id.favorite_checkbox);
             mLightBulb = view.findViewById(R.id.light_bulb_icon);
         }
 

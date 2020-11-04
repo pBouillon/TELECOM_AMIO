@@ -11,6 +11,9 @@ import eu.telecomnancy.amio.polling.PollingService;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    // TODO: move to main activity once created
+    private Intent pollingServiceIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,18 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // TODO: move to main activity once created
+        pollingServiceIntent = new Intent(this, PollingService.class);
+        startService(pollingServiceIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // TODO: move to main activity once created
+        stopService(pollingServiceIntent);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

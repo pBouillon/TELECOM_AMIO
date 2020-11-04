@@ -44,13 +44,11 @@ public class PollingService extends Service {
      */
     @SuppressWarnings("SameParameterValue")
     private void schedulePollingTask(long delay, long period) {
-
         // Create a new task and define its callback in order to access the data it may provide
         // as parameter
         _pollingTask = new PollingTaskBase() {
             @Override
             public void callback(List<Mote> motes) {
-                // TODO: bind to rendering
                 Log.d(TAG, motes.size() + " mote(s) received");
                 motes.forEach(mote -> Log.d(TAG, mote.toString()));
                 sendBroadcastMessage(motes);
@@ -84,8 +82,6 @@ public class PollingService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
         // Cancel the running / scheduled task
         _pollingTask.cancel();
 
@@ -94,6 +90,8 @@ public class PollingService extends Service {
 
         // Remove all canceled tasks from the timer's task queue
         _timer.purge();
+
+        super.onDestroy();
 
         Log.i(TAG, "Service destroyed");
     }
