@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.widget.Toolbar;
-import eu.telecomnancy.amio.iotlab.PollingService;
+import eu.telecomnancy.amio.polling.PollingService;
 import eu.telecomnancy.amio.ui.main.SensorFragment;
 
 public class MainActivity extends AppCompatActivity {
