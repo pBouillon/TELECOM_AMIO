@@ -14,6 +14,11 @@ import eu.telecomnancy.amio.iotlab.dto.MoteDto;
 public class Mote {
 
     /**
+     * Current battery level of the mote
+     */
+    private float _battery;
+
+    /**
      * Brightness value retrieved by the mote
      */
     private float _brightness;
@@ -94,6 +99,9 @@ public class Mote {
         float measure = moteDto.value;
 
         switch (moteDto.label) {
+            case Constants.Labels.BATTERY:
+                _battery = measure;
+                break;
             case Constants.Labels.BRIGHTNESS:
                 _brightness = measure;
                 break;
@@ -116,12 +124,12 @@ public class Mote {
     @NotNull
     @Override
     public String toString() {
-        return "Mote { " +
-                "brightness=" + _brightness +
-                ", humidity=" + _humidity +
-                ", name='" + _name + '\'' +
-                ", temperature=" + _temperature +
-                ", timestamp=" + _timestamp +
+        return "Mote #" + _name +
+                "\t(" + _battery + "%)\t{ " +
+                "brightness: " + _brightness + "lx " +
+                "\thumidity: " + _humidity + "% " +
+                "\ttemperature: " + _temperature + "°C " +
+                "\ttimestamp: " + _timestamp +
                 " }";
     }
 

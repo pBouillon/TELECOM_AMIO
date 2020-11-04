@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.TimerTask;
 
 import eu.telecomnancy.amio.iotlab.cqrs.IotLabAggregator;
+import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBatteryQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesBrightnessQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesHumidityQuery;
@@ -16,6 +17,7 @@ import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
 import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.notification.EventDispatcher;
 
 /**
  * Custom task to be executed to poll the iot lab's server
@@ -31,6 +33,11 @@ public abstract class PollingTaskBase extends TimerTask {
      * CQRS aggregator to handle command and queries
      */
     private final IotLabAggregator _aggregator = new IotLabAggregator();
+
+    /**
+     * Rule engine wrapper for event dispatching
+     */
+    private final EventDispatcher _dispatcher = new EventDispatcher();
 
     /**
      * Define a custom callback method to be executed when the task has run its job
@@ -51,6 +58,7 @@ public abstract class PollingTaskBase extends TimerTask {
     private IMoteCollection getLatestMotes() {
         // Prepare all queries
         List<GetMotesDataTypeQuery> motesDataTypeQueries = Arrays.asList(
+                new GetMotesBatteryQuery(),
                 new GetMotesBrightnessQuery(),
                 new GetMotesHumidityQuery(),
                 new GetMotesTemperatureQuery()
@@ -82,6 +90,9 @@ public abstract class PollingTaskBase extends TimerTask {
 
         // Call the used-defined callback
         callback(_motes.toList());
+
+        // Fire notifications
+        _dispatcher.dispatchNotificationFor(_motes);
 
         Log.i(TAG, "Polling task successfully executed");
     }

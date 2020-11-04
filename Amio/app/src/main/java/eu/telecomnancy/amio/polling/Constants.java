@@ -13,7 +13,7 @@ public final class Constants {
         /**
          * Elapsed milliseconds between each the polling event
          */
-        public final static long POLLING_DELAY = 3_000;
+        public final static long POLLING_DELAY = 10_000;
 
     }
 
