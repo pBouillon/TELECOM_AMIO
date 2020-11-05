@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Unit testing suite for the condition IsAnyNewLightOn
- * @see IsNightTest
+ * Unit testing suite for the condition IsNight
+ * @see IsNight
  */
 public class IsNightTest {
 
