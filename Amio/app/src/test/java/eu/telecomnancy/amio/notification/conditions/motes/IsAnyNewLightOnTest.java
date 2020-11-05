@@ -1,7 +1,11 @@
 package eu.telecomnancy.amio.notification.conditions.motes;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.util.Date;
 
@@ -33,7 +37,7 @@ public class IsAnyNewLightOnTest {
         boolean isConditionMet = condition.evaluate();
 
         // Assert
-        Assert.assertFalse(isConditionMet);
+        assertFalse(isConditionMet);
     }
 
     /**
@@ -60,7 +64,8 @@ public class IsAnyNewLightOnTest {
         boolean isConditionMet = condition.evaluate();
 
         // Assert
-        Assert.assertTrue(isConditionMet);
+        assumeTrue(!motes.isEmpty());
+        assertTrue(isConditionMet);
     }
 
     /**
@@ -80,7 +85,8 @@ public class IsAnyNewLightOnTest {
         boolean isConditionMet = condition.evaluate();
 
         // Assert
-        Assert.assertTrue(isConditionMet);
+        assumeTrue(!motes.isEmpty());
+        assertTrue(isConditionMet);
     }
 
 }
