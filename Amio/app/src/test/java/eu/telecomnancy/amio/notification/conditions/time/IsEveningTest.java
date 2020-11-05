@@ -8,7 +8,6 @@ import java.util.Calendar;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit testing suite for the condition IsAnyNewLightOn
@@ -60,29 +59,6 @@ public class IsEveningTest {
 
         // Assert
         assertFalse(isConditionMet);
-    }
-
-    /**
-     * Ensure that the condition is met when the current hour is in the evening
-     * @param hour Hour to be tested
-     */
-    @ParameterizedTest(name = "{0} hour(s) does met the condition")
-    @MethodSource(
-            "eu.telecomnancy.amio.utils.providers.time.EveningProvider#hoursOfTheDayForEvening")
-    public void evaluate_isFalseWhenDuringTheEvening(int hour) {
-        // Arrange
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-
-        long time = calendar.getTimeInMillis();
-
-        ICondition condition = new IsEvening(time);
-
-        // Act
-        boolean isConditionMet = condition.evaluate();
-
-        // Assert
-        assertTrue(isConditionMet);
     }
 
 }

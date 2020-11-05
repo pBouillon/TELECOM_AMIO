@@ -33,4 +33,5 @@ public final class NightProvider {
                 IntStream.range(Constants.TimeSpans.Night.BEGINNING, 24)
         );
     }
+
 }
