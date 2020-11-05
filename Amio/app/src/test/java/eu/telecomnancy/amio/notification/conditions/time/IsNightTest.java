@@ -43,7 +43,7 @@ public class IsNightTest {
      * Ensure that the condition is met when the current hour is in the night
      * @param hour Hour to be tested
      */
-    @ParameterizedTest(name = "{0} hour(s) does not met the condition")
+    @ParameterizedTest(name = "{0} hour(s) does not the condition")
     @MethodSource(
             "eu.telecomnancy.amio.utils.providers.time.NightProvider#hoursOfTheDayForTheNight")
     public void evaluate_isTrueWhenDuringTheNight(int hour) {
