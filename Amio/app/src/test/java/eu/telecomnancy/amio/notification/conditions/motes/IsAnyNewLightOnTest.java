@@ -1,7 +1,6 @@
 package eu.telecomnancy.amio.notification.conditions.motes;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,7 +12,7 @@ import eu.telecomnancy.amio.iotlab.dto.MoteDto;
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
 import eu.telecomnancy.amio.notification.Constants;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
-import eu.telecomnancy.amio.utils.MoteCollectionFixtureFactory;
+import eu.telecomnancy.amio.utils.factories.MoteCollectionFactory;
 
 /**
  * Unit testing suite for the condition IsAnyNewLightOn
@@ -22,13 +21,18 @@ import eu.telecomnancy.amio.utils.MoteCollectionFixtureFactory;
 public class IsAnyNewLightOnTest {
 
     /**
+     * Factory used to generate fixture data
+     */
+    private final MoteCollectionFactory _factory = new MoteCollectionFactory();
+
+    /**
      * Ensure that the condition is not met when there isn't any brightness value of any mote above
      * the specified threshold
      */
     @Test
     public void evaluate_isFalseWhenTheThresholdIsNotMet() {
         // Arrange
-        IMoteCollection motes = MoteCollectionFixtureFactory.generateMoteCollection(
+        IMoteCollection motes = _factory.generateMoteCollection(
                 Constants.Thresholds.Lux.LIGHTED_ROOM - 1);
 
         ICondition condition = new IsAnyNewLightOn(motes);
@@ -46,7 +50,7 @@ public class IsAnyNewLightOnTest {
     @Test
     public void evaluate_isTrueWhenTheThresholdIsMetByAMote() {
         // Arrange
-        IMoteCollection motes = MoteCollectionFixtureFactory.generateMoteCollection(
+        IMoteCollection motes = _factory.generateMoteCollection(
                 Constants.Thresholds.Lux.LIGHTED_ROOM - 1);
 
         // Create the lightened mote
@@ -75,7 +79,7 @@ public class IsAnyNewLightOnTest {
     @Test
     public void evaluate_isTrueWhenTheThresholdIsMetBySeveralMotes() {
         // Arrange
-        IMoteCollection motes = MoteCollectionFixtureFactory.generateMoteCollection(
+        IMoteCollection motes = _factory.generateMoteCollection(
                 Constants.Thresholds.Lux.LIGHTED_ROOM,
                 Constants.Thresholds.Lux.LIGHTED_ROOM + 1);
 

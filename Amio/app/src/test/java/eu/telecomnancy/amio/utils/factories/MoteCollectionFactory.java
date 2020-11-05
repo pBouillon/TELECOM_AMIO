@@ -1,7 +1,6 @@
-package eu.telecomnancy.amio.utils;
+package eu.telecomnancy.amio.utils.factories;
 
 import java.util.Date;
-import java.util.Random;
 
 import eu.telecomnancy.amio.iotlab.Constants;
 import eu.telecomnancy.amio.iotlab.dto.MoteDto;
@@ -11,18 +10,18 @@ import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
 /**
  * Factory to generate IMoteCollection fixture
  */
-public final class MoteCollectionFixtureFactory {
+public final class MoteCollectionFactory extends FactoryBase<IMoteCollection> {
 
     /**
      * Maximum number of motes to be generated to populate the IMoteCollection
      */
     private final static int MAXIMUM_NUMBER_OF_MOTES_GENERATED = 1_000;
 
-    /**
-     * Random object to be used to generate various temperature
-     */
-    private final static Random random = new Random(
-            new Date().getTime());
+    @Override
+    public IMoteCollection generate() {
+        return generateMoteCollection(
+                eu.telecomnancy.amio.notification.Constants.Thresholds.Lux.LIGHTED_ROOM + 1);
+    }
 
     /**
      * Create an IMoteCollection with the brightness value of each of them between 0
@@ -31,7 +30,7 @@ public final class MoteCollectionFixtureFactory {
      * @param maximumLuxValue Maximum value of each mote's brightness property
      * @return The created IMoteCollection holding the generated motes
      */
-    public static IMoteCollection generateMoteCollection(int maximumLuxValue) {
+    public IMoteCollection generateMoteCollection(int maximumLuxValue) {
         return generateMoteCollection(0, maximumLuxValue);
     }
 
@@ -43,7 +42,7 @@ public final class MoteCollectionFixtureFactory {
      * @param maximumLuxValue Maximum value of each mote's brightness property
      * @return The created IMoteCollection holding the generated motes
      */
-    public static IMoteCollection generateMoteCollection(int minLuxValue, int maximumLuxValue)
+    public IMoteCollection generateMoteCollection(int minLuxValue, int maximumLuxValue)
             throws IllegalArgumentException{
         if (maximumLuxValue < minLuxValue) {
             throw new IllegalArgumentException(
