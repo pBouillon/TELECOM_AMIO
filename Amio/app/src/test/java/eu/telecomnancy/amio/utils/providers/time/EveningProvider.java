@@ -1,17 +1,18 @@
-package eu.telecomnancy.amio.utils;
+package eu.telecomnancy.amio.utils.providers.time;
 
 import java.util.stream.IntStream;
 
 import eu.telecomnancy.amio.notification.Constants;
 
 /**
- * Provider for time spans and specific times
+ * Provider for time spans and specific times related to the evening
+ * @see Constants
  *
  * Those methods are called at runtime in the test cases
  * @see eu.telecomnancy.amio.notification.conditions.time.IsEveningTest
  */
 @SuppressWarnings("unused")
-public final class TimeProvider {
+public final class EveningProvider {
 
     /**
      * Retrieve all hours of the day from the end of the evening to the end of the day

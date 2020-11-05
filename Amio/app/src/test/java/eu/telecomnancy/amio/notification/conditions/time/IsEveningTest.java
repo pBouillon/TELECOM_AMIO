@@ -21,7 +21,8 @@ public class IsEveningTest {
      * @param hour Hour to be tested
      */
     @ParameterizedTest(name = "{0} hour(s) does not met the condition")
-    @MethodSource("eu.telecomnancy.amio.utils.TimeProvider#hoursOfTheDayAfterEvening")
+    @MethodSource(
+            "eu.telecomnancy.amio.utils.providers.time.EveningProvider#hoursOfTheDayAfterEvening")
     public void evaluate_isFalseWhenAfterEvening(int hour) {
         // Arrange
         Calendar calendar = Calendar.getInstance();
@@ -43,7 +44,8 @@ public class IsEveningTest {
      * @param hour Hour to be tested
      */
     @ParameterizedTest(name = "{0} hour(s) does not met the condition")
-    @MethodSource("eu.telecomnancy.amio.utils.TimeProvider#hoursOfTheDayBeforeEvening")
+    @MethodSource(
+            "eu.telecomnancy.amio.utils.providers.time.EveningProvider#hoursOfTheDayBeforeEvening")
     public void evaluate_isFalseWhenBeforeEvening(int hour) {
         // Arrange
         Calendar calendar = Calendar.getInstance();
@@ -65,7 +67,8 @@ public class IsEveningTest {
      * @param hour Hour to be tested
      */
     @ParameterizedTest(name = "{0} hour(s) does met the condition")
-    @MethodSource("eu.telecomnancy.amio.utils.TimeProvider#hoursOfTheDayForEvening")
+    @MethodSource(
+            "eu.telecomnancy.amio.utils.providers.time.EveningProvider#hoursOfTheDayForEvening")
     public void evaluate_isFalseWhenDuringTheEvening(int hour) {
         // Arrange
         Calendar calendar = Calendar.getInstance();
