@@ -2,7 +2,7 @@ package eu.telecomnancy.amio.notification.notifiers;
 
 import eu.telecomnancy.amio.notification.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
-import eu.telecomnancy.amio.notification.attributes.EventNotifier;
+import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 
 @EventNotifier(target = NotificationType.ANDROID)
 public class VibratorNotifier extends AndroidNotifier {

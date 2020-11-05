@@ -1,7 +1,7 @@
 package eu.telecomnancy.amio.notification.notifiers;
 
 import eu.telecomnancy.amio.notification.NotificationContext;
-import eu.telecomnancy.amio.notification.attributes.EventNotifier;
+import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
 
 @EventNotifier(target = NotificationType.ANDROID)

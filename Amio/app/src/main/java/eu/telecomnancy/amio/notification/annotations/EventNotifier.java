@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.notification.attributes;
+package eu.telecomnancy.amio.notification.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
