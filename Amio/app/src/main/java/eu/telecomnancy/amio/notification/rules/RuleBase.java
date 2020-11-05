@@ -6,10 +6,10 @@ import org.jeasy.rules.annotation.Fact;
 import org.jeasy.rules.api.Facts;
 
 import eu.telecomnancy.amio.notification.EventContext;
-import eu.telecomnancy.amio.notification.EventDispatcher;
+import eu.telecomnancy.amio.notification.dispatchers.EventDispatcher;
 import eu.telecomnancy.amio.notification.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
-import eu.telecomnancy.amio.notification.notifiers.NotificationDispatcher;
+import eu.telecomnancy.amio.notification.dispatchers.NotificationDispatcher;
 
 public abstract class RuleBase implements IRule {
 

@@ -17,7 +17,7 @@ import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
 import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
-import eu.telecomnancy.amio.notification.EventDispatcher;
+import eu.telecomnancy.amio.notification.dispatchers.EventDispatcher;
 
 /**
  * Custom task to be executed to poll the iot lab's server

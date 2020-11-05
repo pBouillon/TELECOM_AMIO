@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.notification;
+package eu.telecomnancy.amio.notification.dispatchers;
 
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rules;
@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.notification.EventContext;
 import eu.telecomnancy.amio.notification.rules.IRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEndEveningRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEveningRule;
