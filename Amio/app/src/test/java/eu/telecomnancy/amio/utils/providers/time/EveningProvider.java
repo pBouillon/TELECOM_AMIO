@@ -18,7 +18,7 @@ public final class EveningProvider {
      * Retrieve all hours of the day from the end of the evening to the end of the day
      * @return An IntStream of the hours it corresponds to
      */
-    private static IntStream hoursOfTheDayAfterEvening() {
+    public static IntStream hoursOfTheDayAfterEvening() {
         return IntStream.range(Constants.TimeSpans.Evening.END, 24);
     }
 
@@ -26,15 +26,15 @@ public final class EveningProvider {
      * Retrieve all hours of the day from the beginning of the day to its end
      * @return An IntStream of the hours it corresponds to
      */
-    private static IntStream hoursOfTheDayBeforeEvening() {
+    public static IntStream hoursOfTheDayBeforeEvening() {
         return IntStream.range(0, Constants.TimeSpans.Evening.BEGINNING);
     }
 
     /**
-     * Retrieve all hours of the day from the beginning of the evening to its
+     * Retrieve all hours of the day from the beginning of the evening to its end
      * @return An IntStream of the hours it corresponds to
      */
-    private static IntStream hoursOfTheDayForEvening() {
+    public static IntStream hoursOfTheDayForEvening() {
         return IntStream.range(
                 Constants.TimeSpans.Evening.BEGINNING, Constants.TimeSpans.Evening.END);
     }
