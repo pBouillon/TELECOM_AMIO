@@ -10,6 +10,7 @@ public class IsAnyNewLightOn extends MotesCondition {
 
     /**
      * Create the condition
+     *
      * @param motes Collection of motes on which running the assertion
      */
     public IsAnyNewLightOn(IMoteCollection motes) {

@@ -57,6 +57,7 @@ public class EventDispatcher {
 
     /**
      * Evaluate the provided data against all registered rules for notification
+     *
      * @param fetchedMotes A collection of all fetched motes to be passed to all rules
      * @see EventContext
      */

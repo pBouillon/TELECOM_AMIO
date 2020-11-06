@@ -12,8 +12,20 @@ import eu.telecomnancy.amio.notification.dispatchers.EventDispatcher;
  */
 public interface IRule {
 
+    /**
+     * Test a condition against the provided context
+     * This rule is considered as active when the condition is met
+     *
+     * @param context Context against which performing the checks
+     * @return true whenever the condition is met; false otherwise
+     */
     boolean isActiveWhen(EventContext context);
 
+    /**
+     * Action to be performed when `isActiveWhen` is true
+     *
+     * @param facts Context propagated by the rule engine
+     */
     void then(Facts facts);
 
 }

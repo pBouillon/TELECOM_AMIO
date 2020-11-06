@@ -34,6 +34,7 @@ public class PollingService extends Service {
 
     /**
      * Schedule the polling task
+     *
      * @param delay Delay in milliseconds before task is to be executed
      * @param period Time in milliseconds between successive task executions
      */

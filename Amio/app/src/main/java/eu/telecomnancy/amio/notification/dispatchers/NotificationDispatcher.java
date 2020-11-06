@@ -22,6 +22,7 @@ public final class NotificationDispatcher {
 
     /**
      * Available notifiers to be used to send appropriate notifications depending of the context
+     *
      * @see INotifier
      * @see NotificationContext
      * @see eu.telecomnancy.amio.notification.flags.NotificationType

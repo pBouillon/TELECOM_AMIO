@@ -11,6 +11,11 @@ import eu.telecomnancy.amio.notification.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
 import eu.telecomnancy.amio.notification.dispatchers.NotificationDispatcher;
 
+/**
+ * Define a generic rule to be checked by the rule engine and the event dispatcher
+ *
+ * @see EventDispatcher
+ */
 public abstract class RuleBase implements IRule {
 
     @Condition
@@ -31,6 +36,11 @@ public abstract class RuleBase implements IRule {
         NotificationDispatcher.sendNotificationsFrom(notificationContext);
     }
 
+    /**
+     * Define which type of notification to be triggered when the rule is valid
+     *
+     * @return Type of notification to be triggered when the rule is valid
+     */
     protected abstract NotificationType getNotificationTargets();
 
 }
