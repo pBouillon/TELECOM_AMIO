@@ -21,12 +21,12 @@ import eu.telecomnancy.amio.notification.rules.NewLightOnWeekNightRule;
 public class EventDispatcher {
 
     /**
-     * Tag under which the context passed to the Rules' Facts will be registered
+     * Tag under which the context passed to the rules' Facts will be registered
      *
      * @see Facts
      * @see org.jeasy.rules.annotation.Rule
      */
-    public static final String ContextTag = "Context";
+    public static final String ContextTag = EventContext.class.getName();
 
     /**
      * Registered rules handler
