@@ -1,6 +1,6 @@
 package eu.telecomnancy.amio.notification.notifiers;
 
-import eu.telecomnancy.amio.notification.NotificationContext;
+import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 
 /**
  * Define a generic INotifier able to propagate a notification

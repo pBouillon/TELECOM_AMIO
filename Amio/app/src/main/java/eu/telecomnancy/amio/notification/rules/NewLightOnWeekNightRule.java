@@ -4,7 +4,7 @@ import org.jeasy.rules.annotation.Rule;
 
 import java.util.stream.Stream;
 
-import eu.telecomnancy.amio.notification.EventContext;
+import eu.telecomnancy.amio.notification.contexts.EventContext;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
 import eu.telecomnancy.amio.notification.conditions.motes.IsAnyNewLightOn;
 import eu.telecomnancy.amio.notification.conditions.time.IsNight;

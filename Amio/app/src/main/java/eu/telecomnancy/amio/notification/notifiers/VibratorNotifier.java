@@ -1,6 +1,6 @@
 package eu.telecomnancy.amio.notification.notifiers;
 
-import eu.telecomnancy.amio.notification.NotificationContext;
+import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 

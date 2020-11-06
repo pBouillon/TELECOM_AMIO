@@ -1,6 +1,6 @@
 package eu.telecomnancy.amio.notification.notifiers;
 
-import eu.telecomnancy.amio.notification.NotificationContext;
+import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 
 /**
  * Define a INotifier able to propagate a notification on the current Android device

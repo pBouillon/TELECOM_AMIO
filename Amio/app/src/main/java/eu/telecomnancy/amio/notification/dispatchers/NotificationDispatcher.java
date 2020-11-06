@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import eu.telecomnancy.amio.notification.NotificationContext;
+import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.notifiers.INotifier;
 import eu.telecomnancy.amio.notification.notifiers.NotifierBase;

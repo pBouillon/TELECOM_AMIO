@@ -5,9 +5,9 @@ import org.jeasy.rules.annotation.Condition;
 import org.jeasy.rules.annotation.Fact;
 import org.jeasy.rules.api.Facts;
 
-import eu.telecomnancy.amio.notification.EventContext;
+import eu.telecomnancy.amio.notification.contexts.EventContext;
 import eu.telecomnancy.amio.notification.dispatchers.EventDispatcher;
-import eu.telecomnancy.amio.notification.NotificationContext;
+import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
 import eu.telecomnancy.amio.notification.dispatchers.NotificationDispatcher;
 

@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.notification;
+package eu.telecomnancy.amio.notification.contexts;
 
 import java.util.Date;
 
