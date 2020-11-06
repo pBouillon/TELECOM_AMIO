@@ -27,7 +27,7 @@ public abstract class PollingTaskBase extends TimerTask {
     /**
      * Android logging tag for this class
      */
-    private static final String TAG = PollingTaskBase.class.getSimpleName();
+    private static final String TAG = PollingTaskBase.class.getName();
 
     /**
      * CQRS aggregator to handle command and queries
@@ -83,18 +83,23 @@ public abstract class PollingTaskBase extends TimerTask {
 
     @Override
     public void run() {
-        Log.i(TAG, "Polling task triggered");
+        Log.d(TAG, "Polling task triggered");
 
         // Retrieve the latest data from the motes
+        Log.i(TAG, "Retrieving motes' latest data");
         IMoteCollection _motes = getLatestMotes();
+        Log.i(TAG, "Data retrieved");
 
         // Call the used-defined callback
+        Log.i(TAG, "Calling to the callback with the retrieved motes");
         callback(_motes.toList());
 
         // Fire notifications
+        Log.i(TAG, "Dispatching notification for the retrieved motes");
         _dispatcher.dispatchNotificationFor(_motes);
+        Log.i(TAG, "Notifications dispatched");
 
-        Log.i(TAG, "Polling task successfully executed");
+        Log.d(TAG, "Polling task executed");
     }
 
 }

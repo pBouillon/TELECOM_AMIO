@@ -1,6 +1,8 @@
-package eu.telecomnancy.amio.notification.notifiers;
+package eu.telecomnancy.amio.notification.notifiers.android;
 
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
+import eu.telecomnancy.amio.notification.notifiers.INotifier;
+import eu.telecomnancy.amio.notification.notifiers.NotifierBase;
 
 /**
  * Define a INotifier able to propagate a notification on the current Android device
@@ -11,9 +13,9 @@ import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 public abstract class AndroidNotifier extends NotifierBase {
 
     /**
-     * Propagate the context to the super class
+     * Create a new notifier
      *
-     * @param payload The notification payload
+     * @param payload Notification payload to be later propagated
      */
     protected AndroidNotifier(NotificationContext payload) {
         super(payload);

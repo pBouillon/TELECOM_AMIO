@@ -1,8 +1,9 @@
-package eu.telecomnancy.amio.notification.notifiers;
+package eu.telecomnancy.amio.notification.notifiers.android;
 
+import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
-import eu.telecomnancy.amio.notification.annotations.EventNotifier;
+import eu.telecomnancy.amio.notification.notifiers.INotifier;
 
 /**
  * Define a INotifier able to propagate a notification on the current Android device's vibrator
@@ -14,9 +15,9 @@ import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 public class VibratorNotifier extends AndroidNotifier {
 
     /**
-     * Propagate the context to the super class
+     * Create a new notifier
      *
-     * @param payload The notification payload
+     * @param payload Notification payload to be later propagated
      */
     public VibratorNotifier(NotificationContext payload) {
         super(payload);

@@ -12,8 +12,8 @@ import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.notifiers.INotifier;
 import eu.telecomnancy.amio.notification.notifiers.NotifierBase;
-import eu.telecomnancy.amio.notification.notifiers.ToastNotifier;
-import eu.telecomnancy.amio.notification.notifiers.VibratorNotifier;
+import eu.telecomnancy.amio.notification.notifiers.android.*;
+import eu.telecomnancy.amio.notification.notifiers.email.*;
 
 /**
  * Dispatch an incoming notification to the appropriates notifiers
@@ -30,7 +30,10 @@ public final class NotificationDispatcher {
     private static final List<Class<? extends INotifier>> notifierClasses = Arrays.asList(
             // Android notifiers
             ToastNotifier.class,
-            VibratorNotifier.class
+            VibratorNotifier.class,
+
+            // Email notifiers
+            SmtpNotifier.class
     );
 
     /**

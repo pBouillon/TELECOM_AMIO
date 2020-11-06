@@ -26,7 +26,7 @@ public class EventDispatcher {
      * @see Facts
      * @see org.jeasy.rules.annotation.Rule
      */
-    public static final String ContextTag = EventContext.class.getName();
+    public static final String ContextTag = "Context";
 
     /**
      * Registered rules handler
