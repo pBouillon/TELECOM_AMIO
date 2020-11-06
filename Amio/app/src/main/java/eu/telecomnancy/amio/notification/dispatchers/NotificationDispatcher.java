@@ -1,16 +1,19 @@
 package eu.telecomnancy.amio.notification.dispatchers;
 
 import org.jetbrains.annotations.Nullable;
-import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import eu.telecomnancy.amio.notification.NotificationContext;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.notifiers.INotifier;
 import eu.telecomnancy.amio.notification.notifiers.NotifierBase;
+import eu.telecomnancy.amio.notification.notifiers.ToastNotifier;
+import eu.telecomnancy.amio.notification.notifiers.VibratorNotifier;
 
 /**
  * Dispatch an incoming notification to the appropriates notifiers
@@ -18,9 +21,16 @@ import eu.telecomnancy.amio.notification.notifiers.NotifierBase;
 public final class NotificationDispatcher {
 
     /**
-     * Packages in which searching for the notifiers
+     * Available notifiers to be used to send appropriate notifications depending of the context
+     * @see INotifier
+     * @see NotificationContext
+     * @see eu.telecomnancy.amio.notification.flags.NotificationType
      */
-    private static final String TARGET_NAMESPACE = "eu.telecomnancy.amio";
+    private static final List<Class<? extends INotifier>> notifierClasses = Arrays.asList(
+            // Android notifiers
+            ToastNotifier.class,
+            VibratorNotifier.class
+    );
 
     /**
      * Given a context, send the notification to all the notifiers supporting its type
@@ -31,13 +41,7 @@ public final class NotificationDispatcher {
      * @see eu.telecomnancy.amio.notification.flags.NotificationType
      */
     public static void sendNotificationsFrom(NotificationContext context) {
-        // Create the reflexion utility
-        Reflections reflections = new Reflections(TARGET_NAMESPACE);
-
-        // Send the notification to all notifiers
-        reflections
-                // Retrieve all types annotated with the EventNotifier annotation
-                .getTypesAnnotatedWith(EventNotifier.class)
+        notifierClasses
                 // Keep only the ones related to the context
                 .stream()
                 .filter(type -> type
@@ -57,8 +61,9 @@ public final class NotificationDispatcher {
      * @param type Derived of INotifier to instantiate
      * @param context Notification context to be provided in the constructor according to the base
      *                class
-     * @return An instance of the associated INotifier type; null if any error occured
+     * @return An instance of the associated INotifier type; null if any error occurred
      */
+    @SuppressWarnings("unchecked")
     @Nullable
     private static INotifier invokeINotifierFromType(Class<?> type, NotificationContext context) {
         // Attempt to dynamic create an instance of the provided type

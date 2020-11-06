@@ -7,7 +7,7 @@ import eu.telecomnancy.amio.notification.flags.NotificationType;
 @EventNotifier(target = NotificationType.ANDROID)
 public class ToastNotifier extends AndroidNotifier {
 
-    protected ToastNotifier(NotificationContext payload) {
+    public ToastNotifier(NotificationContext payload) {
         super(payload);
     }
 

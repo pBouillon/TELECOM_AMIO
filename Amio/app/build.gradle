@@ -38,10 +38,6 @@ dependencies {
     implementation 'org.jeasy:easy-rules-core:4.0.0'
     implementation 'org.jeasy:easy-rules-support:4.0.0'
 
-    // Using 0.9.11 instead of 0.9.12 due to a bug in this version
-    // https://github.com/ronmamo/reflections/issues/273
-    implementation 'org.reflections:reflections:0.9.11'
-
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'

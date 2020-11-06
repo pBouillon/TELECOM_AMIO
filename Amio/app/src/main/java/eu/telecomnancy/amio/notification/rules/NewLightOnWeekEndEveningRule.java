@@ -27,13 +27,11 @@ public class NewLightOnWeekEndEveningRule extends RuleBase {
     public boolean isActiveWhen(EventContext context) {
         long currentTime = context.currentTime;
 
-        return true;
-
-//        return Stream.of(
-//                new IsAnyNewLightOn(context.motes),
-//                new IsWeekEnd(currentTime),
-//                new IsEvening(currentTime))
-//                .allMatch(ICondition::evaluate);
+        return Stream.of(
+                new IsAnyNewLightOn(context.motes),
+                new IsWeekEnd(currentTime),
+                new IsEvening(currentTime))
+                .allMatch(ICondition::evaluate);
     }
 
 }
