@@ -86,18 +86,20 @@ public abstract class PollingTaskBase extends TimerTask {
         Log.d(TAG, "Polling task triggered");
 
         // Retrieve the latest data from the motes
-        Log.i(TAG, "Retrieving motes' latest data");
+        Log.i(TAG, "Retrieving motes latest data");
         IMoteCollection _motes = getLatestMotes();
-        Log.i(TAG, "Data retrieved");
 
         // Call the used-defined callback
-        Log.i(TAG, "Calling to the callback with the retrieved motes");
+        Log.i(TAG, "Calling the callback with the retrieved motes");
         callback(_motes.toList());
 
         // Fire notifications
-        Log.i(TAG, "Dispatching notification for the retrieved motes");
-        _dispatcher.dispatchNotificationFor(_motes);
-        Log.i(TAG, "Notifications dispatched");
+        if (!_motes.isEmpty()) {
+            Log.i(TAG, "Dispatching notification for the retrieved motes");
+            _dispatcher.dispatchNotificationFor(_motes);
+        } else {
+            Log.w(TAG, "No mote retrieved, skipping the notification dispatch");
+        }
 
         Log.d(TAG, "Polling task executed");
     }

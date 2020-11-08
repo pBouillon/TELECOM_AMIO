@@ -129,7 +129,7 @@ public class PollingService extends Service {
 
         _timer.scheduleAtFixedRate(_pollingTask, delay, period);
 
-        Log.i(TAG, String.format("Task schedule for %d ms, every %d ms", delay, period));
+        Log.i(TAG, String.format("Task scheduled every %d ms, starting in %d ms", period, delay));
     }
 
 }
