@@ -22,16 +22,27 @@ import eu.telecomnancy.amio.ui.main.MoteUpdateAware;
 import eu.telecomnancy.amio.ui.main.MoteUpdateBroadcastReceiver;
 import eu.telecomnancy.amio.ui.main.SensorFragment;
 
+/**
+ * TODO doc
+ */
 public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
+    /**
+     * Android logging tag for this class
+     */
     private static final String TAG = MainActivity.class.getName();
 
+    /**
+     * TODO doc
+     */
     private Intent pollingServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main_activity);
+
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -52,19 +63,20 @@ public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings_button:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.settings_button) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_app_bar_menu, menu);
+        getMenuInflater()
+                .inflate(R.menu.main_app_bar_menu, menu);
+
         return true;
     }
 
@@ -76,8 +88,12 @@ public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
     @Override
     public void onMotesUpdate(List<Mote> motes) {
-        Log.d(TAG, "Broadcast recieved");
-        MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
+        Log.d(TAG, "Broadcast received");
+
+        MainViewModel model = new ViewModelProvider(this)
+                .get(MainViewModel.class);
+
         model.setMotes(motes);
     }
+
 }

@@ -28,13 +28,22 @@ public class SensorRecyclerViewAdapter
      */
     private final Context _context;
 
+    /**
+     * TODO doc
+     */
     private List<Mote> _motes;
 
+    /**
+     * TODO doc
+     */
     public SensorRecyclerViewAdapter(List<Mote> items, Context context) {
         _motes = items;
         _context = context;
     }
 
+    /**
+     * TODO doc
+     */
     public void setMotes(List<Mote> motes) {
         _motes = motes;
         notifyDataSetChanged();
@@ -87,14 +96,45 @@ public class SensorRecyclerViewAdapter
         return _motes.size();
     }
 
+    /**
+     * TODO doc
+     * TODO move to dedicated class
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        /**
+         * TODO doc
+         */
         public final View mView;
+
+        /**
+         * TODO doc
+         */
         public final TextView lightView;
+
+        /**
+         * TODO doc
+         */
         public final TextView temperatureView;
+
+        /**
+         * TODO doc
+         */
         public final TextView nameView;
+
+        /**
+         * TODO doc
+         */
         public final ImageView mLightBulb;
+
+        /**
+         * TODO doc
+         */
         public Mote item;
 
+        /**
+         * TODO doc
+         */
         public ViewHolder(View view) {
             super(view);
             mView = view;
@@ -109,5 +149,7 @@ public class SensorRecyclerViewAdapter
         public String toString() {
             return super.toString() + " '" + temperatureView.getText() + "'";
         }
+
     }
+
 }

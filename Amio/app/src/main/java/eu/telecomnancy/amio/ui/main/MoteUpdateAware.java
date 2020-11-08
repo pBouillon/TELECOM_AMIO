@@ -5,12 +5,12 @@ import java.util.List;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 
 /**
- * TODO
+ * TODO doc
  */
 public interface MoteUpdateAware {
 
     /**
-     * TODO
+     * TODO doc
      */
     void onMotesUpdate(List<Mote> motes);
 

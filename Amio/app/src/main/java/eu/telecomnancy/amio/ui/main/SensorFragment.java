@@ -26,17 +26,19 @@ import eu.telecomnancy.amio.iotlab.entities.Mote;
 public class SensorFragment extends Fragment {
 
     /**
-     * TODO
+     * TODO doc
+     * TODO to const file
      */
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     /**
-     * TODO
+     * TODO doc
+     * TODO to const file
      */
     private static final int COLUMN_COUNT = 3;
 
     /**
-     * TODO
+     * TODO doc
      */
     private RecyclerView _recyclerView;
 
