@@ -7,20 +7,21 @@ import android.content.Intent;
 import java.util.List;
 
 import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.polling.Constants;
 import eu.telecomnancy.amio.polling.PollingService;
 
 /**
- * TODO
+ * TODO doc
  */
 public class MoteUpdateBroadcastReceiver extends BroadcastReceiver {
 
     /**
-     * TODO
+     * TODO doc
      */
     private final MoteUpdateAware mMoteUpdateAware;
 
     /**
-     * TODO
+     * TODO doc
      */
     public MoteUpdateBroadcastReceiver(MoteUpdateAware moteUpdateAware) {
         mMoteUpdateAware = moteUpdateAware;
@@ -28,9 +29,11 @@ public class MoteUpdateBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        // noinspection unchecked
         List<Mote> motes
-                = (List<Mote>) intent.getBundleExtra(PollingService.MOTES_BUNDLE_IDENTIFIER)
-                .getSerializable(PollingService.MOTES_EXTRA_IDENTIFIER);
+                = (List<Mote>) intent.getBundleExtra(Constants.Broadcast.BUNDLE_IDENTIFIER)
+                .getSerializable(Constants.Broadcast.IDENTIFIER);
+
         mMoteUpdateAware.onMotesUpdate(motes);
     }
 

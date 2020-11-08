@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 
 import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.polling.Constants;
 import eu.telecomnancy.amio.polling.PollingService;
 import eu.telecomnancy.amio.ui.main.MainViewModel;
 import eu.telecomnancy.amio.ui.main.MoteUpdateAware;
@@ -23,7 +24,8 @@ import eu.telecomnancy.amio.ui.main.SensorFragment;
 
 public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getName();
+
     private Intent pollingServiceIntent;
 
     @Override
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
         registerReceiver(
                 new MoteUpdateBroadcastReceiver(this),
-                new IntentFilter(PollingService.MOTE_DATA_UPDATE_ACTION)
+                new IntentFilter(Constants.Broadcast.UPDATED_DATA)
         );
 
         pollingServiceIntent = new Intent(this, PollingService.class);

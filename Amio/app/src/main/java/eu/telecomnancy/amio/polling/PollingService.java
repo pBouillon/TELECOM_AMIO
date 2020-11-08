@@ -23,9 +23,6 @@ public class PollingService extends Service {
      * Android logging tag for this class
      */
     private static final String TAG = PollingService.class.getSimpleName();
-    public static final String MOTE_DATA_UPDATE_ACTION = "MoteDataUpdate";
-    public static final String MOTES_EXTRA_IDENTIFIER = "Motes";
-    public static final String MOTES_BUNDLE_IDENTIFIER = "MotesBundle";
 
     /**
      * Inner-timer used for firing events
@@ -36,42 +33,6 @@ public class PollingService extends Service {
      * TimerTask to be run by the timer
      */
     private PollingTaskBase _pollingTask;
-
-    /**
-     * Schedule the polling task
-     * @param delay Delay in milliseconds before task is to be executed
-     * @param period Time in milliseconds between successive task executions
-     */
-    @SuppressWarnings("SameParameterValue")
-    private void schedulePollingTask(long delay, long period) {
-        // Create a new task and define its callback in order to access the data it may provide
-        // as parameter
-        _pollingTask = new PollingTaskBase() {
-            @Override
-            public void callback(List<Mote> motes) {
-                Log.d(TAG, motes.size() + " mote(s) received");
-                motes.forEach(mote -> Log.d(TAG, mote.toString()));
-                sendBroadcastMessage(motes);
-            }
-        };
-
-        _timer.scheduleAtFixedRate(_pollingTask, delay, period);
-
-        Log.i(TAG, String.format("Task schedule for %d ms, every %d ms", delay, period));
-    }
-
-    /**
-     * Send a broadcast message that contain the mote list
-     * @param motes updated motes list
-     */
-    private void sendBroadcastMessage(List<Mote> motes){
-        Intent broadcastMessage = new Intent(MOTE_DATA_UPDATE_ACTION);
-        Bundle moteBundle = new Bundle();
-        moteBundle.putSerializable(MOTES_EXTRA_IDENTIFIER, (Serializable) motes);
-        broadcastMessage.putExtra(MOTES_BUNDLE_IDENTIFIER, moteBundle);
-        sendBroadcast(broadcastMessage);
-        Log.d(TAG, "Broadcast Sent");
-    }
 
     @Nullable
     @Override
@@ -108,6 +69,46 @@ public class PollingService extends Service {
 
         // If the service get killed, after returning from here, restart it
         return START_STICKY;
+    }
+
+    /**
+     * Send a broadcast message that contain the mote list
+     *
+     * @param motes updated motes list
+     */
+    private void sendBroadcastMessage(List<Mote> motes) {
+        Intent broadcastMessage = new Intent(Constants.Broadcast.UPDATED_DATA);
+
+        Bundle moteBundle = new Bundle();
+        moteBundle.putSerializable(Constants.Broadcast.IDENTIFIER, (Serializable) motes);
+        broadcastMessage.putExtra(Constants.Broadcast.BUNDLE_IDENTIFIER, moteBundle);
+
+        sendBroadcast(broadcastMessage);
+        Log.d(TAG, "Broadcast Sent");
+    }
+
+    /**
+     * Schedule the polling task
+     *
+     * @param delay  Delay in milliseconds before task is to be executed
+     * @param period Time in milliseconds between successive task executions
+     */
+    @SuppressWarnings("SameParameterValue")
+    private void schedulePollingTask(long delay, long period) {
+        // Create a new task and define its callback in order to access the data it may provide
+        // as parameter
+        _pollingTask = new PollingTaskBase() {
+            @Override
+            public void callback(List<Mote> motes) {
+                Log.d(TAG, motes.size() + " mote(s) received");
+                motes.forEach(mote -> Log.d(TAG, mote.toString()));
+                sendBroadcastMessage(motes);
+            }
+        };
+
+        _timer.scheduleAtFixedRate(_pollingTask, delay, period);
+
+        Log.i(TAG, String.format("Task schedule for %d ms, every %d ms", delay, period));
     }
 
 }
