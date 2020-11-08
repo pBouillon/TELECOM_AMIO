@@ -1,11 +1,9 @@
-package eu.telecomnancy.amio.ui.main;
+package eu.telecomnancy.amio.ui.main.sensor;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,14 +12,13 @@ import java.util.List;
 
 import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
-import eu.telecomnancy.amio.notification.Constants;
 import eu.telecomnancy.amio.ui.commons.FormatProvider;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Mote}.
  */
 public class SensorRecyclerViewAdapter
-        extends RecyclerView.Adapter<SensorRecyclerViewAdapter.ViewHolder> {
+        extends RecyclerView.Adapter<SensorViewHolder> {
 
     /**
      * Context to access the parametrized string resource
@@ -51,15 +48,15 @@ public class SensorRecyclerViewAdapter
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SensorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.sensor_view_holder, parent, false);
 
-        return new ViewHolder(view);
+        return new SensorViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final SensorViewHolder holder, final int position) {
         // Retrieve the mote to be updated
         Mote mote = _motes.get(position);
 
@@ -84,7 +81,7 @@ public class SensorRecyclerViewAdapter
                 R.string.temperature_text_holder, temperatureText));
 
         // Assign the relevant image
-        holder.mLightBulb.setImageResource(
+        holder.lightBulb.setImageResource(
                 mote.isRoomLightened()
                         ? R.drawable.ic_light_bulb_on
                         : R.drawable.ic_light_bulb_off
@@ -94,62 +91,6 @@ public class SensorRecyclerViewAdapter
     @Override
     public int getItemCount() {
         return _motes.size();
-    }
-
-    /**
-     * TODO doc
-     * TODO move to dedicated class
-     */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        /**
-         * TODO doc
-         */
-        public final View mView;
-
-        /**
-         * TODO doc
-         */
-        public final TextView lightView;
-
-        /**
-         * TODO doc
-         */
-        public final TextView temperatureView;
-
-        /**
-         * TODO doc
-         */
-        public final TextView nameView;
-
-        /**
-         * TODO doc
-         */
-        public final ImageView mLightBulb;
-
-        /**
-         * TODO doc
-         */
-        public Mote item;
-
-        /**
-         * TODO doc
-         */
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            nameView = view.findViewById(R.id.sensorId);
-            lightView = view.findViewById(R.id.light);
-            temperatureView = view.findViewById(R.id.humidity);
-            mLightBulb = view.findViewById(R.id.light_bulb_icon);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return super.toString() + " '" + temperatureView.getText() + "'";
-        }
-
     }
 
 }

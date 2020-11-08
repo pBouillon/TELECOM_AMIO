@@ -20,7 +20,7 @@ import eu.telecomnancy.amio.polling.PollingService;
 import eu.telecomnancy.amio.ui.main.MainViewModel;
 import eu.telecomnancy.amio.ui.main.IMoteUpdateAware;
 import eu.telecomnancy.amio.ui.main.MoteUpdateBroadcastReceiver;
-import eu.telecomnancy.amio.ui.main.SensorFragment;
+import eu.telecomnancy.amio.ui.main.sensor.SensorFragment;
 
 /**
  * TODO doc

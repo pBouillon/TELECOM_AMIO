@@ -1,5 +1,7 @@
 package eu.telecomnancy.amio.ui.main;
 
+import eu.telecomnancy.amio.ui.main.sensor.SensorFragment;
+
 /**
  * Main UI constants
  */

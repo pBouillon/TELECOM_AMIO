@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.ui.main;
+package eu.telecomnancy.amio.ui.main.sensor;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.ui.main.Constants;
+import eu.telecomnancy.amio.ui.main.MainViewModel;
 
 /**
  * A fragment representing a list of items
