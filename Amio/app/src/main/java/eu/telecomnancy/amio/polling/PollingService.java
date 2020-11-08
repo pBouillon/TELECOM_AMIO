@@ -20,7 +20,7 @@ public class PollingService extends Service {
     /**
      * Android logging tag for this class
      */
-    private static final String TAG = PollingService.class.getSimpleName();
+    private static final String TAG = PollingService.class.getName();
 
     /**
      * Inner-timer used for firing events
@@ -34,6 +34,7 @@ public class PollingService extends Service {
 
     /**
      * Schedule the polling task
+     *
      * @param delay Delay in milliseconds before task is to be executed
      * @param period Time in milliseconds between successive task executions
      */

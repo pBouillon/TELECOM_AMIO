@@ -10,12 +10,14 @@ public abstract class MotesCondition implements ICondition {
 
     /**
      * Collection of motes on which running the assertion
+     *
      * @see IMoteCollection
      */
     protected final IMoteCollection _motes;
 
     /**
      * Create the condition
+     *
      * @param motes Collection of motes on which running the assertion
      */
     protected MotesCondition(IMoteCollection motes) {

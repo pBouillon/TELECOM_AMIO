@@ -21,6 +21,7 @@ public abstract class CurrentTimeCondition implements ICondition {
 
     /**
      * Create the condition
+     *
      * @param currentTimeInMillis Reference time to be checked
      */
     protected CurrentTimeCondition(long currentTimeInMillis) {

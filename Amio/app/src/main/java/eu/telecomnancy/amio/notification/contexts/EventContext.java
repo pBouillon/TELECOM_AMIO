@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.notification;
+package eu.telecomnancy.amio.notification.contexts;
 
 import java.util.Date;
 
@@ -21,6 +21,7 @@ public class EventContext {
 
     /**
      * Create the event context
+     *
      * @param fetchedMotes Motes retrieved to be passed to the rule engine
      */
     public EventContext(IMoteCollection fetchedMotes) {

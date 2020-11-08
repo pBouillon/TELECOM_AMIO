@@ -9,6 +9,7 @@ public class IsWeekEnd extends CurrentTimeCondition {
 
     /**
      * Create the condition
+     *
      * @param currentTimeInMillis Reference time to be checked
      */
     public IsWeekEnd(long currentTimeInMillis) {
