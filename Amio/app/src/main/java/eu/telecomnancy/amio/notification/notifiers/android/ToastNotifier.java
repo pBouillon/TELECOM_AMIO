@@ -6,7 +6,6 @@ import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
 import eu.telecomnancy.amio.notification.notifiers.INotifier;
-import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEndEveningRule;
 
 /**
  * Define a INotifier able to propagate a notification through Android's toasts

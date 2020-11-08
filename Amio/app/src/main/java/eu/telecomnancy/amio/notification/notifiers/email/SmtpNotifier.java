@@ -1,5 +1,7 @@
 package eu.telecomnancy.amio.notification.notifiers.email;
 
+import android.util.Log;
+
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
@@ -15,6 +17,11 @@ import eu.telecomnancy.amio.notification.notifiers.INotifier;
 public class SmtpNotifier extends EmailNotifier {
 
     /**
+     * Android logging tag for this class
+     */
+    private static final String TAG = SmtpNotifier.class.getName();
+
+    /**
      * Create a new notifier
      *
      * @param payload Notification payload to be later propagated
@@ -25,7 +32,7 @@ public class SmtpNotifier extends EmailNotifier {
 
     @Override
     public void sendNotification() {
-        System.out.println("Mail from " + EmailNotifier.class.getSimpleName());
+        Log.d(TAG, "Sending notification");
     }
 
 }
