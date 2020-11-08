@@ -97,7 +97,7 @@ public class PollingService extends Service {
                 // Creating the new record
                 .forEach(mote -> {
                     mote.moteId = (int) _database.moteDao().insert(mote);
-                    Log.d(TAG, "New mote inserted: " + mote);
+                    Log.d(TAG, "New mote added in the database: " + mote);
                 });
 
         // TODO: register their associated data
