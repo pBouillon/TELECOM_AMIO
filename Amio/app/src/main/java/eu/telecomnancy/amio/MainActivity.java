@@ -1,8 +1,5 @@
 package eu.telecomnancy.amio;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -10,10 +7,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.List;
 
@@ -21,20 +18,19 @@ import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.polling.PollingService;
 import eu.telecomnancy.amio.ui.main.MainViewModel;
 import eu.telecomnancy.amio.ui.main.MoteUpdateAware;
-import eu.telecomnancy.amio.ui.main.MoteUpdateBroadcastReciever;
+import eu.telecomnancy.amio.ui.main.MoteUpdateBroadcastReceiver;
 import eu.telecomnancy.amio.ui.main.SensorFragment;
 
 public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
-    private Intent pollingServiceIntent;
-
     private static final String TAG = MainActivity.class.getSimpleName();
+    private Intent pollingServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
 
         if (savedInstanceState == null) {
@@ -44,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
         }
 
         registerReceiver(
-                new MoteUpdateBroadcastReciever(this),
+                new MoteUpdateBroadcastReceiver(this),
                 new IntentFilter(PollingService.MOTE_DATA_UPDATE_ACTION)
         );
 
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.settings_button:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
     @Override
     public void onMotesUpdate(List<Mote> motes) {
-        Log.d(TAG,"Broadcast recieved");
+        Log.d(TAG, "Broadcast recieved");
         MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
         model.setMotes(motes);
     }

@@ -11,6 +11,7 @@ public class IsNight extends CurrentTimeCondition {
 
     /**
      * Create the condition
+     *
      * @param currentTimeInMillis Reference time to be checked
      */
     public IsNight(long currentTimeInMillis) {

@@ -9,6 +9,7 @@ public interface ICondition {
 
     /**
      * Evaluate the condition
+     *
      * @return true if the condition is validated; false otherwise
      */
     boolean evaluate();

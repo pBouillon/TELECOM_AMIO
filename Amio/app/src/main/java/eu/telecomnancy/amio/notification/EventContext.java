@@ -21,6 +21,7 @@ public class EventContext {
 
     /**
      * Create the event context
+     *
      * @param fetchedMotes Motes retrieved to be passed to the rule engine
      */
     public EventContext(IMoteCollection fetchedMotes) {

@@ -85,6 +85,15 @@ public class Mote implements Serializable {
     }
 
     /**
+     * Evaluate whether or not the room in which the sensor is is lightened
+     *
+     * @return true if the room is lightened; false otherwise
+     */
+    public boolean isRoomLightened() {
+        return _brightness > eu.telecomnancy.amio.notification.Constants.Thresholds.Lux.LIGHTED_ROOM;
+    }
+
+    /**
      * Get the date on were the data where retrieved for the last time
      * @return A Date object from the `timestamp` property
      */
@@ -113,7 +122,7 @@ public class Mote implements Serializable {
                 _temperature = measure;
                 break;
             default:
-                throw new IllegalArgumentException("Unknown property '" + moteDto.label +"'");
+                throw new IllegalArgumentException("Unknown property '" + moteDto.label + "'");
         }
 
         // Update the timestamp to the most recent measure
