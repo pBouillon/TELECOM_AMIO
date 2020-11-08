@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         stopService(pollingServiceIntent);
+        super.onDestroy();
     }
 
     @Override
