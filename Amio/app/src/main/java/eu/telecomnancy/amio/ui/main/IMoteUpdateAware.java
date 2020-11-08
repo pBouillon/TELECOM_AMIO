@@ -7,7 +7,7 @@ import eu.telecomnancy.amio.iotlab.entities.Mote;
 /**
  * TODO doc
  */
-public interface MoteUpdateAware {
+public interface IMoteUpdateAware {
 
     /**
      * TODO doc

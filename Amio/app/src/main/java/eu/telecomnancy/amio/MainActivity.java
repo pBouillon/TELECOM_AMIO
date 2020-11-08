@@ -18,14 +18,14 @@ import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.polling.Constants;
 import eu.telecomnancy.amio.polling.PollingService;
 import eu.telecomnancy.amio.ui.main.MainViewModel;
-import eu.telecomnancy.amio.ui.main.MoteUpdateAware;
+import eu.telecomnancy.amio.ui.main.IMoteUpdateAware;
 import eu.telecomnancy.amio.ui.main.MoteUpdateBroadcastReceiver;
 import eu.telecomnancy.amio.ui.main.SensorFragment;
 
 /**
  * TODO doc
  */
-public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
+public class MainActivity extends AppCompatActivity implements IMoteUpdateAware {
 
     /**
      * Android logging tag for this class
@@ -46,12 +46,14 @@ public class MainActivity extends AppCompatActivity implements MoteUpdateAware {
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
 
+        // TODO doc
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, SensorFragment.newInstance())
                     .commitNow();
         }
 
+        // TODO doc
         registerReceiver(
                 new MoteUpdateBroadcastReceiver(this),
                 new IntentFilter(Constants.Broadcast.UPDATED_DATA)

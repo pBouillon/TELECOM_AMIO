@@ -21,21 +21,9 @@ import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.iotlab.entities.Mote;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of items
  */
 public class SensorFragment extends Fragment {
-
-    /**
-     * TODO doc
-     * TODO to const file
-     */
-    private static final String ARG_COLUMN_COUNT = "column-count";
-
-    /**
-     * TODO doc
-     * TODO to const file
-     */
-    private static final int COLUMN_COUNT = 3;
 
     /**
      * TODO doc
@@ -43,7 +31,7 @@ public class SensorFragment extends Fragment {
     private RecyclerView _recyclerView;
 
     /**
-     * TODO
+     * TODO doc
      */
     private SensorRecyclerViewAdapter _sensorRecyclerViewAdapter;
 
@@ -54,14 +42,15 @@ public class SensorFragment extends Fragment {
     public SensorFragment() { }
 
     /**
-     * TODO
+     * TODO doc
      */
     public static SensorFragment newInstance() {
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, COLUMN_COUNT);
+        args.putInt(Constants.Sensor.ARG_COLUMN_COUNT, Constants.Sensor.COLUMN_COUNT);
 
         SensorFragment fragment = new SensorFragment();
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -117,7 +106,7 @@ public class SensorFragment extends Fragment {
 
         _recyclerView.setLayoutManager(isOrientationPortrait
                 ? new LinearLayoutManager(context)
-                : new GridLayoutManager(context, COLUMN_COUNT));
+                : new GridLayoutManager(context, Constants.Sensor.COLUMN_COUNT));
     }
 
 }

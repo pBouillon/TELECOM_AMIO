@@ -84,7 +84,8 @@ public class PollingService extends Service {
         broadcastMessage.putExtra(Constants.Broadcast.BUNDLE_IDENTIFIER, moteBundle);
 
         sendBroadcast(broadcastMessage);
-        Log.d(TAG, "Broadcast Sent");
+
+        Log.d(TAG, "Broadcast message sent");
     }
 
     /**
