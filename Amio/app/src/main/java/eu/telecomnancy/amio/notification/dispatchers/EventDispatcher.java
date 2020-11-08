@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.notification;
+package eu.telecomnancy.amio.notification.dispatchers;
 
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rules;
@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.notification.contexts.EventContext;
 import eu.telecomnancy.amio.notification.rules.IRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEndEveningRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEveningRule;
@@ -20,7 +21,7 @@ import eu.telecomnancy.amio.notification.rules.NewLightOnWeekNightRule;
 public class EventDispatcher {
 
     /**
-     * Tag under which the context passed to the Rules' Facts will be registered
+     * Tag under which the context passed to the rules' Facts will be registered
      *
      * @see Facts
      * @see org.jeasy.rules.annotation.Rule
@@ -56,6 +57,7 @@ public class EventDispatcher {
 
     /**
      * Evaluate the provided data against all registered rules for notification
+     *
      * @param fetchedMotes A collection of all fetched motes to be passed to all rules
      * @see EventContext
      */
