@@ -22,13 +22,13 @@
             android:id="@+id/light_bulb_icon"
             android:layout_width="52dp"
             android:layout_height="51dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:contentDescription="@string/light_bulb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_light_bulb_off" />
+            app:srcCompat="@drawable/light_off" />
 
         <TextView
             android:id="@+id/humidity"

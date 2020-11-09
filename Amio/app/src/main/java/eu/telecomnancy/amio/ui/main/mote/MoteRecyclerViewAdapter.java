@@ -83,8 +83,8 @@ public class MoteRecyclerViewAdapter
         // Assign the relevant image
         holder.lightBulb.setImageResource(
                 mote.isRoomLightened()
-                        ? R.drawable.ic_light_bulb_on
-                        : R.drawable.ic_light_bulb_off
+                        ? R.drawable.light_on
+                        : R.drawable.light_off
         );
     }
 
