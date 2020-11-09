@@ -15,19 +15,20 @@ import eu.telecomnancy.amio.iotlab.entities.Mote;
 public class MainViewModel extends ViewModel {
 
     /**
-     * TODO doc
+     * Mote's list able to register observers
      */
     private final MutableLiveData<List<Mote>> _motes = new MutableLiveData<>();
 
     /**
-     * TODO doc
+     * Getter fot the mote list
+     * @return the mote list
      */
     public LiveData<List<Mote>> getMotes() {
         return _motes;
     }
 
     /**
-     * TODO doc
+     * Update the content of the live data model
      */
     public void setMotes(List<Mote> newMotes) {
         //postValue can be used in a background task and will trigger all observers

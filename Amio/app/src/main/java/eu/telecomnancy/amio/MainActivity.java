@@ -18,24 +18,19 @@ import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.polling.Constants;
 import eu.telecomnancy.amio.polling.PollingService;
 import eu.telecomnancy.amio.ui.main.MainViewModel;
-import eu.telecomnancy.amio.ui.main.IMoteUpdateAware;
+import eu.telecomnancy.amio.ui.main.IMoteUpdateWatcher;
 import eu.telecomnancy.amio.ui.main.MoteUpdateBroadcastReceiver;
-import eu.telecomnancy.amio.ui.main.sensor.SensorFragment;
+import eu.telecomnancy.amio.ui.main.mote.MoteListFragment;
 
 /**
- * TODO doc
+ * Default activity started at launch
  */
-public class MainActivity extends AppCompatActivity implements IMoteUpdateAware {
+public class MainActivity extends AppCompatActivity implements IMoteUpdateWatcher {
 
     /**
      * Android logging tag for this class
      */
     private static final String TAG = MainActivity.class.getName();
-
-    /**
-     * TODO doc
-     */
-    private Intent pollingServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +41,19 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateAware 
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
 
-        // TODO doc
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, SensorFragment.newInstance())
-                    .commitNow();
-        }
+        // Replace the container layout with the Recycler view fragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container, MoteListFragment.newInstance())
+                .commitNow();
 
-        // TODO doc
+        // Set the mote update broadcast reciever
         registerReceiver(
                 new MoteUpdateBroadcastReceiver(this),
                 new IntentFilter(Constants.Broadcast.UPDATED_DATA)
         );
 
-        pollingServiceIntent = new Intent(this, PollingService.class);
+        Intent pollingServiceIntent = new Intent(this, PollingService.class);
         startService(pollingServiceIntent);
     }
 
@@ -80,12 +74,6 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateAware 
                 .inflate(R.menu.main_app_bar_menu, menu);
 
         return true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        stopService(pollingServiceIntent);
-        super.onDestroy();
     }
 
     @Override

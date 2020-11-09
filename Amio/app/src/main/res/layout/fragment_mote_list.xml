@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="eu.telecomnancy.amio.ui.main.SensorFragment"
+    android:name="eu.telecomnancy.amio.ui.main.MoteListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.main.sensor.SensorFragment"
-    tools:listitem="@layout/sensor_view_holder" />
+    tools:context=".ui.main.mote.MoteListFragment"
+    tools:listitem="@layout/mote_view_holder" />

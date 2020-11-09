@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.ui.main.sensor;
+package eu.telecomnancy.amio.ui.main.mote;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -25,32 +25,32 @@ import eu.telecomnancy.amio.ui.main.MainViewModel;
 /**
  * A fragment representing a list of items
  */
-public class SensorFragment extends Fragment {
+public class MoteListFragment extends Fragment {
 
     /**
-     * TODO doc
+     * Recycler view used for Mote list rendering
      */
     private RecyclerView _recyclerView;
 
     /**
-     * TODO doc
+     * Date adapter for the mote list
      */
-    private SensorRecyclerViewAdapter _sensorRecyclerViewAdapter;
+    private MoteRecyclerViewAdapter m_moteRecyclerViewAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SensorFragment() { }
+    public MoteListFragment() { }
 
     /**
-     * TODO doc
+     * Give the right way to construct this fragment
      */
-    public static SensorFragment newInstance() {
+    public static MoteListFragment newInstance() {
         Bundle args = new Bundle();
-        args.putInt(Constants.Sensor.ARG_COLUMN_COUNT, Constants.Sensor.COLUMN_COUNT);
+        args.putInt(Constants.MoteList.ARG_COLUMN_COUNT, Constants.MoteList.COLUMN_COUNT);
 
-        SensorFragment fragment = new SensorFragment();
+        MoteListFragment fragment = new MoteListFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -66,7 +66,7 @@ public class SensorFragment extends Fragment {
         viewModel.getMotes()
                 .observe(
                         getViewLifecycleOwner(),
-                        dummySensors -> _sensorRecyclerViewAdapter.setMotes(dummySensors));
+                        motes -> m_moteRecyclerViewAdapter.setMotes(motes));
     }
 
     @Override
@@ -83,14 +83,14 @@ public class SensorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sensor_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_mote_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             _recyclerView = (RecyclerView) view;
             updateRecyclerLayer();
-            _sensorRecyclerViewAdapter = new SensorRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
-            _recyclerView.setAdapter(_sensorRecyclerViewAdapter);
+            m_moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
+            _recyclerView.setAdapter(m_moteRecyclerViewAdapter);
         }
 
         return view;
@@ -108,7 +108,7 @@ public class SensorFragment extends Fragment {
 
         _recyclerView.setLayoutManager(isOrientationPortrait
                 ? new LinearLayoutManager(context)
-                : new GridLayoutManager(context, Constants.Sensor.COLUMN_COUNT));
+                : new GridLayoutManager(context, Constants.MoteList.COLUMN_COUNT));
     }
 
 }

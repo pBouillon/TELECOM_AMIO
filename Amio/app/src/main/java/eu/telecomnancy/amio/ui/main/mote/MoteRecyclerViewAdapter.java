@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.ui.main.sensor;
+package eu.telecomnancy.amio.ui.main.mote;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,8 +17,8 @@ import eu.telecomnancy.amio.ui.commons.FormatProvider;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Mote}.
  */
-public class SensorRecyclerViewAdapter
-        extends RecyclerView.Adapter<SensorViewHolder> {
+public class MoteRecyclerViewAdapter
+        extends RecyclerView.Adapter<MoteViewHolder> {
 
     /**
      * Context to access the parametrized string resource
@@ -26,20 +26,20 @@ public class SensorRecyclerViewAdapter
     private final Context _context;
 
     /**
-     * TODO doc
+     * List of the motes that are shown
      */
     private List<Mote> _motes;
 
     /**
-     * TODO doc
+     * Default constructor for the MoteRecyclerViewAdapter
      */
-    public SensorRecyclerViewAdapter(List<Mote> items, Context context) {
+    public MoteRecyclerViewAdapter(List<Mote> items, Context context) {
         _motes = items;
         _context = context;
     }
 
     /**
-     * TODO doc
+     * Set the motes and update the view
      */
     public void setMotes(List<Mote> motes) {
         _motes = motes;
@@ -48,15 +48,15 @@ public class SensorRecyclerViewAdapter
 
     @NonNull
     @Override
-    public SensorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.sensor_view_holder, parent, false);
+                .inflate(R.layout.mote_view_holder, parent, false);
 
-        return new SensorViewHolder(view);
+        return new MoteViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final SensorViewHolder holder, final int position) {
+    public void onBindViewHolder(final MoteViewHolder holder, final int position) {
         // Retrieve the mote to be updated
         Mote mote = _motes.get(position);
 

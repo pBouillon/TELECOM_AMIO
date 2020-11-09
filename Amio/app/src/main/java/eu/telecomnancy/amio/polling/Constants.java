@@ -11,17 +11,17 @@ public final class Constants {
     public static final class Broadcast {
 
         /**
-         * TODO doc
+         * Identifier for the bundle that contains the new mote list in broadcast messages
          */
         public static final String BUNDLE_IDENTIFIER = "MotesBundle";
 
         /**
-         * TODO doc
+         * Identifier for the mote list inside the bundle
          */
         public static final String IDENTIFIER = "Motes";
 
         /**
-         * TODO doc
+         * Identifier of the broadcast message
          */
         public static final String UPDATED_DATA = "MoteDataUpdate";
 
