@@ -19,6 +19,7 @@ import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
 import eu.telecomnancy.amio.persistence.daos.MoteDao;
 import eu.telecomnancy.amio.persistence.daos.RecordDao;
 import eu.telecomnancy.amio.persistence.entities.Record;
+import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
  * Polling service who will periodically fetch data from the server
@@ -44,6 +45,36 @@ public class PollingService extends Service {
      * Inner-timer used for firing events
      */
     private Timer _timer;
+
+    /**
+     * Create a new task and define its callback in order to access the data it may provide
+     *  as parameter
+     *
+     * @return The newly created polling task
+     */
+    private PollingTaskBase createPollingTask() {
+        PollingContext context = new PollingContext(getApplicationContext());
+
+        // Create a new task and define its callback in order to access the data it may provide
+        // as parameter
+        return new PollingTaskBase(context) {
+            @Override
+            public void callback(List<Mote> motes) {
+                // Log the received payload
+                Log.i(TAG, motes.size() + " mote(s) received");
+
+                motes.forEach(mote
+                        -> Log.d(TAG, mote.toString()));
+
+
+                // Broadcast the new data to the UI
+                sendBroadcastMessage(motes);
+
+                // Store the received motes
+                storeRecords(motes);
+            }
+        };
+    }
 
     @Nullable
     @Override
@@ -168,25 +199,7 @@ public class PollingService extends Service {
      */
     @SuppressWarnings("SameParameterValue")
     private void schedulePollingTask(long delay, long period) {
-        // Create a new task and define its callback in order to access the data it may provide
-        // as parameter
-        _pollingTask = new PollingTaskBase() {
-            @Override
-            public void callback(List<Mote> motes) {
-                // Log the received payload
-                Log.i(TAG, motes.size() + " mote(s) received");
-
-                motes.forEach(mote
-                        -> Log.d(TAG, mote.toString()));
-
-
-                // Broadcast the new data to the UI
-                sendBroadcastMessage(motes);
-
-                // Store the received motes
-                storeRecords(motes);
-            }
-        };
+        _pollingTask = createPollingTask();
 
         _timer.scheduleAtFixedRate(_pollingTask, delay, period);
 

@@ -3,6 +3,7 @@ package eu.telecomnancy.amio.notification.contexts;
 import java.util.Date;
 
 import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
+import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
  * Define a POJO that will wrap all data relative to an event
@@ -20,12 +21,21 @@ public class EventContext {
     public final IMoteCollection motes;
 
     /**
+     * Context wrapping the polling data and ecosystem
+     */
+    public final PollingContext pollingContext;
+
+    /**
      * Create the event context
      *
+     * @param context Context wrapping the polling data and ecosystem
      * @param fetchedMotes Motes retrieved to be passed to the rule engine
      */
-    public EventContext(IMoteCollection fetchedMotes) {
+    public EventContext(PollingContext context, IMoteCollection fetchedMotes) {
+        pollingContext = context;
         motes = fetchedMotes;
     }
+
+
 
 }

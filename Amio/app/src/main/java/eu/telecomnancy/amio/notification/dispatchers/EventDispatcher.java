@@ -14,6 +14,7 @@ import eu.telecomnancy.amio.notification.rules.IRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEndEveningRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEveningRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekNightRule;
+import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
  * Rule engine wrapper handling the rules registration and the firing of all notification events
@@ -27,6 +28,11 @@ public class EventDispatcher {
      * @see org.jeasy.rules.annotation.Rule
      */
     public static final String ContextTag = "Context";
+
+    /**
+     * Polling context in which this event take place
+     */
+    private final PollingContext _context;
 
     /**
      * Registered rules handler
@@ -50,8 +56,12 @@ public class EventDispatcher {
     /**
      * Default constructor
      * This will register all rules to be later evaluated on event firing
+     *
+     * @param context Polling context in which this event take place
      */
-    public EventDispatcher() {
+    public EventDispatcher(PollingContext context) {
+        _context = context;
+
         handledRules.forEach(_rules::register);
     }
 
@@ -63,7 +73,7 @@ public class EventDispatcher {
      */
     public void dispatchNotificationFor(IMoteCollection fetchedMotes) {
         // Create the event context from the provided motes
-        EventContext context = new EventContext(fetchedMotes);
+        EventContext context = new EventContext(_context, fetchedMotes);
 
         // Create the rules payload from the context
         Facts facts = new Facts();

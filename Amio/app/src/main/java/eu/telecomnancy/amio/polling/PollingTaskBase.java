@@ -18,6 +18,7 @@ import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 import eu.telecomnancy.amio.notification.dispatchers.EventDispatcher;
+import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
  * Custom task to be executed to poll the iot lab's server
@@ -37,7 +38,22 @@ public abstract class PollingTaskBase extends TimerTask {
     /**
      * Rule engine wrapper for event dispatching
      */
-    private final EventDispatcher _dispatcher = new EventDispatcher();
+    private final EventDispatcher _dispatcher;
+
+    /**
+     * Context wrapping the polling data and ecosystem
+     */
+    private final PollingContext _context;
+
+    /**
+     * Create a new polling task
+     *
+     * @param context Context wrapping the polling data and ecosystem
+     */
+    public PollingTaskBase(PollingContext context) {
+        _context = context;
+        _dispatcher = new EventDispatcher(_context);
+    }
 
     /**
      * Define a custom callback method to be executed when the task has run its job
