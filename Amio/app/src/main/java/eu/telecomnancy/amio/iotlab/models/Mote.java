@@ -3,13 +3,13 @@ package eu.telecomnancy.amio.iotlab.models;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import eu.telecomnancy.amio.iotlab.Constants;
 import eu.telecomnancy.amio.iotlab.dto.MoteDto;
 
 /**
  * Logical representation of a mote
+ *
  * @see MoteDto For the its API representation
  */
 public class Mote implements Serializable {
@@ -93,6 +93,7 @@ public class Mote implements Serializable {
     }
 
     /**
+<<<<<<< HEAD:Amio/app/src/main/java/eu/telecomnancy/amio/iotlab/models/Mote.java
      * Get the timestamp of the date on which the data was retrieved
      *
      * @return The associated timestamp
@@ -102,6 +103,9 @@ public class Mote implements Serializable {
     }
 
     /**
+     * Evaluate whether or not the room in which the sensor is is lightened
+     *
+     * @return true if the room is lightened; false otherwise
      * Evaluate whether or not the room in which the sensor is is lightened
      *
      * @return true if the room is lightened; false otherwise
