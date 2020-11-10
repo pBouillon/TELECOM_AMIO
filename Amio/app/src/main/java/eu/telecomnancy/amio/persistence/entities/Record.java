@@ -34,18 +34,33 @@ public class Record {
     @ColumnInfo(name = "mote_source_id")
     public long moteSourceId;
 
+    /**
+     * The brightness measured in lux
+     */
     @ColumnInfo(name = "brightness")
     public double brightness;
 
+    /**
+     * The humidity measured in percentage
+     */
     @ColumnInfo(name = "humidity")
     public double humidity;
 
+    /**
+     * The remaining battery of the mote in percentage
+     */
     @ColumnInfo(name = "remaining_battery")
     public double remainingBattery;
 
+    /**
+     * The timestamp corresponding to the moment where this data was retrieved
+     */
     @ColumnInfo(name = "retrieved_at")
     public long retrievedAt;
 
+    /**
+     * The temperature measured in Celsius
+     */
     @ColumnInfo(name = "temperature")
     public double temperature;
 
