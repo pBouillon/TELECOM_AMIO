@@ -32,6 +32,7 @@ jobs:
     - name: Test with Gradle
       run: |
         cd Amio/
+        chmod +x gradlew
         ./gradlew test --stacktrace
 
   build:
@@ -47,4 +48,5 @@ jobs:
     - name: Build with Gradle
       run: |
         cd Amio/
+        chmod +x gradlew
         ./gradlew build
