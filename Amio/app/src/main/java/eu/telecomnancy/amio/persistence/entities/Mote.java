@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.persistence.models;
+package eu.telecomnancy.amio.persistence.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -11,7 +11,14 @@ import org.jetbrains.annotations.NotNull;
  * A mote is a single sensor that will retrieve data of several types
  *
  * For its logical representation
- * @see eu.telecomnancy.amio.iotlab.entities.Mote
+ * @see eu.telecomnancy.amio.iotlab.models.Mote
+ */
+/**
+ * Mote representation
+ * A mote is a single sensor that will retrieve data of several types
+ *
+ * For its logical representation
+ * @see eu.telecomnancy.amio.iotlab.models.Mote
  */
 @Entity
 public class Mote {
@@ -22,7 +29,7 @@ public class Mote {
      */
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "mote_id")
-    public int moteId;
+    public long moteId;
 
     /**
      * The mote's name as specified by the user
@@ -56,4 +63,5 @@ public class Mote {
                 ", name='" + name + '\'' +
                 " }";
     }
+
 }

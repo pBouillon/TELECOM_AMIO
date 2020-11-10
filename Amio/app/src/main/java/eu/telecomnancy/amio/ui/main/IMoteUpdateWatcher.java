@@ -2,7 +2,7 @@ package eu.telecomnancy.amio.ui.main;
 
 import java.util.List;
 
-import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 
 /**
  * Interface used by all object that need an update from the {@link MoteUpdateBroadcastReceiver}

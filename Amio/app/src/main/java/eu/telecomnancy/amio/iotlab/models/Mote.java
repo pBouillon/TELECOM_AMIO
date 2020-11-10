@@ -1,4 +1,4 @@
-package eu.telecomnancy.amio.iotlab.entities;
+package eu.telecomnancy.amio.iotlab.models;
 
 import org.jetbrains.annotations.NotNull;
 

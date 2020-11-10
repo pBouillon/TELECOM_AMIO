@@ -1,18 +1,20 @@
 package eu.telecomnancy.amio.persistence.daos;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
-import eu.telecomnancy.amio.persistence.models.Mote;
+import eu.telecomnancy.amio.persistence.entities.Mote;
+import eu.telecomnancy.amio.persistence.entities.MoteWithRecords;
 
 /**
  * Mote data access object, exposing methods to interact with the entity in the database
  *
  * @see Mote
+ * @see MoteWithRecords
  */
 @Dao
 public interface MoteDao {
@@ -34,6 +36,16 @@ public interface MoteDao {
      */
     @Query("SELECT * FROM mote ORDER BY preferred_name, name")
     List<Mote> getAll();
+
+    /**
+     * Get all records of a mote
+     *
+     * @param moteName Name of the mote we are looking at
+     * @return An entity holding the mote and all of its records
+     */
+    @Transaction
+    @Query("SELECT * from mote WHERE name = :moteName")
+    List<MoteWithRecords> getAllRecordsForMote(String moteName);
 
     /**
      * Insert a mote in the database

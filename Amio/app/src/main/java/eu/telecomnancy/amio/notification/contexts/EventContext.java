@@ -2,7 +2,7 @@ package eu.telecomnancy.amio.notification.contexts;
 
 import java.util.Date;
 
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 
 /**
  * Define a POJO that will wrap all data relative to an event

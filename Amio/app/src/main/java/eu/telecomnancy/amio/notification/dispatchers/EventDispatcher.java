@@ -8,7 +8,7 @@ import org.jeasy.rules.core.DefaultRulesEngine;
 import java.util.Arrays;
 import java.util.List;
 
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 import eu.telecomnancy.amio.notification.contexts.EventContext;
 import eu.telecomnancy.amio.notification.rules.IRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEndEveningRule;

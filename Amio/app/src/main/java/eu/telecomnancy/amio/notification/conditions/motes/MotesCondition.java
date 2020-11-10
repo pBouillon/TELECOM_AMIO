@@ -1,6 +1,6 @@
 package eu.telecomnancy.amio.notification.conditions.motes;
 
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
 
 /**

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import java.util.Date;
 
 import eu.telecomnancy.amio.iotlab.dto.MoteDto;
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 import eu.telecomnancy.amio.notification.Constants;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
 import eu.telecomnancy.amio.utils.factories.MoteCollectionFactory;

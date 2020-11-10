@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Timer;
 
-import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.persistence.IotLabDatabase;
 import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
 
@@ -95,7 +95,7 @@ public class PollingService extends Service {
                         -> !_database.moteDao().exists(mote.getName()))
                 // Converting the provided mote to its database representation
                 .map(mote
-                        -> new eu.telecomnancy.amio.persistence.models.Mote(mote.getName()))
+                        -> new eu.telecomnancy.amio.persistence.entities.Mote(mote.getName()))
                 // Creating the new record
                 .forEach(mote -> {
                     mote.moteId = (int) _database.moteDao().insert(mote);

@@ -1,8 +1,7 @@
 package eu.telecomnancy.amio.notification.conditions.motes;
 
-import eu.telecomnancy.amio.iotlab.entities.Mote;
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
-import eu.telecomnancy.amio.notification.Constants;
+import eu.telecomnancy.amio.iotlab.models.Mote;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 
 /**
  * Condition to check if any light has been recently turned on
