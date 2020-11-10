@@ -4,15 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import eu.telecomnancy.amio.iotlab.dto.MoteDto;
-import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.ConsecutiveMoteMeasuresPair;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.notification.Constants;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
-import eu.telecomnancy.amio.utils.factories.MoteCollectionFactory;
+import eu.telecomnancy.amio.utils.factories.MoteFactory;
 
 /**
  * Unit testing suite for the condition IsAnyNewLightOn
@@ -23,19 +23,24 @@ public class IsAnyNewLightOnTest {
     /**
      * Factory used to generate fixture data
      */
-    private final MoteCollectionFactory _factory = new MoteCollectionFactory();
+    private final MoteFactory _factory = new MoteFactory();
 
     /**
-     * Ensure that the condition is not met when there isn't any brightness value of any mote above
-     * the specified threshold
+     * Ensure that the condition is not met when neither of the records are showing a
+     * lightened room
      */
     @Test
-    public void evaluate_isFalseWhenTheThresholdIsNotMet() {
+    public void evaluate_isFalseWhenBothRecordsShowLightenedRoom() {
         // Arrange
-        IMoteCollection motes = _factory.generateMoteCollection(
-                Constants.Thresholds.Lux.LIGHTED_ROOM - 1);
+        int brightRoom = Constants.Thresholds.Lux.LIGHTED_ROOM + 1;
 
-        ICondition condition = new IsAnyNewLightOn(motes);
+        Mote oldest = _factory.generate(brightRoom, 1);
+        Mote recent = _factory.generate(brightRoom, 2, oldest.getName());
+
+        List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
+        records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
+
+        ICondition condition = new IsAnyNewLightOn(records);
 
         // Act
         boolean isConditionMet = condition.evaluate();
@@ -45,52 +50,78 @@ public class IsAnyNewLightOnTest {
     }
 
     /**
-     * Ensure that the condition is met when a mote has its brightness above the specified threshold
+     * Ensure that the condition is not met when both of the records are showing a
+     * lightened room
      */
     @Test
-    public void evaluate_isTrueWhenTheThresholdIsMetByAMote() {
+    public void evaluate_isFalseWhenBothRecordsShowNotLightenedRoom() {
         // Arrange
-        IMoteCollection motes = _factory.generateMoteCollection(
-                Constants.Thresholds.Lux.LIGHTED_ROOM - 1);
+        int darkRoom = Constants.Thresholds.Lux.LIGHTED_ROOM - 1;
 
-        // Create the lightened mote
-        MoteDto lightenedRoomMote = new MoteDto();
-        lightenedRoomMote.mote = String.valueOf(new Date().getTime());
-        lightenedRoomMote.label = eu.telecomnancy.amio.iotlab.Constants.Labels.BRIGHTNESS;
-        lightenedRoomMote.value = Constants.Thresholds.Lux.LIGHTED_ROOM + 1;
+        Mote oldest = _factory.generate(darkRoom, 1);
+        Mote recent = _factory.generate(darkRoom, 2, oldest.getName());
 
-        // Add the lightened mote to the collection of motes
-        motes.addAndMergeFromDto(lightenedRoomMote);
+        List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
+        records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
 
-        ICondition condition = new IsAnyNewLightOn(motes);
+        ICondition condition = new IsAnyNewLightOn(records);
 
         // Act
         boolean isConditionMet = condition.evaluate();
 
         // Assert
-        assumeTrue(!motes.isEmpty());
-        assertTrue(isConditionMet);
+        assertFalse(isConditionMet);
     }
 
     /**
-     * Ensure that the condition is met when several or all motes have their brightness above
-     * the specified threshold
+     * Ensure that the condition is not met when the oldest record is showing a lightened room
+     * but the most recent one does not
      */
     @Test
-    public void evaluate_isTrueWhenTheThresholdIsMetBySeveralMotes() {
+    public void evaluate_isFalseWhenRecordsAreShowingARoomRecentlyTurnedOff() {
         // Arrange
-        IMoteCollection motes = _factory.generateMoteCollection(
-                Constants.Thresholds.Lux.LIGHTED_ROOM,
-                Constants.Thresholds.Lux.LIGHTED_ROOM + 1);
+        int brightRoom = Constants.Thresholds.Lux.LIGHTED_ROOM + 1;
+        int darkRoom = Constants.Thresholds.Lux.LIGHTED_ROOM - 1;
 
-        ICondition condition = new IsAnyNewLightOn(motes);
+        Mote oldest = _factory.generate(brightRoom, 1);
+        Mote recent = _factory.generate(darkRoom, 2, oldest.getName());
+
+        List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
+        records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
+
+        ICondition condition = new IsAnyNewLightOn(records);
 
         // Act
         boolean isConditionMet = condition.evaluate();
 
         // Assert
-        assumeTrue(!motes.isEmpty());
+        assertFalse(isConditionMet);
+    }
+
+    /**
+     * Ensure that the condition is met when the oldest record show a room that has not been
+     * lightened but the most recent one does
+     */
+    @Test
+    public void evaluate_isTrueWhenRecordsAreShowingARoomRecentlyLightened() {
+        // Arrange
+        int brightRoom = Constants.Thresholds.Lux.LIGHTED_ROOM + 1;
+        int darkRoom = Constants.Thresholds.Lux.LIGHTED_ROOM - 1;
+
+        Mote oldest = _factory.generate(darkRoom, 1);
+        Mote recent = _factory.generate(brightRoom, 2, oldest.getName());
+
+        List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
+        records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
+
+        ICondition condition = new IsAnyNewLightOn(records);
+
+        // Act
+        boolean isConditionMet = condition.evaluate();
+
+        // Assert
         assertTrue(isConditionMet);
     }
+
 
 }
