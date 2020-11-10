@@ -38,21 +38,9 @@ public class MoteRecyclerViewAdapter
         _context = context;
     }
 
-    /**
-     * Set the motes and update the view
-     */
-    public void setMotes(List<Mote> motes) {
-        _motes = motes;
-        notifyDataSetChanged();
-    }
-
-    @NonNull
     @Override
-    public MoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mote_view_holder, parent, false);
-
-        return new MoteViewHolder(view);
+    public int getItemCount() {
+        return _motes.size();
     }
 
     @Override
@@ -88,9 +76,21 @@ public class MoteRecyclerViewAdapter
         );
     }
 
+    @NonNull
     @Override
-    public int getItemCount() {
-        return _motes.size();
+    public MoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.mote_view_holder, parent, false);
+
+        return new MoteViewHolder(view);
+    }
+
+    /**
+     * Set the motes and update the view
+     */
+    public void setMotes(List<Mote> motes) {
+        _motes = motes;
+        notifyDataSetChanged();
     }
 
 }

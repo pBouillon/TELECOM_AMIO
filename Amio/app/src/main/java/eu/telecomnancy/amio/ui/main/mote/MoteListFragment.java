@@ -23,19 +23,19 @@ import eu.telecomnancy.amio.ui.main.Constants;
 import eu.telecomnancy.amio.ui.main.MainViewModel;
 
 /**
- * A fragment representing a list of items
+ * A fragment representing a list of motes
  */
 public class MoteListFragment extends Fragment {
 
     /**
-     * Recycler view used for Mote list rendering
-     */
-    private RecyclerView _recyclerView;
-
-    /**
      * Date adapter for the mote list
      */
-    private MoteRecyclerViewAdapter m_moteRecyclerViewAdapter;
+    private MoteRecyclerViewAdapter _moteRecyclerViewAdapter;
+
+    /**
+     * Recycler view used for the mote list re-rendering when the orientation changes
+     */
+    private RecyclerView _recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -45,10 +45,15 @@ public class MoteListFragment extends Fragment {
 
     /**
      * Give the right way to construct this fragment
+     *
+     * @return The instantiated fragment
      */
     public static MoteListFragment newInstance() {
         Bundle args = new Bundle();
-        args.putInt(Constants.MoteList.ARG_COLUMN_COUNT, Constants.MoteList.COLUMN_COUNT);
+
+        args.putInt(
+                Constants.MoteList.ARG_COLUMN_COUNT,
+                Constants.MoteList.COLUMN_COUNT);
 
         MoteListFragment fragment = new MoteListFragment();
         fragment.setArguments(args);
@@ -66,7 +71,7 @@ public class MoteListFragment extends Fragment {
         viewModel.getMotes()
                 .observe(
                         getViewLifecycleOwner(),
-                        motes -> m_moteRecyclerViewAdapter.setMotes(motes));
+                        motes -> _moteRecyclerViewAdapter.setMotes(motes));
     }
 
     @Override
@@ -89,8 +94,8 @@ public class MoteListFragment extends Fragment {
         if (view instanceof RecyclerView) {
             _recyclerView = (RecyclerView) view;
             updateRecyclerLayer();
-            m_moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
-            _recyclerView.setAdapter(m_moteRecyclerViewAdapter);
+            _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
+            _recyclerView.setAdapter(_moteRecyclerViewAdapter);
         }
 
         return view;

@@ -26,7 +26,7 @@ public class MoteViewHolder extends RecyclerView.ViewHolder {
     public final ImageView lightBulb;
 
     /**
-     * Number of lumens
+     * Number of lumen
      */
     public final TextView lightView;
 
@@ -55,12 +55,6 @@ public class MoteViewHolder extends RecyclerView.ViewHolder {
         lightView = view.findViewById(R.id.light);
         nameView = view.findViewById(R.id.moteId);
         temperatureView = view.findViewById(R.id.humidity);
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return super.toString() + " '" + temperatureView.getText() + "'";
     }
 
 }

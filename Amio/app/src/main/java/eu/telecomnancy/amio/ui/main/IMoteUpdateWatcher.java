@@ -11,7 +11,8 @@ public interface IMoteUpdateWatcher {
 
     /**
      * Function triggered on each mote update
-     * @param motes the new mote's list
+     *
+     * @param motes The new mote list
      */
     void onMotesUpdate(List<Mote> motes);
 

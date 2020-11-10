@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
                 .replace(R.id.container, MoteListFragment.newInstance())
                 .commitNow();
 
-        // Set the mote update broadcast reciever
+        // Set the mote update broadcast receiver
         registerReceiver(
                 new MoteUpdateBroadcastReceiver(this),
                 new IntentFilter(Constants.Broadcast.UPDATED_DATA)
@@ -55,17 +55,6 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
 
         Intent pollingServiceIntent = new Intent(this, PollingService.class);
         startService(pollingServiceIntent);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.settings_button) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -84,6 +73,17 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
                 .get(MainViewModel.class);
 
         model.setMotes(motes);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.settings_button) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

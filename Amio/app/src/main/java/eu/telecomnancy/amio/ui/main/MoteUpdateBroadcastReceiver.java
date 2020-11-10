@@ -10,20 +10,21 @@ import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.polling.Constants;
 
 /**
- * Broadcast reciever designed to handle any update in the mote list dispatched by the Polling service
+ * Broadcast receiver designed to handle any update in the mote list dispatched by the Polling service
  *
  * @see eu.telecomnancy.amio.polling.PollingTaskBase
  */
 public class MoteUpdateBroadcastReceiver extends BroadcastReceiver {
 
     /**
-     * Object that whant to be updated on every changement
+     * Will trigger its callback whenever new motes are received
      */
     private final IMoteUpdateWatcher _moteUpdateAware;
 
     /**
      * Default constructor for a MoteUpdateBroadcastReceiver
-     * @param moteUpdateAware set _moteUpdateAware
+     *
+     * @param moteUpdateAware set moteUpdateAware
      */
     public MoteUpdateBroadcastReceiver(IMoteUpdateWatcher moteUpdateAware) {
         _moteUpdateAware = moteUpdateAware;
@@ -33,9 +34,11 @@ public class MoteUpdateBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // noinspection unchecked
         List<Mote> motes
-                = (List<Mote>) intent.getBundleExtra(Constants.Broadcast.BUNDLE_IDENTIFIER)
+                = (List<Mote>) intent
+                .getBundleExtra(Constants.Broadcast.BUNDLE_IDENTIFIER)
                 .getSerializable(Constants.Broadcast.IDENTIFIER);
-        //Trigger the custom function on the object that need an update
+
+        // Trigger the custom function on the object that need an update
         _moteUpdateAware.onMotesUpdate(motes);
     }
 
