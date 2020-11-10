@@ -86,14 +86,12 @@ public class PollingService extends Service {
     }
 
     /**
-     * Given a list of motes, add all the ones not already registered in the database and their
-     * associated values
+     * Add all motes not already tracked in the database
      *
-     * @param motes Received payload of motes
+     * @param motes The list of motes to track
      */
-    private void recordMotesInDatabase(List<Mote> motes) {
+    private void storeNewMotes(List<Mote> motes) {
         MoteDao moteDao = _database.moteDao();
-        RecordDao recordDao = _database.recordDao();
 
         // Register all the missing motes in the database
         motes.stream()
@@ -108,6 +106,20 @@ public class PollingService extends Service {
                     mote.moteId = moteDao.insert(mote);
                     Log.d(TAG, "New mote added in the database: " + mote);
                 });
+    }
+
+    /**
+     * Given a list of motes, add all the ones not already registered in the database and their
+     * associated values
+     *
+     * @param motes Received payload of motes
+     */
+    private void storeRecords(List<Mote> motes) {
+        MoteDao moteDao = _database.moteDao();
+        RecordDao recordDao = _database.recordDao();
+
+        // Register all the missing motes in the database
+        storeNewMotes(motes);
 
         // Register the data retrieved
         motes.stream()
@@ -118,7 +130,7 @@ public class PollingService extends Service {
                 })
                 // Storing the new records
                 .forEach(pair -> {
-                    // Create the record from the mote id and the data originially retrieved
+                    // Create the record from the mote id and the data originally retrieved
                     Mote source = pair.second;
                     Record record = new Record(pair.first, source.getBrightness(),
                             source.getHumidity(), source.getBattery(), source.getTimestamp(),
@@ -172,7 +184,7 @@ public class PollingService extends Service {
                 sendBroadcastMessage(motes);
 
                 // Store the received motes
-                recordMotesInDatabase(motes);
+                storeRecords(motes);
             }
         };
 
