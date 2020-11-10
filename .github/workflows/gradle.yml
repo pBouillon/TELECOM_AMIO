@@ -1,11 +1,24 @@
 # This workflow will build a Java project with Gradle
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: Android CI with Gradle
 
-on: [ push ]
+
+
+on:
+
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+
 
 jobs:
+
   test:
     name: Run unit tests
     runs-on: ubuntu-latest
@@ -16,12 +29,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Unit tests
     - name: Test with Gradle
       run: |
         cd Amio/
         ./gradlew test --stacktrace
-
 
   build:
     name: Build the project
