@@ -12,6 +12,7 @@ public abstract class GetMotesDataTypeQuery extends MotesQuery {
 
     /**
      * Default constructor
+     *
      * @param label Label of the mote's value to be queried
      */
     protected GetMotesDataTypeQuery(String label) {

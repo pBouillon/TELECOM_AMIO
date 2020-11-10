@@ -2,11 +2,13 @@ package eu.telecomnancy.amio.polling;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Timer;
 
@@ -31,29 +33,6 @@ public class PollingService extends Service {
      * TimerTask to be run by the timer
      */
     private PollingTaskBase _pollingTask;
-
-    /**
-     * Schedule the polling task
-     *
-     * @param delay Delay in milliseconds before task is to be executed
-     * @param period Time in milliseconds between successive task executions
-     */
-    @SuppressWarnings("SameParameterValue")
-    private void schedulePollingTask(long delay, long period) {
-        // Create a new task and define its callback in order to access the data it may provide
-        // as parameter
-        _pollingTask = new PollingTaskBase() {
-            @Override
-            public void callback(List<Mote> motes) {
-                Log.d(TAG, motes.size() + " mote(s) received");
-                motes.forEach(mote -> Log.d(TAG, mote.toString()));
-            }
-        };
-
-        _timer.scheduleAtFixedRate(_pollingTask, delay, period);
-
-        Log.i(TAG, String.format("Task schedule for %d ms, every %d ms", delay, period));
-    }
 
     @Nullable
     @Override
@@ -90,6 +69,47 @@ public class PollingService extends Service {
 
         // If the service get killed, after returning from here, restart it
         return START_STICKY;
+    }
+
+    /**
+     * Send a broadcast message that contain the mote list
+     *
+     * @param motes updated motes list
+     */
+    private void sendBroadcastMessage(List<Mote> motes) {
+        Intent broadcastMessage = new Intent(Constants.Broadcast.UPDATED_DATA);
+
+        Bundle moteBundle = new Bundle();
+        moteBundle.putSerializable(Constants.Broadcast.IDENTIFIER, (Serializable) motes);
+        broadcastMessage.putExtra(Constants.Broadcast.BUNDLE_IDENTIFIER, moteBundle);
+
+        sendBroadcast(broadcastMessage);
+
+        Log.d(TAG, "Broadcast message sent");
+    }
+
+    /**
+     * Schedule the polling task
+     *
+     * @param delay  Delay in milliseconds before task is to be executed
+     * @param period Time in milliseconds between successive task executions
+     */
+    @SuppressWarnings("SameParameterValue")
+    private void schedulePollingTask(long delay, long period) {
+        // Create a new task and define its callback in order to access the data it may provide
+        // as parameter
+        _pollingTask = new PollingTaskBase() {
+            @Override
+            public void callback(List<Mote> motes) {
+                Log.d(TAG, motes.size() + " mote(s) received");
+                motes.forEach(mote -> Log.d(TAG, mote.toString()));
+                sendBroadcastMessage(motes);
+            }
+        };
+
+        _timer.scheduleAtFixedRate(_pollingTask, delay, period);
+
+        Log.i(TAG, String.format("Task schedule for %d ms, every %d ms", delay, period));
     }
 
 }
