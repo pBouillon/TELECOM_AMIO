@@ -53,6 +53,14 @@ public class Mote implements Serializable {
     }
 
     /**
+     * Getter for the battery
+     * @return The remaining battery of the mote
+     */
+    public float getBattery() {
+        return _battery;
+    }
+
+    /**
      * Getter for the brightness
      * @return The brightness measured by the mote
      */
@@ -85,20 +93,21 @@ public class Mote implements Serializable {
     }
 
     /**
+     * Get the timestamp of the date on which the data was retrieved
+     *
+     * @return The associated timestamp
+     */
+    public long getTimestamp() {
+        return _timestamp;
+    }
+
+    /**
      * Evaluate whether or not the room in which the sensor is is lightened
      *
      * @return true if the room is lightened; false otherwise
      */
     public boolean isRoomLightened() {
         return _brightness > eu.telecomnancy.amio.notification.Constants.Thresholds.Lux.LIGHTED_ROOM;
-    }
-
-    /**
-     * Get the date on were the data where retrieved for the last time
-     * @return A Date object from the `timestamp` property
-     */
-    public Date lastUpdatedOn() {
-        return new Date(_timestamp);
     }
 
     /**

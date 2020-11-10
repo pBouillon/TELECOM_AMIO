@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.annotation.Nullable;
 
@@ -15,6 +16,9 @@ import java.util.Timer;
 import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.persistence.IotLabDatabase;
 import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
+import eu.telecomnancy.amio.persistence.daos.MoteDao;
+import eu.telecomnancy.amio.persistence.daos.RecordDao;
+import eu.telecomnancy.amio.persistence.entities.Record;
 
 /**
  * Polling service who will periodically fetch data from the server
@@ -88,21 +92,43 @@ public class PollingService extends Service {
      * @param motes Received payload of motes
      */
     private void recordMotesInDatabase(List<Mote> motes) {
+        MoteDao moteDao = _database.moteDao();
+        RecordDao recordDao = _database.recordDao();
+
         // Register all the missing motes in the database
         motes.stream()
                 // Filtering only the ones not existing in the database
                 .filter(mote
-                        -> !_database.moteDao().exists(mote.getName()))
+                        -> !moteDao.exists(mote.getName()))
                 // Converting the provided mote to its database representation
                 .map(mote
                         -> new eu.telecomnancy.amio.persistence.entities.Mote(mote.getName()))
-                // Creating the new record
+                // Storing the new motes
                 .forEach(mote -> {
-                    mote.moteId = (int) _database.moteDao().insert(mote);
+                    mote.moteId = moteDao.insert(mote);
                     Log.d(TAG, "New mote added in the database: " + mote);
                 });
 
-        // TODO: register their associated data
+        // Register the data retrieved
+        motes.stream()
+                // Creating the record from their value and name
+                .map(mote -> {
+                    long moteId = moteDao.getByName(mote.getName()).moteId;
+                    return new Pair<>(moteId, mote);
+                })
+                // Storing the new records
+                .forEach(pair -> {
+                    // Create the record from the mote id and the data originially retrieved
+                    Mote source = pair.second;
+                    Record record = new Record(pair.first, source.getBrightness(),
+                            source.getHumidity(), source.getBattery(), source.getTimestamp(),
+                            source.getTemperature());
+
+                    // Insert the newly created record
+                    record.recordId = recordDao.insert(record);
+
+                    Log.d(TAG, "New record added in the database: " + record);
+                });
     }
 
     /**

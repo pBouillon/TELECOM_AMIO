@@ -38,6 +38,14 @@ public interface MoteDao {
     List<Mote> getAll();
 
     /**
+     * Get a mote by its name
+     *
+     * @return The mote which name is the same as the provided one
+     */
+    @Query("SELECT * FROM mote WHERE name = :moteName")
+   Mote getByName(String moteName);
+
+    /**
      * Get all records of a mote
      *
      * @param moteName Name of the mote we are looking at
