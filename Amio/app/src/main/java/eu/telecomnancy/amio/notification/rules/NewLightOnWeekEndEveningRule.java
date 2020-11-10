@@ -12,6 +12,9 @@ import eu.telecomnancy.amio.notification.conditions.motes.IsAnyNewLightOn;
 import eu.telecomnancy.amio.notification.conditions.time.IsEvening;
 import eu.telecomnancy.amio.notification.conditions.time.IsWeekEnd;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
+import eu.telecomnancy.amio.persistence.IotLabDatabase;
+import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
+import eu.telecomnancy.amio.persistence.entities.RecordAndMote;
 import eu.telecomnancy.amio.polling.PollingService;
 
 /**
@@ -36,7 +39,7 @@ public class NewLightOnWeekEndEveningRule extends RuleBase {
         long currentTime = context.currentTime;
 
         boolean isActive = Stream.of(
-                new IsAnyNewLightOn(context.motes),
+                new IsAnyNewLightOn(context.consecutiveMoteMeasuresPairs),
                 new IsWeekEnd(currentTime),
                 new IsEvening(currentTime))
                 .allMatch(ICondition::evaluate);

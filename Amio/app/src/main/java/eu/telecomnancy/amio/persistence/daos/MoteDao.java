@@ -53,7 +53,7 @@ public interface MoteDao {
      */
     @Transaction
     @Query("SELECT * from mote WHERE name = :moteName")
-    List<MoteWithRecords> getAllRecordsForMote(String moteName);
+    List<MoteWithRecords> getAllRecordsForMoteByName(String moteName);
 
     /**
      * Insert a mote in the database

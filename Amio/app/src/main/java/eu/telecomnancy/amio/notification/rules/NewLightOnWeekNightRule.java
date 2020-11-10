@@ -35,7 +35,7 @@ public class NewLightOnWeekNightRule extends RuleBase {
         long currentTime = context.currentTime;
 
         boolean isActive =  Stream.of(
-                new IsAnyNewLightOn(context.motes),
+                new IsAnyNewLightOn(context.consecutiveMoteMeasuresPairs),
                 new IsNotWeekEnd(currentTime),
                 new IsNight(currentTime))
                 .allMatch(ICondition::evaluate);

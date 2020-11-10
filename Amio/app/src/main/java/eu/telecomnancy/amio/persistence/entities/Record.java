@@ -38,19 +38,19 @@ public class Record {
      * The brightness measured in lux
      */
     @ColumnInfo(name = "brightness")
-    public double brightness;
+    public float brightness;
 
     /**
      * The humidity measured in percentage
      */
     @ColumnInfo(name = "humidity")
-    public double humidity;
+    public float humidity;
 
     /**
      * The remaining battery of the mote in percentage
      */
     @ColumnInfo(name = "remaining_battery")
-    public double remainingBattery;
+    public float remainingBattery;
 
     /**
      * The timestamp corresponding to the moment where this data was retrieved
@@ -62,7 +62,7 @@ public class Record {
      * The temperature measured in Celsius
      */
     @ColumnInfo(name = "temperature")
-    public double temperature;
+    public float temperature;
 
     /**
      * Create a new record from the id of the mote it comes from
@@ -74,8 +74,8 @@ public class Record {
      * @param retrievedAt Timestamp at which the data was retrieved
      * @param temperature Temperature in Celsius
      */
-    public Record(long moteSourceId, double brightness, double humidity, double remainingBattery,
-                  long retrievedAt, double temperature) {
+    public Record(long moteSourceId, float brightness, float humidity, float remainingBattery,
+                  long retrievedAt, float temperature) {
         this.moteSourceId = moteSourceId;
 
         this.brightness = brightness;
@@ -85,6 +85,7 @@ public class Record {
         this.temperature = temperature;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "Record { " +

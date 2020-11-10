@@ -6,7 +6,7 @@ import androidx.room.Relation;
 import java.util.List;
 
 /**
- * Representation of a a mote with all the records it has retrieved
+ * Representation of a mote with all the records it has retrieved
  */
 public class MoteWithRecords {
 
