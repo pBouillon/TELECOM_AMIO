@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Custom collection of mote DTOs
+ *
  * @see MoteDto
  */
 public class MoteDtoCollection {

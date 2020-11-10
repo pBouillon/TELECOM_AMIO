@@ -19,6 +19,7 @@ public class MoteCollectionDtoAggregator {
 
     /**
      * Merge all DTOs held by this aggregator and create fully completed Motes
+     *
      * @return A collection of motes according to the data retrieved
      * @see Mote
      */
@@ -35,7 +36,8 @@ public class MoteCollectionDtoAggregator {
 
     /**
      * Associate a mote collection to specific label
-     * @param label Label categorizing the mote collection
+     *
+     * @param label           Label categorizing the mote collection
      * @param associatedMotes Associated collection of motes
      */
     public void aggregateMotesFor(String label, MoteDtoCollection associatedMotes) {

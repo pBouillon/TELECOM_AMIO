@@ -2,11 +2,13 @@ package eu.telecomnancy.amio.polling;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Timer;
 
@@ -104,6 +106,23 @@ public class PollingService extends Service {
     }
 
     /**
+     * Send a broadcast message that contain the mote list
+     *
+     * @param motes updated motes list
+     */
+    private void sendBroadcastMessage(List<Mote> motes) {
+        Intent broadcastMessage = new Intent(Constants.Broadcast.UPDATED_DATA);
+
+        Bundle moteBundle = new Bundle();
+        moteBundle.putSerializable(Constants.Broadcast.IDENTIFIER, (Serializable) motes);
+        broadcastMessage.putExtra(Constants.Broadcast.BUNDLE_IDENTIFIER, moteBundle);
+
+        sendBroadcast(broadcastMessage);
+
+        Log.d(TAG, "Broadcast message sent");
+    }
+
+    /**
      * Schedule the polling task
      *
      * @param delay Delay in milliseconds before task is to be executed
@@ -121,6 +140,10 @@ public class PollingService extends Service {
 
                 motes.forEach(mote
                         -> Log.d(TAG, mote.toString()));
+
+
+                // Broadcast the new data to the UI
+                sendBroadcastMessage(motes);
 
                 // Store the received motes
                 recordMotesInDatabase(motes);
