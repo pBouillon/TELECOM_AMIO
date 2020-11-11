@@ -85,26 +85,31 @@ public class IotLabAggregator {
     private MoteDtoCollection fetchAndRetrieveMoteCollectionFromUrl(String queryUrl)
             throws IOException {
         // Build the HTTP Request based on the query
-        Request request = new Request.Builder()
-                .url(queryUrl)
-                .build();
-
-        // Send the HTTP GET request to the API
-        Response response = _httpClient
-                .newCall(request)
-                .execute();
-
-        // Retrieve the payload of the request
-        ResponseBody payload = response.body();
-
-        // If any data is fetched, deserialize it into the appropriate object
         MoteDtoCollection moteDtoCollection;
         try {
+            Request request = new Request.Builder()
+                    .url(queryUrl)
+                    .build();
+
+            // Send the HTTP GET request to the API
+            Response response = _httpClient
+                    .newCall(request)
+                    .execute();
+
+            // Retrieve the payload of the request
+            ResponseBody payload = response.body();
+
+            // If any data is fetched, deserialize it into the appropriate object
+
+
             moteDtoCollection = (payload != null)
                     ? new Gson().fromJson(payload.string(), MoteDtoCollection.class)
                     : new MoteDtoCollection();
         } catch (JsonSyntaxException e) {
             Log.e(TAG, "Unable to parse recieved data");
+            moteDtoCollection = new MoteDtoCollection();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Malformed Url");
             moteDtoCollection = new MoteDtoCollection();
         }
         return moteDtoCollection;
