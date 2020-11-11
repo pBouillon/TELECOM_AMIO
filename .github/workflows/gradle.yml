@@ -27,7 +27,7 @@ jobs:
         cd Amio/
         chmod +x gradlew
         ./gradlew test --stacktrace
-        
+
   build:
     name: Build the project
     runs-on: ubuntu-latest
