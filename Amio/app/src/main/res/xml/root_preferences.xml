@@ -11,31 +11,5 @@
             android:title="@string/iot_lab_adress"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
-    <PreferenceCategory app:title="@string/notification_header">
-
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/start_hour_entries"
-            android:entryValues="@array/start_hour_values"
-            android:key="list_preference_1"
-            android:title="@string/notification_start_title" />
-        <ListPreference
-            android:defaultValue="1"
-            android:entries="@array/end_hour_entries"
-            android:entryValues="@array/end_hour_values"
-            android:key="list_preference_2"
-            android:title="@string/notification_end_title" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/device_header">
-
-        <SwitchPreferenceCompat
-            app:key="@string/vibrate_title"
-            app:summaryOff="@string/vibrate_summary_off"
-            app:summaryOn="@string/vibrate_summary_on"
-            app:title="@string/vibrate_title" />
-
-    </PreferenceCategory>
 
 </PreferenceScreen>

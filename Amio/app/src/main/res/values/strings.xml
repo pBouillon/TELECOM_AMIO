@@ -4,20 +4,9 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preference Titles -->
-    <string name="notification_header">Notifications</string>
-    <string name="device_header">Device</string>
-
-    <!-- Messages Preferences -->
-    <string name="notification_start_title">Notification start hour</string>
-    <string name="notification_end_title">Notification end hour</string>
-
-    <!-- Device Preferences -->
-    <string name="vibrate_title">Toogle vibrations</string>
-    <string name="vibrate_summary_on">Vibrate when new light is detected</string>
-    <string name="vibrate_summary_off">No vibration</string>
+    <string name="api_title">Web API</string>
 
     <!-- API Preferences -->
-    <string name="api_title">Web API</string>
     <string name="iot_lab_adress">Web API address</string>
 
     <!-- Main Activity Text -->

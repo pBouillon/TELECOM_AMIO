@@ -86,7 +86,7 @@ public abstract class PollingTaskBase extends TimerTask {
         // Perform all queries
         motesDataTypeQueries.forEach(query -> {
             try {
-                MoteDtoCollection associatedMoteDtos = _aggregator.handle(query);
+                MoteDtoCollection associatedMoteDtos = _aggregator.handle(query, _context);
                 dtoAggregator.aggregateMotesFor(query.label, associatedMoteDtos);
             } catch (IOException e) {
                 Log.e(TAG, "Failed to perform the HTTP requests", e);
