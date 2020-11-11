@@ -1,5 +1,6 @@
 package eu.telecomnancy.amio.notification.conditions.motes;
 
+import eu.telecomnancy.amio.iotlab.entities.Mote;
 import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
 import eu.telecomnancy.amio.notification.Constants;
 
@@ -21,8 +22,7 @@ public class IsAnyNewLightOn extends MotesCondition {
     public boolean evaluate() {
         return _motes.toList()
                 .stream()
-                .anyMatch(mote ->
-                        mote.getBrightness() >= Constants.Thresholds.Lux.LIGHTED_ROOM);
+                .anyMatch(Mote::isRoomLightened);
     }
 
 }

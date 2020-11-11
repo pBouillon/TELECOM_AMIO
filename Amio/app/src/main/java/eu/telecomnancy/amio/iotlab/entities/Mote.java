@@ -2,6 +2,7 @@ package eu.telecomnancy.amio.iotlab.entities;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import eu.telecomnancy.amio.iotlab.Constants;
@@ -11,7 +12,7 @@ import eu.telecomnancy.amio.iotlab.dto.MoteDto;
  * Logical representation of a mote
  * @see MoteDto For the its API representation
  */
-public class Mote {
+public class Mote implements Serializable {
 
     /**
      * Current battery level of the mote
@@ -84,6 +85,15 @@ public class Mote {
     }
 
     /**
+     * Evaluate whether or not the room in which the sensor is is lightened
+     *
+     * @return true if the room is lightened; false otherwise
+     */
+    public boolean isRoomLightened() {
+        return _brightness > eu.telecomnancy.amio.notification.Constants.Thresholds.Lux.LIGHTED_ROOM;
+    }
+
+    /**
      * Get the date on were the data where retrieved for the last time
      * @return A Date object from the `timestamp` property
      */
@@ -112,7 +122,7 @@ public class Mote {
                 _temperature = measure;
                 break;
             default:
-                throw new IllegalArgumentException("Unknown property '" + moteDto.label +"'");
+                throw new IllegalArgumentException("Unknown property '" + moteDto.label + "'");
         }
 
         // Update the timestamp to the most recent measure
