@@ -9,7 +9,6 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.List;
 import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.polling.Constants;
 import eu.telecomnancy.amio.polling.PollingService;
-import eu.telecomnancy.amio.ui.main.MainViewModel;
 import eu.telecomnancy.amio.ui.main.IMoteUpdateWatcher;
+import eu.telecomnancy.amio.ui.main.MainViewModel;
 import eu.telecomnancy.amio.ui.main.MoteUpdateBroadcastReceiver;
 import eu.telecomnancy.amio.ui.main.mote.MoteListFragment;
 
@@ -37,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
-
+/*
         Toolbar myToolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(myToolbar);
+        setSupportActionBar(myToolbar);*/
 
         // Replace the container layout with the Recycler view fragment
         getSupportFragmentManager()
