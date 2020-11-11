@@ -1,5 +1,7 @@
 package eu.telecomnancy.amio.notification.rules;
 
+import android.util.Log;
+
 import org.jeasy.rules.annotation.Rule;
 
 import java.util.stream.Stream;
@@ -18,6 +20,11 @@ import eu.telecomnancy.amio.notification.flags.NotificationType;
         description = "When a new light is detected on the week's night, fire the event")
 public class NewLightOnWeekNightRule extends RuleBase {
 
+    /**
+     * Android logging tag for this class
+     */
+    private static final String TAG = NewLightOnWeekNightRule.class.getName();
+
     @Override
     public NotificationType getNotificationTargets() {
         return NotificationType.EMAIL;
@@ -27,11 +34,15 @@ public class NewLightOnWeekNightRule extends RuleBase {
     public boolean isActiveWhen(EventContext context) {
         long currentTime = context.currentTime;
 
-        return Stream.of(
-                new IsAnyNewLightOn(context.motes),
+        boolean isActive =  Stream.of(
+                new IsAnyNewLightOn(context.consecutiveMoteMeasuresPairs),
                 new IsNotWeekEnd(currentTime),
                 new IsNight(currentTime))
                 .allMatch(ICondition::evaluate);
+
+        Log.d(TAG, "Rule evaluated to " + isActive);
+
+        return isActive;
     }
 
 }

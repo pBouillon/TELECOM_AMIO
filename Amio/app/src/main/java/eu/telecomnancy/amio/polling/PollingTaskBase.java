@@ -15,9 +15,10 @@ import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesHumidityQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesTemperatureQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
 import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
-import eu.telecomnancy.amio.iotlab.entities.Mote;
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.Mote;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 import eu.telecomnancy.amio.notification.dispatchers.EventDispatcher;
+import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
  * Custom task to be executed to poll the iot lab's server
@@ -37,7 +38,22 @@ public abstract class PollingTaskBase extends TimerTask {
     /**
      * Rule engine wrapper for event dispatching
      */
-    private final EventDispatcher _dispatcher = new EventDispatcher();
+    private final EventDispatcher _dispatcher;
+
+    /**
+     * Context wrapping the polling data and ecosystem
+     */
+    private final PollingContext _context;
+
+    /**
+     * Create a new polling task
+     *
+     * @param context Context wrapping the polling data and ecosystem
+     */
+    public PollingTaskBase(PollingContext context) {
+        _context = context;
+        _dispatcher = new EventDispatcher(_context);
+    }
 
     /**
      * Define a custom callback method to be executed when the task has run its job
@@ -86,18 +102,20 @@ public abstract class PollingTaskBase extends TimerTask {
         Log.d(TAG, "Polling task triggered");
 
         // Retrieve the latest data from the motes
-        Log.i(TAG, "Retrieving motes' latest data");
+        Log.i(TAG, "Retrieving motes latest data");
         IMoteCollection _motes = getLatestMotes();
-        Log.i(TAG, "Data retrieved");
 
         // Call the used-defined callback
-        Log.i(TAG, "Calling to the callback with the retrieved motes");
+        Log.i(TAG, "Calling the callback with the retrieved motes");
         callback(_motes.toList());
 
         // Fire notifications
-        Log.i(TAG, "Dispatching notification for the retrieved motes");
-        _dispatcher.dispatchNotificationFor(_motes);
-        Log.i(TAG, "Notifications dispatched");
+        if (!_motes.isEmpty()) {
+            Log.i(TAG, "Dispatching notification for the retrieved motes");
+            _dispatcher.dispatchNotificationFor(_motes);
+        } else {
+            Log.w(TAG, "No mote retrieved, skipping the notification dispatch");
+        }
 
         Log.d(TAG, "Polling task executed");
     }

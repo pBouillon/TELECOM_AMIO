@@ -1,11 +1,11 @@
-package eu.telecomnancy.amio.iotlab.entities.collections;
+package eu.telecomnancy.amio.iotlab.models.collections;
 
 import androidx.annotation.Nullable;
 
 import java.util.List;
 
 import eu.telecomnancy.amio.iotlab.dto.MoteDto;
-import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 
 /**
  * Defines a Mote collection

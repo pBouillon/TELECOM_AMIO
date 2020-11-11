@@ -3,9 +3,9 @@ package eu.telecomnancy.amio.entities.collections;
 import org.junit.jupiter.api.Test;
 
 import eu.telecomnancy.amio.iotlab.dto.MoteDto;
-import eu.telecomnancy.amio.iotlab.entities.Mote;
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
-import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
+import eu.telecomnancy.amio.iotlab.models.Mote;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.MoteCollection;
 import eu.telecomnancy.amio.utils.factories.MoteDtoFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

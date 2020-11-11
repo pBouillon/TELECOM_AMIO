@@ -3,9 +3,9 @@ package eu.telecomnancy.amio.iotlab.dto;
 import java.util.HashMap;
 import java.util.Map;
 
-import eu.telecomnancy.amio.iotlab.entities.Mote;
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
-import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
+import eu.telecomnancy.amio.iotlab.models.Mote;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.MoteCollection;
 
 /**
  * Aggregator for all motes DTOs, provide an API to merge all of them into concrete entities

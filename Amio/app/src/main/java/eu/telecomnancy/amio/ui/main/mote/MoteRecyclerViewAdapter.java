@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import eu.telecomnancy.amio.R;
-import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.ui.commons.FormatProvider;
 
 /**
