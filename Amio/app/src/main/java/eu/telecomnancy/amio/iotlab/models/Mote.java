@@ -1,15 +1,15 @@
-package eu.telecomnancy.amio.iotlab.entities;
+package eu.telecomnancy.amio.iotlab.models;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import eu.telecomnancy.amio.iotlab.Constants;
 import eu.telecomnancy.amio.iotlab.dto.MoteDto;
 
 /**
  * Logical representation of a mote
+ *
  * @see MoteDto For the its API representation
  */
 public class Mote implements Serializable {
@@ -46,10 +46,39 @@ public class Mote implements Serializable {
 
     /**
      * Default constructor
+     *
      * @param name Mote's name
      */
     public Mote(String name) {
         _name = name;
+    }
+
+    /**
+     * Specified constructor to generate a mote from all of its values
+     *
+     * @param battery Current battery level of the mote
+     * @param brightness Brightness value retrieved by the mote
+     * @param humidity Humidity value retrieved by the mote
+     * @param name Mote's name
+     * @param temperature Temperature value retrieved by the mote
+     * @param timestamp Timestamp of the last update of this mote
+     */
+    public Mote(float battery, float brightness, float humidity, String name,
+                float temperature, long timestamp) {
+        _battery = battery;
+        _brightness = brightness;
+        _humidity = humidity;
+        _name = name;
+        _temperature = temperature;
+        _timestamp = timestamp;
+    }
+
+    /**
+     * Getter for the battery
+     * @return The remaining battery of the mote
+     */
+    public float getBattery() {
+        return _battery;
     }
 
     /**
@@ -85,6 +114,15 @@ public class Mote implements Serializable {
     }
 
     /**
+     * Get the timestamp of the date on which the data was retrieved
+     *
+     * @return The associated timestamp
+     */
+    public long getTimestamp() {
+        return _timestamp;
+    }
+
+    /**
      * Evaluate whether or not the room in which the sensor is is lightened
      *
      * @return true if the room is lightened; false otherwise
@@ -94,15 +132,8 @@ public class Mote implements Serializable {
     }
 
     /**
-     * Get the date on were the data where retrieved for the last time
-     * @return A Date object from the `timestamp` property
-     */
-    public Date lastUpdatedOn() {
-        return new Date(_timestamp);
-    }
-
-    /**
-     * Merge a mote DTO's data into the mote
+     * Merge a mote DTO data into the mote
+     *
      * @param moteDto The DTO to be merged
      */
     public void merge(MoteDto moteDto) {

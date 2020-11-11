@@ -4,8 +4,8 @@ import java.util.Date;
 
 import eu.telecomnancy.amio.iotlab.Constants;
 import eu.telecomnancy.amio.iotlab.dto.MoteDto;
-import eu.telecomnancy.amio.iotlab.entities.collections.IMoteCollection;
-import eu.telecomnancy.amio.iotlab.entities.collections.MoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.MoteCollection;
 
 /**
  * Factory to generate IMoteCollection fixture

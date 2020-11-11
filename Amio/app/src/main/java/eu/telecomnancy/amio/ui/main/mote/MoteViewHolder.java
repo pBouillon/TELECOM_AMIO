@@ -4,11 +4,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import eu.telecomnancy.amio.R;
-import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 
 /**
  * Represent all view fields on each items in the mote recycler view

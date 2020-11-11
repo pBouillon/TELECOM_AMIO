@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import java.util.List;
 
-import eu.telecomnancy.amio.iotlab.entities.Mote;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.polling.Constants;
 
 /**
