@@ -4,7 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceFragmentCompat;
+
+import eu.telecomnancy.amio.ui.settings.SettingsMainFragment;
 
 /**
  * Activity to gather the user settings
@@ -19,12 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings, new PreferenceFragmentCompat() {
-                    @Override
-                    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-                        setPreferencesFromResource(R.xml.root_preferences, rootKey);
-                    }
-                })
+                .replace(R.id.settings, new SettingsMainFragment())
                 .commit();
 
         ActionBar actionBar = getSupportActionBar();

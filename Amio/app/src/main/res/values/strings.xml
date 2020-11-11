@@ -5,21 +5,31 @@
 
     <!-- Preference Titles -->
     <string name="notification_header">Notifications</string>
-    <string name="device_header">Appareil</string>
+    <string name="device_header">Device</string>
 
     <!-- Messages Preferences -->
-    <string name="notification_start_title">Heure de début des notifications</string>
-    <string name="notification_end_title">Heure de fin des notifications</string>
+    <string name="notification_start_title">Notification start hour</string>
+    <string name="notification_end_title">Notification end hour</string>
 
     <!-- Device Preferences -->
-    <string name="vibrate_title">Activer les vibrations</string>
-    <string name="vibrate_summary_on">Vibrations activées lors de la détection d\'une nouvelle lumière</string>
-    <string name="vibrate_summary_off">Vibrations désactivées</string>
-    <string name="mail_header">Mails</string>
-    <string name="mail_adress_title">Adresse mail à notifier</string>
+    <string name="vibrate_title">Toogle vibrations</string>
+    <string name="vibrate_summary_on">Vibrate when new light is detected</string>
+    <string name="vibrate_summary_off">No vibration</string>
+
+    <!-- API Preferences -->
+    <string name="api_title">Web API</string>
+    <string name="iot_lab_adress">Web API address</string>
+
+    <!-- Main Activity Text -->
     <string name="sensor_id_text_holder">Sensor %1$s</string>
     <string name="light_text_holder">Light : %1$s</string>
     <string name="temperature_text_holder">Temperature : %1$s</string>
+
+    <!-- Default Preferences -->
+    <string name="default_api_adress">http://iotlab.telecomnancy.eu:8080/iotlab/</string>
+
+    <!-- Image Descriptions -->
     <string name="settings">Settings</string>
     <string name="light_bulb">Light bulb</string>
+
 </resources>

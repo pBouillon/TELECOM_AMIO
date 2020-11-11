@@ -1,14 +1,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/mail_header">
+    <PreferenceCategory android:title="@string/api_title">
 
         <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="edit_text_preference_1"
+            android:defaultValue="@string/default_api_adress"
+            android:key="@string/iot_lab_adress"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/mail_adress_title"
+            android:title="@string/iot_lab_adress"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/notification_header">
@@ -31,7 +31,7 @@
     <PreferenceCategory app:title="@string/device_header">
 
         <SwitchPreferenceCompat
-            app:key="sync"
+            app:key="@string/vibrate_title"
             app:summaryOff="@string/vibrate_summary_off"
             app:summaryOn="@string/vibrate_summary_on"
             app:title="@string/vibrate_title" />
