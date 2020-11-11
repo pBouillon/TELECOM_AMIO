@@ -13,13 +13,6 @@ import org.jetbrains.annotations.NotNull;
  * For its logical representation
  * @see eu.telecomnancy.amio.iotlab.models.Mote
  */
-/**
- * Mote representation
- * A mote is a single sensor that will retrieve data of several types
- *
- * For its logical representation
- * @see eu.telecomnancy.amio.iotlab.models.Mote
- */
 @Entity
 public class Mote {
 
