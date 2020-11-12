@@ -33,7 +33,7 @@ public abstract class PollingTaskBase extends TimerTask {
     /**
      * CQRS aggregator to handle command and queries
      */
-    private final IotLabAggregator _aggregator = new IotLabAggregator();
+    private final IotLabAggregator _aggregator;
 
     /**
      * Rule engine wrapper for event dispatching
@@ -52,6 +52,8 @@ public abstract class PollingTaskBase extends TimerTask {
      */
     public PollingTaskBase(PollingContext context) {
         _context = context;
+
+        _aggregator = new IotLabAggregator(_context);
         _dispatcher = new EventDispatcher(_context);
     }
 
@@ -88,7 +90,8 @@ public abstract class PollingTaskBase extends TimerTask {
             try {
                 MoteDtoCollection associatedMoteDtos = _aggregator.handle(query);
                 dtoAggregator.aggregateMotesFor(query.label, associatedMoteDtos);
-            } catch (IOException e) {
+            } catch (IOException
+                    | IllegalStateException e) {
                 Log.e(TAG, "Failed to perform the HTTP requests", e);
             }
         });

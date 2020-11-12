@@ -9,4 +9,30 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <string-array name="start_hour_entries">
+        <item>17H</item>
+        <item>18H</item>
+        <item>19H</item>
+        <item>20H</item>
+    </string-array>
+
+    <string-array name="start_hour_values">
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+    </string-array>
+
+    <string-array name="end_hour_entries">
+        <item>21H</item>
+        <item>22H</item>
+        <item>23H</item>
+    </string-array>
+
+    <string-array name="end_hour_values">
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+    </string-array>
 </resources>

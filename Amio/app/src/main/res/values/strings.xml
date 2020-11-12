@@ -1,25 +1,26 @@
 <resources>
-    <string name="app_name">Amio</string>
+
+    <string name="app_name">IoTLab sensors</string>
+
     <!-- Settings Activity Title -->
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="api_title">Web API</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <!-- API Preferences -->
+    <string name="iot_lab_address">Web API address</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- Main Activity Text -->
     <string name="sensor_id_text_holder">Sensor %1$s</string>
     <string name="light_text_holder">Light : %1$s</string>
     <string name="temperature_text_holder">Temperature : %1$s</string>
-    <string name="settings">Settings</string>
-    <string name="light_bulb">Light bulb</string>
+
+    <!-- Default Preferences -->
+    <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
+
+    <!-- Image Descriptions -->
+    <string name="settings" translatable="false">Settings</string>
+    <string name="light_bulb" translatable="false">Light bulb</string>
+
 </resources>
