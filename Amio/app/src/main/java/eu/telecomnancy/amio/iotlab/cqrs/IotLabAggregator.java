@@ -15,6 +15,7 @@ import eu.telecomnancy.amio.iotlab.Constants;
 import eu.telecomnancy.amio.iotlab.cqrs.query.IQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
+import eu.telecomnancy.amio.polling.PollingService;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,7 +29,10 @@ import okhttp3.ResponseBody;
  */
 public class IotLabAggregator {
 
-    private static String TAG = "IotLabAggregator";
+    /**
+     * Android logging tag for this class
+     */
+    private static final String TAG = IotLabAggregator.class.getName();
 
     /**
      * Inner HttpClient used for HTTP requests
