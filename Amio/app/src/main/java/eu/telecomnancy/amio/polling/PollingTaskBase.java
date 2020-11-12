@@ -90,7 +90,8 @@ public abstract class PollingTaskBase extends TimerTask {
             try {
                 MoteDtoCollection associatedMoteDtos = _aggregator.handle(query);
                 dtoAggregator.aggregateMotesFor(query.label, associatedMoteDtos);
-            } catch (IOException e) {
+            } catch (IOException
+                    | IllegalStateException e) {
                 Log.e(TAG, "Failed to perform the HTTP requests", e);
             }
         });

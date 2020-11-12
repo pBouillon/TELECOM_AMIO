@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity);
-/*
-        Toolbar myToolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(myToolbar);*/
 
         // Replace the container layout with the Recycler view fragment
         getSupportFragmentManager()

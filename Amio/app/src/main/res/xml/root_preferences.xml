@@ -4,11 +4,11 @@
     <PreferenceCategory android:title="@string/api_title">
 
         <EditTextPreference
-            android:defaultValue="@string/default_api_adress"
-            android:key="@string/iot_lab_adress"
+            android:defaultValue="@string/default_api_address"
+            android:key="@string/iot_lab_address"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/iot_lab_adress"
+            android:title="@string/iot_lab_address"
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 

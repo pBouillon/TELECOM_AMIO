@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Amio</string>
+
+    <string name="app_name">IoTLab sensors</string>
+
     <!-- Settings Activity Title -->
     <string name="title_activity_settings">Settings</string>
 
@@ -7,7 +9,7 @@
     <string name="api_title">Web API</string>
 
     <!-- API Preferences -->
-    <string name="iot_lab_adress">Web API address</string>
+    <string name="iot_lab_address">Web API address</string>
 
     <!-- Main Activity Text -->
     <string name="sensor_id_text_holder">Sensor %1$s</string>
@@ -15,10 +17,10 @@
     <string name="temperature_text_holder">Temperature : %1$s</string>
 
     <!-- Default Preferences -->
-    <string name="default_api_adress">http://iotlab.telecomnancy.eu:8080/iotlab/</string>
+    <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
 
     <!-- Image Descriptions -->
-    <string name="settings">Settings</string>
-    <string name="light_bulb">Light bulb</string>
+    <string name="settings" translatable="false">Settings</string>
+    <string name="light_bulb" translatable="false">Light bulb</string>
 
 </resources>

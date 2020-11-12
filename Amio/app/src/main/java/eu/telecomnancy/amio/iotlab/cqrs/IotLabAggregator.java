@@ -1,11 +1,8 @@
 package eu.telecomnancy.amio.iotlab.cqrs;
 
-import android.util.Log;
-
 import androidx.preference.PreferenceManager;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -15,7 +12,6 @@ import eu.telecomnancy.amio.iotlab.Constants;
 import eu.telecomnancy.amio.iotlab.cqrs.query.IQuery;
 import eu.telecomnancy.amio.iotlab.cqrs.query.mote.GetMotesDataTypeQuery;
 import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
-import eu.telecomnancy.amio.polling.PollingService;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -55,15 +51,23 @@ public class IotLabAggregator {
      * @return The associated API route
      */
     private String generateRouteForLabel(String label) {
-        String baseUri = _context.androidContext
+        // Retrieve the root URL route from the preferences
+        String baseUrlArgName = _context.androidContext
                 .getResources()
-                .getString(R.string.iot_lab_adress);
+                .getString(R.string.iot_lab_address);
 
         String baseUrl = PreferenceManager
                 .getDefaultSharedPreferences(_context.androidContext)
-                .getString(baseUri, null);
+                .getString(baseUrlArgName, null);
 
-        return baseUrl + Constants.Urls.API + "/" + label + "/last";
+        // If the root URL route has a trailing '/', remove it
+        int baseUrlLength = baseUrl.length();
+        if (baseUrl.charAt(baseUrlLength - 1) == '/') {
+            baseUrl = baseUrl.substring(0, baseUrlLength - 1);
+        }
+
+        // Return the forged string
+        return baseUrl + Constants.Urls.API_BASE_URL + "/" + label + "/last";
     }
 
     /**
@@ -73,9 +77,10 @@ public class IotLabAggregator {
      * @return The MoteDtoCollection holding all requested data according to the provided query
      * @throws IOException If any issue happened with the HTTP call
      * @throws InvalidParameterException If the query can't be handled by the aggregator
+     * @throws IllegalStateException If the returned payload is not JSON failed to be deserialize
      */
     public MoteDtoCollection handle(IQuery query)
-            throws IOException, InvalidParameterException {
+            throws IOException, InvalidParameterException, IllegalStateException {
         // Flag to check whether or not this query is forged to request a specific value from all
         // motes
         boolean isMoteDataTypeQuery = query instanceof GetMotesDataTypeQuery;
@@ -102,9 +107,10 @@ public class IotLabAggregator {
      * @param queryUrl Url to be queried
      * @return A mote collection with its object mapped to the JSON response of the request
      * @throws IOException If any issue happened with the HTTP call
+     * @throws IllegalStateException If the returned payload is not JSON and Gson failed to parse it
      */
     private MoteDtoCollection fetchAndRetrieveMoteCollectionFromUrl(String queryUrl)
-            throws IOException {
+            throws IOException, IllegalStateException {
         // Build the HTTP Request based on the query
         MoteDtoCollection moteDtoCollection;
 
@@ -121,8 +127,6 @@ public class IotLabAggregator {
         ResponseBody payload = response.body();
 
         // If any data is fetched, deserialize it into the appropriate object
-
-
         moteDtoCollection = (payload != null)
                 ? new Gson().fromJson(payload.string(), MoteDtoCollection.class)
                 : new MoteDtoCollection();
