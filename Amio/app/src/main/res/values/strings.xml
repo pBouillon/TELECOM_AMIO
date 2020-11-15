@@ -22,5 +22,9 @@
     <!-- Image Descriptions -->
     <string name="settings" translatable="false">Settings</string>
     <string name="light_bulb" translatable="false">Light bulb</string>
+    <string name="channel_name" translatable="false">IoTLab</string>
+    <string name="channel_description" translatable="false">IotLab notification channel</string>
+    <string name="notification_title">Abnormal activity detected</string>
+    <string name="notification_content">An abnormal activity has been deteted, tap to see the details</string>
 
 </resources>

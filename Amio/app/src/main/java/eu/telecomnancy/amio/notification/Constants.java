@@ -97,6 +97,18 @@ public final class Constants {
     }
 
     /**
+     * Notification constants
+     */
+    public static final class Notification {
+
+        /**
+         * Name of the notification channel used by the application
+         */
+        public static final String CHANNEL_ID = "eu.telecomnancy.amio.notification";
+
+    }
+
+    /**
      * Define fixed thresholds for specific domains
      */
     public static final class Thresholds {
