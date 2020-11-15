@@ -29,7 +29,7 @@ public final class NotificationDispatcher {
      */
     private static final List<Class<? extends INotifier>> notifierClasses = Arrays.asList(
             // Android notifiers
-            ToastNotifier.class,
+            PushNotifier.class,
             VibratorNotifier.class,
 
             // Email notifiers
