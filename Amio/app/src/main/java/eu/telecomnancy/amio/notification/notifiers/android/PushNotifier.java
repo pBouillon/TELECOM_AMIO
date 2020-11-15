@@ -86,7 +86,7 @@ public class PushNotifier extends AndroidNotifier {
                         payload.eventContext.pollingContext.androidContext)
                 .notify(notificationId, notification);
 
-        Log.d(TAG, "Push notification of id " + notification + " sent");
+        Log.d(TAG, "Push notification of id " + notificationId + " sent: " + notification);
     }
 
 }
