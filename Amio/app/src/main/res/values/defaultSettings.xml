@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Key -->
+    <string name="api_address_key" translatable="false">api_adress</string>
+    <string name="polling_delay_key" translatable="false">polling_delay</string>
+
+    <!-- Settings default values-->
+    <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
+    <string name="default_polling_time" translatable="false">15</string>
+</resources>

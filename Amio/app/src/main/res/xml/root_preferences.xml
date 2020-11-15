@@ -4,8 +4,18 @@
     <PreferenceCategory android:title="@string/api_title">
 
         <EditTextPreference
+            android:defaultValue="@string/default_polling_time"
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="@string/polling_delay_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/polling_delay"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
             android:defaultValue="@string/default_api_address"
-            android:key="@string/iot_lab_address"
+            android:key="@string/api_address_key"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/iot_lab_address"

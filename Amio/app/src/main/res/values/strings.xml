@@ -10,14 +10,12 @@
 
     <!-- API Preferences -->
     <string name="iot_lab_address">Web API address</string>
+    <string name="polling_delay">Time between 2 data fetch (in seconds)</string>
 
     <!-- Main Activity Text -->
     <string name="sensor_id_text_holder">Sensor %1$s</string>
     <string name="light_text_holder">Light : %1$s</string>
     <string name="temperature_text_holder">Temperature : %1$s</string>
-
-    <!-- Default Preferences -->
-    <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
 
     <!-- Image Descriptions -->
     <string name="settings" translatable="false">Settings</string>

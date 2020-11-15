@@ -4,6 +4,7 @@
     <string name="title_activity_settings">Options</string>
     <string name="api_title">API Web</string>
     <string name="iot_lab_address">Adresse web de l\'API</string>
+    <string name="polling_delay">Temps entre 2 récupération de données (en secondes)</string>
     <string name="sensor_id_text_holder">Capteur %1$s</string>
     <string name="light_text_holder">Luminosité: %1$s</string>
     <string name="temperature_text_holder">Température: %1$s</string>

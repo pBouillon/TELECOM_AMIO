@@ -54,11 +54,16 @@ public class IotLabAggregator {
         // Retrieve the root URL route from the preferences
         String baseUrlArgName = _context.androidContext
                 .getResources()
-                .getString(R.string.iot_lab_address);
+                .getString(R.string.api_address_key);
+
+        // If the preferenceManager don't find the preference, we take the default value
+        String defaultPollingAdress = _context.androidContext
+                .getResources()
+                .getString(R.string.default_api_address);
 
         String baseUrl = PreferenceManager
                 .getDefaultSharedPreferences(_context.androidContext)
-                .getString(baseUrlArgName, null);
+                .getString(baseUrlArgName, defaultPollingAdress);
 
         // If the root URL route has a trailing '/', remove it
         int baseUrlLength = baseUrl.length();

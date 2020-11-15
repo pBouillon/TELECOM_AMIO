@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.Nullable;
+import androidx.preference.PreferenceManager;
 
 import java.io.Serializable;
 import java.util.List;
@@ -139,14 +140,45 @@ public class PollingService extends Service {
         // Initialize the notification channel
         initializeNotificationChannel();
 
-        // Create the timer and plan the polling task every POLLING_DELAY ms
+        int intPollingDelay = getIntPollingDelay();
+        // Create the timer and plan the polling task every POLLING_DELAY ms (polling delay can be changed in settings)
         _timer = new Timer();
-        schedulePollingTask(0, Constants.Polling.POLLING_DELAY);
+        schedulePollingTask(0, intPollingDelay * 1000);
 
         Log.i(TAG, "Service started");
 
         // If the service get killed, after returning from here, restart it
         return START_STICKY;
+    }
+
+    private int getIntPollingDelay() {
+        String pollingDellayArgName = getApplicationContext()
+                .getResources()
+                .getString(R.string.polling_delay_key);
+
+        // If the preferenceManager don't find the preference, we take the default value
+        String defaultPollingDelay = getApplicationContext()
+                .getResources()
+                .getString(R.string.default_polling_time);
+
+        String pollingDelay = PreferenceManager.getDefaultSharedPreferences(this)
+                .getString(pollingDellayArgName, defaultPollingDelay);
+
+        int intPollingDelay;
+        try {
+            intPollingDelay = Integer.parseInt(pollingDelay);
+            // If the value is not correct
+            if (intPollingDelay < 1) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            intPollingDelay = Integer.parseInt(defaultPollingDelay);
+            // Reset the default value
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit().putString(pollingDellayArgName, defaultPollingDelay).apply();
+            Log.e(TAG, "Polling delay preference is not a number -> resetting default value");
+        }
+        return intPollingDelay;
     }
 
     /**
