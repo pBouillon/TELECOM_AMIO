@@ -1,0 +1,36 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/smtp_address_title">
+
+        <EditTextPreference
+            android:defaultValue="@string/default_smtp_host"
+            android:key="@string/smtp_host_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/smtp_host"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:defaultValue="@string/default_smtp_port"
+            android:key="@string/smtp_port_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/smtp_port"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/smtp_credentials_title">
+
+        <EditTextPreference
+            android:key="@string/smtp_username_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/smtp_username"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:key="@string/smtp_password_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/smtp_password" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

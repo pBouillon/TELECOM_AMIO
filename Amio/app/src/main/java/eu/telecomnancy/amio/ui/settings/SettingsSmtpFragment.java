@@ -11,20 +11,15 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import eu.telecomnancy.amio.R;
 
-/**
- * A fragment representing a field to be changed in the preferences
- */
-public class SettingsMainFragment extends PreferenceFragmentCompat {
-
+public class SettingsSmtpFragment extends PreferenceFragmentCompat {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(getResources().getString(R.string.title_activity_settings));
+        getActivity().setTitle(getResources().getString(R.string.title_activity_smtp));
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        setPreferencesFromResource(R.xml.smtp_preferences, rootKey);
     }
-
 }
