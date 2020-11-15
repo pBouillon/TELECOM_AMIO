@@ -1,5 +1,7 @@
 package eu.telecomnancy.amio.polling;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Timer;
 
+import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.persistence.IotLabDatabase;
 import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
@@ -76,6 +79,33 @@ public class PollingService extends Service {
         };
     }
 
+    /**
+     * Initialize the notification channel to allow the task to further send push notifications
+      */
+    private void initializeNotificationChannel() {
+        // Retrieve channel details
+        CharSequence name = getString(R.string.channel_name);
+        String description = getString(R.string.channel_description);
+
+        // Set channel options
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+        // Create the channel
+        NotificationChannel channel = new NotificationChannel(
+                eu.telecomnancy.amio.notification.Constants.Notification.CHANNEL_ID,
+                name,
+                importance);
+
+        channel.setDescription(description);
+
+        // Register the channel with the system; you can't change the importance
+        // or other notification behaviors after this
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+
+        Log.i(TAG, "Notification channel initialized");
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -105,6 +135,9 @@ public class PollingService extends Service {
 
         // Initialize the database access
         _database = IotLabDatabaseProvider.getOrCreateInstance(getApplicationContext());
+
+        // Initialize the notification channel
+        initializeNotificationChannel();
 
         // Create the timer and plan the polling task every POLLING_DELAY ms
         _timer = new Timer();

@@ -10,7 +10,7 @@ public class NotificationContext {
     /**
      * Context of the event to be propagated
      */
-    public final EventContext context;
+    public final EventContext eventContext;
 
     /**
      * Type of the notification to be triggered
@@ -21,10 +21,10 @@ public class NotificationContext {
      * Create the notification context
      *
      * @param notificationType Type of the notification to be triggered
-     * @param notificationContext Context of the event to be propagated
+     * @param eventContext Context of the event to be propagated
      */
-    public NotificationContext(NotificationType notificationType, EventContext notificationContext) {
-        context = notificationContext;
+    public NotificationContext(NotificationType notificationType, EventContext eventContext) {
+        this.eventContext = eventContext;
         type = notificationType;
     }
 
