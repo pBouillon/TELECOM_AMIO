@@ -39,60 +39,9 @@ public final class Constants {
                 + "</html>";
 
         /**
-         * Default mail receiver
-         */
-        public static final String RECEIVER = "pierre.bouillon@telecomnancy.net";
-
-        /**
-         * Default mail sender
-         */
-        public static final String SENDER = "iotlab-notifier@telecomnancy.net";
-
-        /**
          * Mail subject
          */
         public static final String SUBJECT = "[IoTLab activity report] Abnormal activity detected";
-
-        /**
-         * SMTP server constants
-         */
-        public static final class Smtp {
-
-            /**
-             * SMTP configuration
-             */
-            public static final class Config {
-
-                /**
-                 * SMTP port
-                 */
-                public static final long PORT = 587;
-
-                /**
-                 * SMTP address
-                 */
-                public static final String HOST = "smtp.gmail.com";
-
-            }
-
-            /**
-             * SMTP credentials
-             */
-            public static final class Credentials {
-
-                /**
-                 * Username used to access the SMTP service
-                 */
-                public static final String LOGIN = "";
-
-                /**
-                 * Password to access the SMTP service
-                 */
-                public static final String PASSWORD = "";
-
-            }
-
-        }
 
     }
 

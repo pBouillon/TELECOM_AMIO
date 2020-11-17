@@ -21,6 +21,13 @@
     <PreferenceCategory android:title="@string/smtp_credentials_title">
 
         <EditTextPreference
+            android:defaultValue="@string/default_mail_from_address"
+            android:key="@string/mail_from_address_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/mail_from_address"
+            app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
             android:key="@string/smtp_username_key"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -31,6 +38,14 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/smtp_password" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/smtp_try_it_title">
+
+        <Preference
+            android:key="@string/smtp_try_it_key"
+            android:title="@string/smtp_try_it">
+
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

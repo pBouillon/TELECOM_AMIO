@@ -4,12 +4,15 @@
     <PreferenceCategory android:title="@string/notifications_title">
 
         <EditTextPreference
-            android:defaultValue="@string/default_mail_from_address"
-            android:key="@string/mail_from_address_key"
+            android:key="@string/mail_to_address_key"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/mail_from_address"
+            android:title="@string/mail_to_address"
             app:useSimpleSummaryProvider="true" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/enable_mail_notification_key"
+            android:title="@string/enable_mail_notification" />
 
         <Preference
             android:title="@string/smtp_server"

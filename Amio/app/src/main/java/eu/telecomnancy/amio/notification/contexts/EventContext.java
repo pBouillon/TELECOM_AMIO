@@ -1,10 +1,12 @@
 package eu.telecomnancy.amio.notification.contexts;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import eu.telecomnancy.amio.iotlab.models.ConsecutiveMoteMeasuresPair;
 import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.MoteCollection;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
@@ -33,10 +35,21 @@ public class EventContext {
     public final PollingContext pollingContext;
 
     /**
-     * Create the event context
+     * TODO Optional
      *
      * @param context Context wrapping the polling data and ecosystem
-     * @param fetchedMotes Motes retrieved to be passed to the rule engine
+     */
+    public EventContext(PollingContext context) {
+        pollingContext = context;
+        consecutiveMoteMeasuresPairs = new ArrayList<>();
+        motes = new MoteCollection();
+    }
+
+    /**
+     * Create the event context
+     *
+     * @param context                      Context wrapping the polling data and ecosystem
+     * @param fetchedMotes                 Motes retrieved to be passed to the rule engine
      * @param consecutiveMoteMeasuresPairs Collection of the new motes and their previous
      *                                     retrieved values
      */
