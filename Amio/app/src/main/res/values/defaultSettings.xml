@@ -14,7 +14,7 @@
 
     <!-- Settings default values-->
     <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
-    <string name="default_polling_time" translatable="false">15</string>
+    <string name="default_polling_time" translatable="false">30</string>
     <string name="default_mail_from_address" translatable="false">iotlab-notifier@telecomnancy.net</string>
     <string name="default_smtp_port" translatable="false">587</string>
     <string name="default_smtp_host" translatable="false">smtp.gmail.com</string>
