@@ -35,7 +35,7 @@ public class EventContext {
     public final PollingContext pollingContext;
 
     /**
-     * TODO Optional
+     * Create an event context from no content, used to dispatch notification from no data
      *
      * @param context Context wrapping the polling data and ecosystem
      */

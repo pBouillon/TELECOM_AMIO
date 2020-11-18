@@ -21,7 +21,11 @@ import eu.telecomnancy.amio.notification.notifiers.INotifier;
 import eu.telecomnancy.amio.notification.notifiers.email.SmtpNotifier;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
+/**
+ * Fragment to test the SMTP settings set by the user
+ */
 public class SettingsSmtpFragment extends PreferenceFragmentCompat {
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getActivity().setTitle(getResources().getString(R.string.title_activity_smtp));
@@ -31,36 +35,57 @@ public class SettingsSmtpFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Preference button = findPreference(getString(R.string.smtp_try_it_key));
-        if (button != null) {
-            button.setOnPreferenceClickListener(preference -> {
-                // Async task will be deprecated in API 30
-                // Networking is not allowed in main thread
-                Executors.newSingleThreadExecutor().execute(() -> {
-                    boolean sended = true;
-                    NotificationContext notificationContext = new NotificationContext(NotificationType.EMAIL, new EventContext(new PollingContext(getContext())));
-                    INotifier mailer = new SmtpNotifier(notificationContext);
-                    try {
-                        mailer.sendNotification();
-                    } catch (Throwable e) {
-                        sended = false;
-                    }
-                    String toastText;
-                    if (sended) {
-                        toastText = getString(R.string.toast_test_mail_success);
-                    } else {
-                        toastText = getString(R.string.toast_test_mail_fail);
-                    }
-                    // The toast must be throw in the UI thread
-                    getActivity().runOnUiThread(() -> Toast.makeText(getContext(), toastText, Toast.LENGTH_LONG).show());
-                });
-                return false;
-            });
+
+        Preference sendTestMailButton = findPreference(getString(R.string.smtp_try_it_key));
+
+        if (sendTestMailButton == null) {
+            return;
         }
+
+        sendTestMailButton.setOnPreferenceClickListener(preference -> {
+            // Async task will be deprecated in API 30
+            // Networking is not allowed in main thread
+            Executors.newSingleThreadExecutor()
+                    .execute(this::sendTestEmail);
+            return false;
+        });
     }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.smtp_preferences, rootKey);
     }
+
+    /**
+     * Attempt to send an email to test the user settings
+     *
+     * Show a toast with the status of the mail sent
+     */
+    private void sendTestEmail() {
+        // Prepare the notification test
+        boolean isMailSuccessfullySent = true;
+
+        NotificationContext notificationContext
+                = new NotificationContext(
+                        NotificationType.EMAIL,
+                new EventContext(new PollingContext(getContext())));
+
+        INotifier notifier = new SmtpNotifier(notificationContext);
+
+        // Send the notification
+        try {
+            notifier.sendNotification();
+        } catch (Throwable e) {
+            isMailSuccessfullySent = false;
+        }
+
+        // Create the toast
+        String toastText = isMailSuccessfullySent
+                ? getString(R.string.toast_test_mail_success)
+                : getString(R.string.toast_test_mail_fail);
+
+        getActivity().runOnUiThread(()
+                -> Toast.makeText(getContext(), toastText, Toast.LENGTH_LONG).show());
+    }
+
 }
