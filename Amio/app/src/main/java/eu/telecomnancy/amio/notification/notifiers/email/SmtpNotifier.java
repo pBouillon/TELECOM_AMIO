@@ -113,28 +113,22 @@ public class SmtpNotifier extends EmailNotifier {
         Log.d(TAG, "Sending notification");
 
         Context androidContext = payload.eventContext.pollingContext.androidContext;
-        Resources ressources = androidContext.getResources();
+        Resources resource = androidContext.getResources();
 
         // Retrieve constants from the Preferences manager
-        String login = getParameterStringFromRessourceId(androidContext, ressources, R.string.smtp_username_key, "");
-        String password = getParameterStringFromRessourceId(androidContext, ressources, R.string.smtp_password_key, "");
-        ;
-        String host = getParameterStringFromRessourceId(androidContext, ressources, R.string.smtp_host_key, ressources.getString(R.string.default_smtp_host));
-        ;
-        String port = getParameterStringFromRessourceId(androidContext, ressources, R.string.smtp_port_key, ressources.getString(R.string.default_smtp_port));
-        ;
-        String sender = getParameterStringFromRessourceId(androidContext, ressources, R.string.mail_from_address_key, ressources.getString(R.string.default_mail_from_address));
-        ;
-        String receiver = getParameterStringFromRessourceId(androidContext, ressources, R.string.mail_to_address_key, "");
-        ;
-        //TODO Add in the rule engine
-        boolean enabled = PreferenceManager.getDefaultSharedPreferences(androidContext).getBoolean(
-                ressources.getString(R.string.enable_mail_notification_key),
-                true);
+        String login = getParameterStringFromRessourceId(
+                androidContext, resource, R.string.smtp_username_key, "");
 
-        if (!enabled) {
-            return;
-        }
+        String password = getParameterStringFromRessourceId(
+                androidContext, resource, R.string.smtp_password_key, "");
+
+        String host = getParameterStringFromRessourceId(
+                androidContext, resource, R.string.smtp_host_key,
+                resource.getString(R.string.default_smtp_host));
+
+        String port = getParameterStringFromRessourceId(
+                androidContext, resource, R.string.smtp_port_key,
+                resource.getString(R.string.default_smtp_port));
 
         // SMTP connection
         Properties properties = generateSmtpProperties(host, port);
@@ -142,6 +136,9 @@ public class SmtpNotifier extends EmailNotifier {
         Log.d(TAG, "Connection to the SMTP server successfully established");
 
         // Email sending
+        String sender = getParameterStringFromRessourceId(androidContext, resource, R.string.mail_from_address_key, resource.getString(R.string.default_mail_from_address));
+        String receiver = getParameterStringFromRessourceId(androidContext, resource, R.string.mail_to_address_key, "");
+
         try {
             Message message = forgeMessage(session, sender, receiver);
             Log.d(TAG, "Email generated");
