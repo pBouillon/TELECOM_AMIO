@@ -1,7 +1,12 @@
 package eu.telecomnancy.amio.ui.settings;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceFragmentCompat;
 
 import eu.telecomnancy.amio.R;
@@ -10,6 +15,12 @@ import eu.telecomnancy.amio.R;
  * A fragment representing a field to be changed in the preferences
  */
 public class SettingsMainFragment extends PreferenceFragmentCompat {
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(getResources().getString(R.string.title_activity_settings));
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Key -->
+    <string name="api_address_key" translatable="false">api_adress</string>
+    <string name="polling_delay_key" translatable="false">polling_delay</string>
+    <string name="mail_from_address_key" translatable="false">mail_from_address</string>
+    <string name="mail_to_address_key" translatable="false">mail_to_address</string>
+    <string name="smtp_port_key" translatable="false">smtp_port</string>
+    <string name="smtp_host_key" translatable="false">smtp_host</string>
+    <string name="smtp_username_key" translatable="false">smtp_username</string>
+    <string name="smtp_password_key" translatable="false">smtp_password</string>
+    <string name="smtp_try_it_key" translatable="false">try_it</string>
+    <string name="enable_mail_notification_key" translatable="false">try_it</string>
+
+    <!-- Settings default values-->
+    <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
+    <string name="default_polling_time" translatable="false">30</string>
+    <string name="default_mail_from_address" translatable="false">iotlab-notifier@telecomnancy.net</string>
+    <string name="default_smtp_port" translatable="false">587</string>
+    <string name="default_smtp_host" translatable="false">smtp.gmail.com</string>
+</resources>

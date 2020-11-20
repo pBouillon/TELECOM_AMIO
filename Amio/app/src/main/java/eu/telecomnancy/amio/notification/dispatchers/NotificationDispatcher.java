@@ -1,5 +1,10 @@
 package eu.telecomnancy.amio.notification.dispatchers;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import androidx.preference.PreferenceManager;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
@@ -8,8 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
+import eu.telecomnancy.amio.notification.flags.NotificationType;
 import eu.telecomnancy.amio.notification.notifiers.INotifier;
 import eu.telecomnancy.amio.notification.notifiers.NotifierBase;
 import eu.telecomnancy.amio.notification.notifiers.android.*;
@@ -44,13 +51,30 @@ public final class NotificationDispatcher {
      * @see eu.telecomnancy.amio.notification.flags.NotificationType
      */
     public static void sendNotificationsFrom(NotificationContext context) {
+        NotificationType notificationType = context.type;
+
+        // Ensure that the notifications are enabled for this type of notification
+        Context androidContext = context.eventContext.pollingContext.androidContext;
+        Resources resource = androidContext.getResources();
+
+        boolean isMailNotificationEnabled = PreferenceManager
+                .getDefaultSharedPreferences(androidContext)
+                .getBoolean(resource.getString(R.string.enable_mail_notification_key), true);
+
+        // If not, do not send any notification
+        if (notificationType == NotificationType.EMAIL
+                && !isMailNotificationEnabled) {
+            return;
+        }
+
+        // Dispatch the notification
         notifierClasses
                 // Keep only the ones related to the context
                 .stream()
                 .filter(type -> type
                         .getAnnotation(EventNotifier.class)
                         .target()
-                        == context.type)
+                        == notificationType)
                 // Invoke a new instance of the INotifier type retrieved
                 .map(type -> invokeINotifierFromType(type, context))
                 .filter(Objects::nonNull)

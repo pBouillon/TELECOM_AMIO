@@ -3,10 +3,27 @@
     <string name="app_name">Capteurs de l\'IoTLab</string>
     <string name="title_activity_settings">Options</string>
     <string name="api_title">API Web</string>
+    <string name="notifications_title">Notifications</string>
     <string name="iot_lab_address">Adresse web de l\'API</string>
+    <string name="polling_delay">Temps entre 2 récupération de données (en secondes)</string>
     <string name="sensor_id_text_holder">Capteur %1$s</string>
     <string name="light_text_holder">Luminosité: %1$s</string>
     <string name="temperature_text_holder">Température: %1$s</string>
     <string name="notification_title">Activité anormale détectée</string>
     <string name="notification_content">Une activité anormale a été détectée, cliquez pour afficher les détails</string>
+    <string name="mail_to_address">Adresse mail à notifier</string>
+    <string name="mail_from_address">Adresse mail de l\'émetteur</string>
+    <string name="smtp_port">Port</string>
+    <string name="smtp_host">Hôte</string>
+    <string name="smtp_username">Nom d\'utilisateur</string>
+    <string name="smtp_password">Mot de passe</string>
+    <string name="smtp_address_title">Adresse</string>
+    <string name="smtp_credentials_title">Identifiants</string>
+    <string name="smtp_server">Smtp server configuration</string>
+    <string name="title_activity_smtp">SMTP</string>
+    <string name="smtp_try_it_title">Test</string>
+    <string name="smtp_try_it">Envoyer un mail de test</string>
+    <string name="enable_mail_notification">Activer les notifications par mail</string>
+    <string name="toast_test_mail_success">Mail envoyé</string>
+    <string name="toast_test_mail_fail">La configuration ne permet pas l\'envoi de mail</string>
 </resources>
