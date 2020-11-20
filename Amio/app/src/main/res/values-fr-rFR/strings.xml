@@ -24,4 +24,6 @@
     <string name="smtp_try_it_title">Test</string>
     <string name="smtp_try_it">Envoyer un mail de test</string>
     <string name="enable_mail_notification">Activer les notifications par mail</string>
+    <string name="toast_test_mail_success">Mail envoyé</string>
+    <string name="toast_test_mail_fail">La configuration ne permet pas l\'envoi de mail</string>
 </resources>
