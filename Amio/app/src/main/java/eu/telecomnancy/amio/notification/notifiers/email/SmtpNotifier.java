@@ -80,13 +80,14 @@ public class SmtpNotifier extends EmailNotifier {
      *
      * @return A set of pre-filled properties to be used to establish the connection
      */
-    private Properties generateSmtpProperties(String host, String port) {
+    private Properties generateSmtpProperties(String host, String port, String timeout) {
         Properties properties = new Properties();
 
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", port);
+        properties.put("mail.smtp.timeout", timeout);
 
         return properties;
     }
@@ -130,8 +131,12 @@ public class SmtpNotifier extends EmailNotifier {
                 androidContext, resource, R.string.smtp_port_key,
                 resource.getString(R.string.default_smtp_port));
 
+        String timeout = getParameterStringFromRessourceId(
+                androidContext, resource, R.string.smtp_timeout_key,
+                resource.getString(R.string.default_smtp_timeout));
+
         // SMTP connection
-        Properties properties = generateSmtpProperties(host, port);
+        Properties properties = generateSmtpProperties(host, port, timeout);
         Session session = generateSmtpSession(properties, login, password);
         Log.d(TAG, "Connection to the SMTP server successfully established");
 

@@ -17,6 +17,13 @@
             android:singleLine="true"
             android:title="@string/smtp_port"
             app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:defaultValue="@string/default_smtp_timeout"
+            android:key="@string/smtp_timeout_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/smtp_timeout"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/smtp_credentials_title">
 
