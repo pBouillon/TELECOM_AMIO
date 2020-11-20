@@ -55,6 +55,12 @@ public final class Constants {
          */
         public static final String CHANNEL_ID = "eu.telecomnancy.amio.notification";
 
+        /**
+         * Vibration pattern when sending a notification
+         * Each sequence is in milliseconds
+         */
+        public static final long[] VIBRATION_PATTERN = new long[] { 500, 500, 1_000};
+
     }
 
     /**

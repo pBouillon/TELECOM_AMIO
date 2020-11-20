@@ -67,6 +67,7 @@ public class PushNotifier extends AndroidNotifier {
                 .setSmallIcon(R.drawable.light_on)
                 .setContentTitle(title)
                 .setContentText(content)
+                .setVibrate(Constants.Notification.VIBRATION_PATTERN)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(content))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
