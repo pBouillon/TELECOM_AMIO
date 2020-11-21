@@ -1,7 +1,9 @@
 package eu.telecomnancy.amio.ui.main.mote;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -95,6 +99,9 @@ public class MoteListFragment extends Fragment {
         _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
         _recyclerView.setAdapter(_moteRecyclerViewAdapter);
 
+        FloatingActionButton mailFab = view.findViewById(R.id.mail_fab);
+        mailFab.setOnClickListener(view1 -> launchMailIntent());
+
         return view;
     }
 
@@ -111,6 +118,19 @@ public class MoteListFragment extends Fragment {
         _recyclerView.setLayoutManager(isOrientationPortrait
                 ? new LinearLayoutManager(context)
                 : new GridLayoutManager(context, Constants.MoteList.COLUMN_COUNT));
+    }
+
+    /**
+     * Open the mailing app to notify an abnormal activity
+     */
+    private void launchMailIntent() {
+        Intent mailIntent = new Intent(Intent.ACTION_SENDTO);
+        String content = "mailto:" + Uri.encode("Olivier.Festor@telecomnancy.eu")
+                + "?subject=" + Uri.encode("[IOTLab] Abnormal activity report")
+                + "&body=" + Uri.encode(eu.telecomnancy.amio.notification.Constants.Mail.WARNING_MAIL_BODY);
+        Uri uriContent = Uri.parse(content);
+        mailIntent.setData(uriContent);
+        startActivity(mailIntent);
     }
 
 }

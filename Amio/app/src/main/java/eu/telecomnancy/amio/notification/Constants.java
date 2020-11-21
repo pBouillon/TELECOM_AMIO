@@ -43,6 +43,17 @@ public final class Constants {
          */
         public static final String SUBJECT = "[IoTLab activity report] Abnormal activity detected";
 
+        public static final String WARNING_MAIL_BODY =
+                "<html>" +
+                        "   <body>" +
+                        "       <h1>IotLab abnormal activity report</h1>" +
+                        "       <div>" +
+                        "           <p>" +
+                        "               An abnormal activity is reported on the TNCY IOTLab. You should review the data by yourself and maybe take some actions" +
+                        "           </p>" +
+                        "       </div>" +
+                        "   </body>" +
+                        "</html>";
     }
 
     /**
