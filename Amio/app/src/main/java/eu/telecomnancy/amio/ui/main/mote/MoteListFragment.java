@@ -89,14 +89,11 @@ public class MoteListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mote_list, container, false);
-
+        _recyclerView = view.findViewById(R.id.mote_recycler_list);
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            _recyclerView = (RecyclerView) view;
-            updateRecyclerLayer();
-            _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
-            _recyclerView.setAdapter(_moteRecyclerViewAdapter);
-        }
+        updateRecyclerLayer();
+        _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
+        _recyclerView.setAdapter(_moteRecyclerViewAdapter);
 
         return view;
     }
