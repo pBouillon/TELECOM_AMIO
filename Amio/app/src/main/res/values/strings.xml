@@ -41,5 +41,6 @@
     <string name="notification_content">An abnormal activity has been deteted, tap to see the details</string>
     <string name="toast_test_mail_success">Email send</string>
     <string name="toast_test_mail_fail">An error occurred</string>
+    <string name="smtp_timeout">Timeout (in ms)</string>
 
 </resources>

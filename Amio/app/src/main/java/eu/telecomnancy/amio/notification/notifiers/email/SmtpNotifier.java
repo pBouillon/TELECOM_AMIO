@@ -49,7 +49,9 @@ public class SmtpNotifier extends EmailNotifier {
     /**
      * Forge the email to be sent with SMTP
      *
-     * @param session Opened SMTP connection to use
+     * @param session  Opened SMTP connection to use
+     * @param sender   sender's email address
+     * @param receiver reciever email address
      * @return The forged message, along with its recipients, sender and content
      * @throws MessagingException If any error occurs while forging the mail
      */
@@ -77,16 +79,19 @@ public class SmtpNotifier extends EmailNotifier {
 
     /**
      * Generate all properties in order to establish the connection with the SMTP server
-     *
+     * @param host SMTP server's name
+     * @param port SMTP port number
+     * @param timeout in ms, the time allowed to get a response from the server
      * @return A set of pre-filled properties to be used to establish the connection
      */
-    private Properties generateSmtpProperties(String host, String port) {
+    private Properties generateSmtpProperties(String host, String port, String timeout) {
         Properties properties = new Properties();
 
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", port);
+        properties.put("mail.smtp.timeout", timeout);
 
         return properties;
     }
@@ -95,6 +100,8 @@ public class SmtpNotifier extends EmailNotifier {
      * Generate the SMTP session to further send emails from a set of properties
      *
      * @param properties SMTP properties used for the session configuration
+     * @param login SMTP usename
+     * @param password SMTP password
      * @return An opened session with the SMTP server
      */
     private Session generateSmtpSession(Properties properties, String login, String password) {
@@ -130,8 +137,12 @@ public class SmtpNotifier extends EmailNotifier {
                 androidContext, resource, R.string.smtp_port_key,
                 resource.getString(R.string.default_smtp_port));
 
+        String timeout = getParameterStringFromRessourceId(
+                androidContext, resource, R.string.smtp_timeout_key,
+                resource.getString(R.string.default_smtp_timeout));
+
         // SMTP connection
-        Properties properties = generateSmtpProperties(host, port);
+        Properties properties = generateSmtpProperties(host, port, timeout);
         Session session = generateSmtpSession(properties, login, password);
         Log.d(TAG, "Connection to the SMTP server successfully established");
 
