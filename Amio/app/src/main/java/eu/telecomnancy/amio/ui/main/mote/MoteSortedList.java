@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.SortedList;
 import eu.telecomnancy.amio.iotlab.models.Mote;
 
 /**
- * Represent a specialized Sorted list.
+ * Represent a specialized Sorted list
  * This class can compare a collection to the existing one to update only changed items
  *
  * @see androidx.recyclerview.widget.SortedList
@@ -13,7 +13,7 @@ import eu.telecomnancy.amio.iotlab.models.Mote;
 public class MoteSortedList extends SortedList<Mote> {
 
     /**
-     * constructor for MoteSortedList
+     * Constructor for MoteSortedList
      *
      * @param moteRecyclerViewAdapter the recycler view where this list is shown. Needed to notify on data change.
      */
