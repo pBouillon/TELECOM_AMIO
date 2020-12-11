@@ -53,9 +53,12 @@ public class MoteListFragment extends Fragment {
      * @return the generated content of the mail, as an URI
      */
     private Uri generateMailContentUri() {
+        String mailIntentAddress = getContext()
+                .getResources()
+                .getString(R.string.mail_intent_address);
+
         String content = "mailto:" +
-                // TODO: move this value to the preferences menu
-                Uri.encode("Olivier.Festor@telecomnancy.eu") +
+                Uri.encode(mailIntentAddress) +
                 "?subject=" +
                 Uri.encode(eu.telecomnancy.amio.notification.Constants.Mail.SUBJECT) +
                 "&body=" +
