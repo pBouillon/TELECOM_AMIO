@@ -48,6 +48,33 @@ public class MoteListFragment extends Fragment {
     public MoteListFragment() { }
 
     /**
+     * Generate the URI of the content of the mail to be passed on the appropriate application
+     *
+     * @return the generated content of the mail, as an URI
+     */
+    private Uri generateMailContentUri() {
+        String content = "mailto:" +
+                // TODO: move this value to the preferences menu
+                Uri.encode("Olivier.Festor@telecomnancy.eu") +
+                "?subject=" +
+                Uri.encode(eu.telecomnancy.amio.notification.Constants.Mail.SUBJECT) +
+                "&body=" +
+                Uri.encode(eu.telecomnancy.amio.notification.Constants.Mail.Content.INTENDED);
+
+        return Uri.parse(content);
+    }
+
+    /**
+     * Open the mailing app to notify an abnormal activity
+     */
+    private void launchMailIntent() {
+        Intent mailIntent = new Intent(Intent.ACTION_SENDTO);
+        mailIntent.setData(generateMailContentUri());
+
+        startActivity(mailIntent);
+    }
+
+    /**
      * Give the right way to construct this fragment
      *
      * @return The instantiated fragment
@@ -118,19 +145,6 @@ public class MoteListFragment extends Fragment {
         _recyclerView.setLayoutManager(isOrientationPortrait
                 ? new LinearLayoutManager(context)
                 : new GridLayoutManager(context, Constants.MoteList.COLUMN_COUNT));
-    }
-
-    /**
-     * Open the mailing app to notify an abnormal activity
-     */
-    private void launchMailIntent() {
-        Intent mailIntent = new Intent(Intent.ACTION_SENDTO);
-        String content = "mailto:" + Uri.encode("Olivier.Festor@telecomnancy.eu")
-                + "?subject=" + Uri.encode("[IOTLab] Abnormal activity report")
-                + "&body=" + Uri.encode(eu.telecomnancy.amio.notification.Constants.Mail.WARNING_MAIL_BODY);
-        Uri uriContent = Uri.parse(content);
-        mailIntent.setData(uriContent);
-        startActivity(mailIntent);
     }
 
 }

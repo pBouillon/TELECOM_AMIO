@@ -11,49 +11,63 @@ public final class Constants {
     public static final class Mail {
 
         /**
-         * Mail content, in HTML
-         */
-        public static final String CONTENT = ""
-                + "<html>"
-                + "     <body>"
-                + "          <h1 style=\"color: #DF4554\">"
-                + "               A sensor is detecting a light on"
-                + "          </h1>"
-                + ""
-                + "          "
-                + "          <div>"
-                + "               <p>"
-                + "                    A sensor is currently detecting a light on, you might "
-                + "                    want to verify by yourself if everything is fine."
-                + "               </p>"
-                + "<br/>"
-                + "<hr/>"
-                + "               <p style=\"color: #979EA3; font-size: small\">"
-                + "                    This email has been sent to you according to your"
-                + "                    notification and alerting preferences."
-                + "                    <br/>"
-                +                      "You can change your them in your IoTLab app."
-                + "               </p>"
-                + "          </div>"
-                + "     </body>"
-                + "</html>";
-
-        /**
-         * Mail subject
+         * Subject of the mail to be sent by the user
          */
         public static final String SUBJECT = "[IoTLab activity report] Abnormal activity detected";
 
-        public static final String WARNING_MAIL_BODY =
-                "<html>" +
-                        "   <body>" +
-                        "       <h1>IotLab abnormal activity report</h1>" +
-                        "       <div>" +
-                        "           <p>" +
-                        "               An abnormal activity is reported on the TNCY IOTLab. You should review the data by yourself and maybe take some actions" +
-                        "           </p>" +
-                        "       </div>" +
-                        "   </body>" +
-                        "</html>";
+        /**
+         * Mail contents according to the context
+         */
+        public static class Content {
+
+            /**
+             * Mail content, in HTML, automatically sent when the app is detecting an abnormal
+             * activities in the lights' values
+             */
+            public static final String AUTOMATED = ""
+                    + "<html>"
+                    + "     <body>"
+                    + "          <h1 style=\"color: #DF4554\">"
+                    + "               A sensor is detecting a light on"
+                    + "          </h1>"
+                    + ""
+                    + "          "
+                    + "          <div>"
+                    + "               <p>"
+                    + "                    A sensor is currently detecting a light on, you might "
+                    + "                    want to verify by yourself if everything is fine."
+                    + "               </p>"
+                    + "<br/>"
+                    + "<hr/>"
+                    + "               <p style=\"color: #979EA3; font-size: small\">"
+                    + "                    This email has been sent to you according to your"
+                    + "                    notification and alerting preferences."
+                    + "                    <br/>"
+                    +                      "You can change your them in your IoTLab app."
+                    + "               </p>"
+                    + "          </div>"
+                    + "     </body>"
+                    + "</html>";
+
+            /**
+             * Mail content, in plain text, which is used as a template for when the user wants
+             * to send an email manually from the app's menu
+             *
+             * This template introduce the context and let the user free to chose how he will detail
+             * and justify the mail
+             *
+             * This is not meant to be sent automatically
+             */
+            public static final String INTENDED = "" +
+                    "Hi,\n" +
+                    "\n" +
+                    "The IoTLab sensors application is reporting some values that you might want " +
+                    "to review by yourself.\n" +
+                    "\n" +
+                    "Indeed, I noticed that";
+
+        }
+
     }
 
     /**
