@@ -28,13 +28,14 @@ public class MoteRecyclerViewAdapter
     /**
      * List of the motes that are shown
      */
-    private List<Mote> _motes;
+    private final MoteSortedList _motes;
 
     /**
      * Default constructor for the MoteRecyclerViewAdapter
      */
     public MoteRecyclerViewAdapter(List<Mote> items, Context context) {
-        _motes = items;
+        _motes = new MoteSortedList(this);
+        _motes.addAll(items);
         _context = context;
     }
 
@@ -89,8 +90,8 @@ public class MoteRecyclerViewAdapter
      * Set the motes and update the view
      */
     public void setMotes(List<Mote> motes) {
-        _motes = motes;
-        notifyDataSetChanged();
+        // The _motes list is charged to handle duplicates
+        _motes.addAll(motes);
     }
 
 }

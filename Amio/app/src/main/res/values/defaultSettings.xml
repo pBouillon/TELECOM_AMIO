@@ -7,6 +7,7 @@
     <string name="mail_to_address_key" translatable="false">mail_to_address</string>
     <string name="smtp_port_key" translatable="false">smtp_port</string>
     <string name="smtp_host_key" translatable="false">smtp_host</string>
+    <string name="smtp_timeout_key" translatable="false">smtp_timeout</string>
     <string name="smtp_username_key" translatable="false">smtp_username</string>
     <string name="smtp_password_key" translatable="false">smtp_password</string>
     <string name="smtp_try_it_key" translatable="false">try_it</string>
@@ -18,4 +19,5 @@
     <string name="default_mail_from_address" translatable="false">iotlab-notifier@telecomnancy.net</string>
     <string name="default_smtp_port" translatable="false">587</string>
     <string name="default_smtp_host" translatable="false">smtp.gmail.com</string>
+    <string name="default_smtp_timeout" translatable="false">5000</string>
 </resources>
