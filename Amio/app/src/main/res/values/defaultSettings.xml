@@ -3,6 +3,7 @@
     <!-- Settings Key -->
     <string name="api_address_key" translatable="false">api_adress</string>
     <string name="polling_delay_key" translatable="false">polling_delay</string>
+    <string name="mail_intent_address_key" translatable="false">mail_intent_address</string>
     <string name="mail_from_address_key" translatable="false">mail_from_address</string>
     <string name="mail_to_address_key" translatable="false">mail_to_address</string>
     <string name="smtp_port_key" translatable="false">smtp_port</string>
@@ -16,8 +17,10 @@
     <!-- Settings default values-->
     <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
     <string name="default_polling_time" translatable="false">30</string>
+    <string name="default_mail_intent_address" translatable="false">olivier.festor@telecomnancy.eu</string>
     <string name="default_mail_from_address" translatable="false">iotlab-notifier@telecomnancy.net</string>
     <string name="default_smtp_port" translatable="false">587</string>
     <string name="default_smtp_host" translatable="false">smtp.gmail.com</string>
     <string name="default_smtp_timeout" translatable="false">5000</string>
+
 </resources>

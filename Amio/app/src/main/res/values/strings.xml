@@ -16,15 +16,18 @@
     <!-- API Preferences -->
     <string name="iot_lab_address">Web API address</string>
     <string name="polling_delay">Time between 2 data fetch (in seconds)</string>
-    <string name="mail_to_address">Mail address to notify</string>
+
+    <!-- Mail preferences -->
+    <string name="enable_mail_notification">Enable email notification</string>
+    <string name="mail_intent_address" translatable="false">Preferred recipient for the templated mail</string>
     <string name="mail_from_address">Sender mail address</string>
+    <string name="mail_to_address">Mail address to notify</string>
     <string name="smtp_port">Port</string>
     <string name="smtp_host">Host</string>
     <string name="smtp_username">Username</string>
     <string name="smtp_password">Password</string>
-    <string name="smtp_server">Smtp server configuration</string>
+    <string name="smtp_server">SMTP server configuration</string>
     <string name="smtp_try_it">Try to send a mail</string>
-    <string name="enable_mail_notification">Enable email notification</string>
 
     <!-- Main Activity Text -->
     <string name="sensor_id_text_holder">Sensor %1$s</string>
@@ -38,10 +41,9 @@
     <string name="channel_name" translatable="false">IoTLab</string>
     <string name="channel_description" translatable="false">IotLab notification channel</string>
     <string name="notification_title">Abnormal activity detected</string>
-    <string name="notification_content">An abnormal activity has been deteted, tap to see the details</string>
+    <string name="notification_content">An abnormal activity has been detected, tap to see the details</string>
     <string name="toast_test_mail_success">Email send</string>
     <string name="toast_test_mail_fail">An error occurred</string>
     <string name="smtp_timeout">Timeout (in ms)</string>
-    <string name="mail_intent_address" translatable="false">olivier.festor@telecomnancy.eu</string>
 
 </resources>

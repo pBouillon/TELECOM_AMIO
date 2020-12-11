@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,10 +54,21 @@ public class MoteListFragment extends Fragment {
      * @return the generated content of the mail, as an URI
      */
     private Uri generateMailContentUri() {
-        String mailIntentAddress = getContext()
-                .getResources()
-                .getString(R.string.mail_intent_address);
+        // Retrieve the current context
+        Context context = getContext();
 
+        // Retrieve the default value to be used as the recipient
+        String defaultMailIntentAddress = context.getResources()
+                .getString(R.string.default_mail_intent_address);
+
+        // Retrieve the preference's recipient
+        String mailIntentAddressKey = context.getResources()
+                .getString(R.string.mail_intent_address_key);
+
+        String mailIntentAddress = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(mailIntentAddressKey, defaultMailIntentAddress);
+
+        // Create the mail intended to the appropriate recipient
         String content = "mailto:" +
                 Uri.encode(mailIntentAddress) +
                 "?subject=" +
