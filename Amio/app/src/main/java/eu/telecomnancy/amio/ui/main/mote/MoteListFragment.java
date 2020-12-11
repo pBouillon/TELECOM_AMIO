@@ -135,18 +135,15 @@ public class MoteListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mote_list, container, false);
+        _recyclerView = view.findViewById(R.id.mote_recycler_list);
 
         // Set the adapter
         updateRecyclerLayer();
-
         _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<>(), getContext());
-
-        _recyclerView = view.findViewById(R.id.mote_recycler_list);
         _recyclerView.setAdapter(_moteRecyclerViewAdapter);
 
-        // Bind the mail button's event
-        view.findViewById(R.id.mail_fab)
-                .setOnClickListener(v -> fireMailIntent());
+        FloatingActionButton mailFab = view.findViewById(R.id.mail_fab);
+        mailFab.setOnClickListener(v -> fireMailIntent());
 
         return view;
     }
