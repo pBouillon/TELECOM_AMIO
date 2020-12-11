@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Settings Key -->
-    <string name="api_address_key" translatable="false">api_adress</string>
+    <string name="api_address_key" translatable="false">api_address</string>
     <string name="polling_delay_key" translatable="false">polling_delay</string>
     <string name="mail_intent_address_key" translatable="false">mail_intent_address</string>
     <string name="mail_from_address_key" translatable="false">mail_from_address</string>
