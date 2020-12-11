@@ -82,7 +82,7 @@ public class MoteListFragment extends Fragment {
     /**
      * Open the mailing app to notify an abnormal activity
      */
-    private void launchMailIntent() {
+    private void fireMailIntent() {
         Intent mailIntent = new Intent(Intent.ACTION_SENDTO);
         mailIntent.setData(generateMailContentUri());
 
@@ -135,14 +135,18 @@ public class MoteListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mote_list, container, false);
-        _recyclerView = view.findViewById(R.id.mote_recycler_list);
+
         // Set the adapter
         updateRecyclerLayer();
-        _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
+
+        _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<>(), getContext());
+
+        _recyclerView = view.findViewById(R.id.mote_recycler_list);
         _recyclerView.setAdapter(_moteRecyclerViewAdapter);
 
-        FloatingActionButton mailFab = view.findViewById(R.id.mail_fab);
-        mailFab.setOnClickListener(view1 -> launchMailIntent());
+        // Bind the mail button's event
+        view.findViewById(R.id.mail_fab)
+                .setOnClickListener(v -> fireMailIntent());
 
         return view;
     }
