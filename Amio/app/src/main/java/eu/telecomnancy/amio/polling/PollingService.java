@@ -15,6 +15,7 @@ import androidx.preference.PreferenceManager;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Timer;
+import java.util.stream.Collectors;
 
 import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.iotlab.models.Mote;
@@ -23,6 +24,7 @@ import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
 import eu.telecomnancy.amio.persistence.daos.MoteDao;
 import eu.telecomnancy.amio.persistence.daos.RecordDao;
 import eu.telecomnancy.amio.persistence.entities.Record;
+import eu.telecomnancy.amio.persistence.entities.RecordAndMote;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
@@ -215,32 +217,58 @@ public class PollingService extends Service {
      * @param motes Received payload of motes
      */
     private void storeRecords(List<Mote> motes) {
-        MoteDao moteDao = _database.moteDao();
-        RecordDao recordDao = _database.recordDao();
-
         // Register all the missing motes in the database
         storeNewMotes(motes);
 
         // Register the data retrieved
-        motes.stream()
-                // Creating the record from their value and name
-                .map(mote -> {
-                    long moteId = moteDao.getByName(mote.getName()).moteId;
-                    return new Pair<>(moteId, mote);
-                })
-                // Storing the new records
-                .forEach(pair -> {
-                    // Create the record from the mote id and the data originally retrieved
-                    Mote source = pair.second;
-                    Record record = new Record(pair.first, source.getBrightness(),
-                            source.getHumidity(), source.getBattery(), source.getTimestamp(),
-                            source.getTemperature());
+        motes.forEach(mote -> {
+            // Retrieve the corresponding mote in the database for this raw measurement
+            long moteId = _database.moteDao()
+                    .getByName(mote.getName())
+                    .moteId;
 
-                    // Insert the newly created record
-                    record.recordId = recordDao.insert(record);
+            // Store the mote's record
+            storeRecord(moteId, mote);
+        });
+    }
 
-                    Log.d(TAG, "New record added in the database: " + record);
-                });
+    /**
+     * Store the record associated to a raw mote measurement in the database
+     *
+     * If the record has already been stored, based on the time it has been measured
+     *
+     * @param moteId Id of the matching mote entity in the database
+     * @param rawMeasure Raw measure of a mote, as received from the API and digested by the app
+     *
+     * @see Mote
+     */
+    private void storeRecord(long moteId, Mote rawMeasure) {
+        RecordDao recordDao = _database.recordDao();
+
+        // Create the record from the mote id and the data originally retrieved
+        Record record = new Record(moteId, rawMeasure.getBrightness(),
+                rawMeasure.getHumidity(), rawMeasure.getBattery(), rawMeasure.getTimestamp(),
+                rawMeasure.getTemperature());
+
+        // Retrieve the previous record of the provided mote
+        boolean isNewRecord = recordDao.getLatestRecordAndMotePairById(moteId, 1)
+                .stream()
+                .map(recordAndMote
+                        -> recordAndMote.record)
+                .noneMatch(fetchedRecord
+                        -> fetchedRecord.retrievedAt != record.retrievedAt);
+
+        if (!isNewRecord) {
+            Log.d(TAG,
+                    "The measured record is the same as the previous one recorded, " +
+                    "skipping its storage in the database");
+            return;
+        }
+
+        // Insert the newly created record
+        record.recordId = recordDao.insert(record);
+
+        Log.d(TAG, "New record added in the database: " + record);
     }
 
     /**
