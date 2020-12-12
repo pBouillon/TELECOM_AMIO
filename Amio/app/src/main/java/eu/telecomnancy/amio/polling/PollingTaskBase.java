@@ -3,7 +3,6 @@ package eu.telecomnancy.amio.polling;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -17,6 +16,7 @@ import eu.telecomnancy.amio.iotlab.dto.MoteCollectionDtoAggregator;
 import eu.telecomnancy.amio.iotlab.dto.MoteDtoCollection;
 import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
+import eu.telecomnancy.amio.iotlab.models.collections.MoteCollection;
 import eu.telecomnancy.amio.notification.dispatchers.EventDispatcher;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
@@ -75,29 +75,16 @@ public abstract class PollingTaskBase extends TimerTask {
      */
     private IMoteCollection getLatestMotes() {
         // Prepare all queries
-        List<GetMotesDataTypeQuery> motesDataTypeQueries = Arrays.asList(
-                new GetMotesBatteryQuery(),
-                new GetMotesBrightnessQuery(),
-                new GetMotesHumidityQuery(),
-                new GetMotesTemperatureQuery()
-        );
-
-        // Create the aggregator which will retrieve and merge all DTOs
-        MoteCollectionDtoAggregator dtoAggregator = new MoteCollectionDtoAggregator();
-
-        // Perform all queries
-        motesDataTypeQueries.forEach(query -> {
-            try {
-                MoteDtoCollection associatedMoteDtos = _aggregator.handle(query);
-                dtoAggregator.aggregateMotesFor(query.label, associatedMoteDtos);
-            } catch (IOException
-                    | IllegalStateException e) {
-                Log.e(TAG, "Failed to perform the HTTP requests", e);
-            }
-        });
-
-        // Aggregate all motes and retrieve them
-        return dtoAggregator.generateMoteCollectionFromAggregated();
+        try {
+            return sendAndAggregateQueries(
+                    new GetMotesBatteryQuery(),
+                    new GetMotesBrightnessQuery(),
+                    new GetMotesHumidityQuery(),
+                    new GetMotesTemperatureQuery());
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to retrieve the motes data", e);
+            return MoteCollection.empty;
+        }
     }
 
     @Override
@@ -121,6 +108,28 @@ public abstract class PollingTaskBase extends TimerTask {
         }
 
         Log.d(TAG, "Polling task executed");
+    }
+
+    /**
+     * Send several requests through the aggregator and retrieve the aggregated results as a
+     * {@link IMoteCollection}
+     *
+     * @param queries Queries to be executed
+     * @return The aggregated motes in a IMoteCollection
+     * @throws IOException When any error occurred when performing the HTTP request
+     */
+    private IMoteCollection sendAndAggregateQueries(GetMotesDataTypeQuery... queries)
+            throws IOException {
+        // Create the aggregator which will retrieve and merge all DTOs
+        MoteCollectionDtoAggregator dtoAggregator = new MoteCollectionDtoAggregator();
+
+        for (GetMotesDataTypeQuery query : queries) {
+            MoteDtoCollection associatedMoteDtos = _aggregator.handle(query);
+            dtoAggregator.aggregateMotesFor(query.label, associatedMoteDtos);
+        }
+
+        // Aggregate all motes and retrieve them
+        return dtoAggregator.generateMoteCollectionFromAggregated();
     }
 
 }
