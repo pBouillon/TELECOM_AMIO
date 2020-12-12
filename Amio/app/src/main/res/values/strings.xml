@@ -45,5 +45,8 @@
     <string name="toast_test_mail_success">Email send</string>
     <string name="toast_test_mail_fail">An error occurred</string>
     <string name="smtp_timeout">Timeout (in ms)</string>
+    <string name="credits_icon8">https://icons8.com</string>
+    <string name="credits_icon8_text">Icons by Icons8</string>
+    <string name="credits_title">Credits</string>
 
 </resources>
