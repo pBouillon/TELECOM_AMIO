@@ -256,7 +256,7 @@ public class PollingService extends Service {
                 .map(recordAndMote
                         -> recordAndMote.record)
                 .noneMatch(fetchedRecord
-                        -> fetchedRecord.retrievedAt != record.retrievedAt);
+                        -> fetchedRecord.retrievedAt == record.retrievedAt);
 
         if (!isNewRecord) {
             Log.d(TAG,
