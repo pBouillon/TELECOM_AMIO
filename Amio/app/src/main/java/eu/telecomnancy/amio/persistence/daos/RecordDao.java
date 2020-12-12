@@ -19,17 +19,18 @@ import eu.telecomnancy.amio.persistence.entities.RecordAndMote;
 public interface RecordDao {
 
     /**
-     * Given its id, get the two latest records of the mote
+     * Given its id, get the latest records of the mote
      *
      * @param moteId Id of the queried mote
+     * @param historySize number of previous records to fetch
      * @return A list containing at most the two last values measured by this mote
      */
     @Transaction
     @Query("SELECT * FROM record " +
             "WHERE mote_source_id = :moteId " +
             "ORDER BY retrieved_at " +
-            "DESC LIMIT 2")
-    List<RecordAndMote> getLatestRecordAndMotePairById(long moteId);
+            "DESC LIMIT :historySize")
+    List<RecordAndMote> getLatestRecordAndMotePairById(long moteId, int historySize);
 
     /**
      * Insert a record in the database
