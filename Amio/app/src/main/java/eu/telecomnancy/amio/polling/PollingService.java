@@ -70,7 +70,6 @@ public class PollingService extends Service {
                 motes.forEach(mote
                         -> Log.d(TAG, mote.toString()));
 
-
                 // Broadcast the new data to the UI
                 sendBroadcastMessage(motes);
 
@@ -152,7 +151,7 @@ public class PollingService extends Service {
     }
 
     private int getIntPollingDelay() {
-        String pollingDellayArgName = getApplicationContext()
+        String pollingDelayKey = getApplicationContext()
                 .getResources()
                 .getString(R.string.polling_delay_key);
 
@@ -162,22 +161,27 @@ public class PollingService extends Service {
                 .getString(R.string.default_polling_time);
 
         String pollingDelay = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString(pollingDellayArgName, defaultPollingDelay);
+                .getString(pollingDelayKey, defaultPollingDelay);
 
         int intPollingDelay;
+
         try {
             intPollingDelay = Integer.parseInt(pollingDelay);
+
             // If the value is not correct
             if (intPollingDelay < 1) {
                 throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
             intPollingDelay = Integer.parseInt(defaultPollingDelay);
+
             // Reset the default value
             PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit().putString(pollingDellayArgName, defaultPollingDelay).apply();
+                    .edit().putString(pollingDelayKey, defaultPollingDelay).apply();
+
             Log.e(TAG, "Polling delay preference is not a number -> resetting default value");
         }
+
         return intPollingDelay;
     }
 
