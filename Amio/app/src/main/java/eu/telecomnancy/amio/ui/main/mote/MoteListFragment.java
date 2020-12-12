@@ -1,7 +1,9 @@
 package eu.telecomnancy.amio.ui.main.mote;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -42,6 +47,47 @@ public class MoteListFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public MoteListFragment() { }
+
+    /**
+     * Generate the URI of the content of the mail to be passed on the appropriate application
+     *
+     * @return the generated content of the mail, as an URI
+     */
+    private Uri generateMailContentUri() {
+        // Retrieve the current context
+        Context context = getContext();
+
+        // Retrieve the default value to be used as the recipient
+        String defaultMailIntentAddress = context.getResources()
+                .getString(R.string.default_mail_intent_address);
+
+        // Retrieve the preference's recipient
+        String mailIntentAddressKey = context.getResources()
+                .getString(R.string.mail_intent_address_key);
+
+        String mailIntentAddress = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(mailIntentAddressKey, defaultMailIntentAddress);
+
+        // Create the mail intended to the appropriate recipient
+        String content = "mailto:" +
+                Uri.encode(mailIntentAddress) +
+                "?subject=" +
+                Uri.encode(eu.telecomnancy.amio.notification.Constants.Mail.SUBJECT) +
+                "&body=" +
+                Uri.encode(eu.telecomnancy.amio.notification.Constants.Mail.Content.INTENDED);
+
+        return Uri.parse(content);
+    }
+
+    /**
+     * Open the mailing app to notify an abnormal activity
+     */
+    private void fireMailIntent() {
+        Intent mailIntent = new Intent(Intent.ACTION_SENDTO);
+        mailIntent.setData(generateMailContentUri());
+
+        startActivity(mailIntent);
+    }
 
     /**
      * Give the right way to construct this fragment
@@ -89,14 +135,15 @@ public class MoteListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mote_list, container, false);
+        _recyclerView = view.findViewById(R.id.mote_recycler_list);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            _recyclerView = (RecyclerView) view;
-            updateRecyclerLayer();
-            _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<Mote>(), getContext());
-            _recyclerView.setAdapter(_moteRecyclerViewAdapter);
-        }
+        updateRecyclerLayer();
+        _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<>(), getContext());
+        _recyclerView.setAdapter(_moteRecyclerViewAdapter);
+
+        FloatingActionButton mailFab = view.findViewById(R.id.mail_fab);
+        mailFab.setOnClickListener(v -> fireMailIntent());
 
         return view;
     }

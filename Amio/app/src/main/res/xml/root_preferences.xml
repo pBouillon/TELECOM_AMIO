@@ -9,6 +9,14 @@
             android:singleLine="true"
             android:title="@string/mail_to_address"
             app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/default_mail_intent_address"
+            android:key="@string/mail_intent_address_key"
+            android:singleLine="true"
+            android:title="@string/mail_intent_address"
+            app:useSimpleSummaryProvider="true"/>
+
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/enable_mail_notification_key"
@@ -20,6 +28,7 @@
             app:singleLineTitle="true" />
 
     </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/api_title">
 
         <EditTextPreference
@@ -39,6 +48,7 @@
             android:singleLine="true"
             android:title="@string/iot_lab_address"
             app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

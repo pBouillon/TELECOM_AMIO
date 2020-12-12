@@ -72,7 +72,7 @@ public class SmtpNotifier extends EmailNotifier {
                 Constants.Mail.SUBJECT);
 
         // Now set the actual message
-        message.setContent(Constants.Mail.CONTENT, "text/html");
+        message.setContent(Constants.Mail.Content.AUTOMATED, "text/html");
 
         return message;
     }
