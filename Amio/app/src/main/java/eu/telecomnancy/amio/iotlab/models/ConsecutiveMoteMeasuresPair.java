@@ -48,7 +48,9 @@ public class ConsecutiveMoteMeasuresPair {
      * does
      */
     public boolean isMoteRoomJustRecentlyLightened() {
-        return mostRecent.isRoomLightened() && !oldest.isRoomLightened();
+        return mostRecent.getTimestamp() != oldest.getTimestamp()
+                && mostRecent.isRoomLightened()
+                && !oldest.isRoomLightened();
     }
 
 }
