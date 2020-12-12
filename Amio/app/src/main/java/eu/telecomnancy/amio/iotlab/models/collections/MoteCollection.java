@@ -20,6 +20,9 @@ public class MoteCollection implements IMoteCollection {
      */
     private final Map<String, Mote> _moteMap = new HashMap<>();
 
+    /**
+     * Empty mote collection
+     */
     public static final MoteCollection empty = new MoteCollection();
 
     @Override
