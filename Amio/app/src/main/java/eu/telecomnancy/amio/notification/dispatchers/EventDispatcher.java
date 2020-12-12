@@ -120,9 +120,10 @@ public class EventDispatcher {
                             .getByName(mote.getName()).moteId;
 
                     // Retrieve its two last measures
+                    int motesNeededCount = 2;
                     List<Mote> latestMotePair = database.recordDao()
                             // Getting the last two values
-                            .getLatestRecordAndMotePairById(storedMoteId)
+                            .getLatestRecordAndMotePairById(storedMoteId, motesNeededCount)
                             .stream()
                             // Converting them to a Mote that we can exploit in the
                             // IoTLab logic
@@ -133,7 +134,7 @@ public class EventDispatcher {
                     // If we do not have a pair of result to compare, we do not have enough data
                     // to perform an appropriate comparison
                     // We are then returning an null value
-                    if (latestMotePair.size() != 2) {
+                    if (latestMotePair.size() != motesNeededCount) {
                         return null;
                     }
 
