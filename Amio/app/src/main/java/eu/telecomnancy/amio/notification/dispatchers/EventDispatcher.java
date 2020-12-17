@@ -1,5 +1,7 @@
 package eu.telecomnancy.amio.notification.dispatchers;
 
+import android.util.Log;
+
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
@@ -86,14 +88,17 @@ public class EventDispatcher {
         List<ConsecutiveMoteMeasuresPair> pairs
                 = generateConsecutiveMoteMeasuresPairs(fetchedMotes);
 
-        EventContext context = new EventContext(_context, fetchedMotes, pairs);
+        // Fire the rules for each of the generated pairs
+        pairs.forEach(pair -> {
+            EventContext context = new EventContext(_context, pair);
 
-        // Create the rules payload from the context
-        Facts facts = new Facts();
-        facts.put(ContextTag, context);
+            // Create the rules payload from the context
+            Facts facts = new Facts();
+            facts.put(ContextTag, context);
 
-        // Fire the event context against all the registered rules
-        _ruleEngine.fire(_rules, facts);
+            // Fire the event context against all the registered rules
+            _ruleEngine.fire(_rules, facts);
+        });
     }
 
     /**

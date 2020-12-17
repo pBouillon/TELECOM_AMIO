@@ -1,12 +1,8 @@
 package eu.telecomnancy.amio.notification.contexts;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import eu.telecomnancy.amio.iotlab.models.ConsecutiveMoteMeasuresPair;
-import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
-import eu.telecomnancy.amio.iotlab.models.collections.MoteCollection;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
@@ -20,14 +16,9 @@ public class EventContext {
     public final long currentTime = new Date().getTime();
 
     /**
-     * Collection of the new motes and their previous retrieved values
+     * Pair of the two latest values retrieved by a mote
      */
-    public final List<ConsecutiveMoteMeasuresPair> consecutiveMoteMeasuresPairs;
-
-    /**
-     * Collection of retrieved motes
-     */
-    public final IMoteCollection motes;
+    public final ConsecutiveMoteMeasuresPair consecutiveMoteMeasuresPair;
 
     /**
      * Context wrapping the polling data and ecosystem
@@ -41,23 +32,20 @@ public class EventContext {
      */
     public EventContext(PollingContext context) {
         pollingContext = context;
-        consecutiveMoteMeasuresPairs = new ArrayList<>();
-        motes = new MoteCollection();
+        consecutiveMoteMeasuresPair = null;
     }
 
     /**
      * Create the event context
      *
-     * @param context                      Context wrapping the polling data and ecosystem
-     * @param fetchedMotes                 Motes retrieved to be passed to the rule engine
-     * @param consecutiveMoteMeasuresPairs Collection of the new motes and their previous
+     * @param context Context wrapping the polling data and ecosystem
+     * @param consecutiveMoteMeasuresPair Collection of the new motes and their previous
      *                                     retrieved values
      */
-    public EventContext(PollingContext context, IMoteCollection fetchedMotes,
-                        List<ConsecutiveMoteMeasuresPair> consecutiveMoteMeasuresPairs) {
-        this.consecutiveMoteMeasuresPairs = consecutiveMoteMeasuresPairs;
+    public EventContext(PollingContext context,
+                        ConsecutiveMoteMeasuresPair consecutiveMoteMeasuresPair) {
+        this.consecutiveMoteMeasuresPair = consecutiveMoteMeasuresPair;
         pollingContext = context;
-        motes = fetchedMotes;
     }
 
 

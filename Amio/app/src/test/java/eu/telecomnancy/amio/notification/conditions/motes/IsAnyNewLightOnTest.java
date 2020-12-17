@@ -16,7 +16,7 @@ import eu.telecomnancy.amio.utils.factories.MoteFactory;
 
 /**
  * Unit testing suite for the condition IsAnyNewLightOn
- * @see IsAnyNewLightOn
+ * @see IsLightNewlyOn
  */
 public class IsAnyNewLightOnTest {
 
@@ -40,7 +40,7 @@ public class IsAnyNewLightOnTest {
         List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
         records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
 
-        ICondition condition = new IsAnyNewLightOn(records);
+        ICondition condition = new IsLightNewlyOn(records);
 
         // Act
         boolean isConditionMet = condition.evaluate();
@@ -64,7 +64,7 @@ public class IsAnyNewLightOnTest {
         List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
         records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
 
-        ICondition condition = new IsAnyNewLightOn(records);
+        ICondition condition = new IsLightNewlyOn(records);
 
         // Act
         boolean isConditionMet = condition.evaluate();
@@ -89,7 +89,7 @@ public class IsAnyNewLightOnTest {
         List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
         records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
 
-        ICondition condition = new IsAnyNewLightOn(records);
+        ICondition condition = new IsLightNewlyOn(records);
 
         // Act
         boolean isConditionMet = condition.evaluate();
@@ -114,7 +114,7 @@ public class IsAnyNewLightOnTest {
         List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
         records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
 
-        ICondition condition = new IsAnyNewLightOn(records);
+        ICondition condition = new IsLightNewlyOn(records);
 
         // Act
         boolean isConditionMet = condition.evaluate();

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 import eu.telecomnancy.amio.R;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
@@ -67,6 +68,9 @@ public final class NotificationDispatcher {
             return;
         }
 
+        // Retrieve the mote from which the alert has been emitted
+        Mote alertSource = context.eventContext.consecutiveMoteMeasuresPair.mostRecent;
+
         // Dispatch the notification
         notifierClasses
                 // Keep only the ones related to the context
@@ -79,7 +83,7 @@ public final class NotificationDispatcher {
                 .map(type -> invokeINotifierFromType(type, context))
                 .filter(Objects::nonNull)
                 // Send the notification from all the matching types
-                .forEach(INotifier::sendNotification);
+                .forEach(notifier -> notifier.sendNotification(alertSource));
     }
 
     /**

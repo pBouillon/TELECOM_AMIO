@@ -17,6 +17,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import eu.telecomnancy.amio.R;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.notification.Constants;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
@@ -115,29 +116,32 @@ public class SmtpNotifier extends EmailNotifier {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void sendNotification() {
+    public void sendNotification(Mote source) {
         Log.d(TAG, "Sending notification");
 
         Context androidContext = payload.eventContext.pollingContext.androidContext;
         Resources resource = androidContext.getResources();
 
         // Retrieve constants from the Preferences manager
-        String login = getParameterStringFromRessourceId(
+        String login = getParameterStringFromResourceId(
                 androidContext, resource, R.string.smtp_username_key, "");
 
-        String password = getParameterStringFromRessourceId(
+        String password = getParameterStringFromResourceId(
                 androidContext, resource, R.string.smtp_password_key, "");
 
-        String host = getParameterStringFromRessourceId(
+        String host = getParameterStringFromResourceId(
                 androidContext, resource, R.string.smtp_host_key,
                 resource.getString(R.string.default_smtp_host));
 
-        String port = getParameterStringFromRessourceId(
+        String port = getParameterStringFromResourceId(
                 androidContext, resource, R.string.smtp_port_key,
                 resource.getString(R.string.default_smtp_port));
 
-        String timeout = getParameterStringFromRessourceId(
+        String timeout = getParameterStringFromResourceId(
                 androidContext, resource, R.string.smtp_timeout_key,
                 resource.getString(R.string.default_smtp_timeout));
 
@@ -147,8 +151,8 @@ public class SmtpNotifier extends EmailNotifier {
         Log.d(TAG, "Connection to the SMTP server successfully established");
 
         // Email sending
-        String sender = getParameterStringFromRessourceId(androidContext, resource, R.string.mail_from_address_key, resource.getString(R.string.default_mail_from_address));
-        String receiver = getParameterStringFromRessourceId(androidContext, resource, R.string.mail_to_address_key, "");
+        String sender = getParameterStringFromResourceId(androidContext, resource, R.string.mail_from_address_key, resource.getString(R.string.default_mail_from_address));
+        String receiver = getParameterStringFromResourceId(androidContext, resource, R.string.mail_to_address_key, "");
 
         try {
             Message message = forgeMessage(session, sender, receiver);
@@ -162,9 +166,9 @@ public class SmtpNotifier extends EmailNotifier {
         }
     }
 
-    private String getParameterStringFromRessourceId(Context androidContext, Resources ressources, int valueId, String defaultValue) {
-        return PreferenceManager.getDefaultSharedPreferences(androidContext).getString(
-                ressources.getString(valueId),
-                defaultValue);
+    private String getParameterStringFromResourceId(Context androidContext, Resources resources,
+                                                    int valueId, String defaultValue) {
+        return PreferenceManager.getDefaultSharedPreferences(androidContext)
+                .getString(resources.getString(valueId), defaultValue);
     }
 }

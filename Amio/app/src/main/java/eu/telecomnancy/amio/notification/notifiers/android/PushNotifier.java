@@ -13,6 +13,7 @@ import java.util.Date;
 
 import eu.telecomnancy.amio.MainActivity;
 import eu.telecomnancy.amio.R;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.notification.Constants;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
@@ -78,8 +79,11 @@ public class PushNotifier extends AndroidNotifier {
                 .build();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void sendNotification() {
+    public void sendNotification(Mote source) {
         Notification notification = createNotification();
         int notificationId = (int) new Date().getTime();
 

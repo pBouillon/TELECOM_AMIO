@@ -1,33 +1,29 @@
 package eu.telecomnancy.amio.notification.conditions.motes;
 
-import java.util.List;
-
 import eu.telecomnancy.amio.iotlab.models.ConsecutiveMoteMeasuresPair;
 
 /**
  * Condition to check if any light has been recently turned on
  */
-public class IsAnyNewLightOn extends MotesCondition {
+public class IsLightNewlyOn extends MotesCondition {
 
     /**
      * Collection of the new motes and their previous retrieved values
      */
-    private final List<ConsecutiveMoteMeasuresPair> _comparedRecords;
+    private final ConsecutiveMoteMeasuresPair _comparedRecord;
 
     /**
      * Create the condition
      *
      * @param comparedRecords Collection of the new motes and their previous value retrieved
      */
-    public IsAnyNewLightOn(List<ConsecutiveMoteMeasuresPair> comparedRecords) {
-        _comparedRecords = comparedRecords;
+    public IsLightNewlyOn(ConsecutiveMoteMeasuresPair comparedRecords) {
+        _comparedRecord = comparedRecords;
     }
 
     @Override
     public boolean evaluate() {
-        return _comparedRecords
-                .stream()
-                .anyMatch(ConsecutiveMoteMeasuresPair::isMoteRoomJustRecentlyLightened);
+        return _comparedRecord.isMoteRoomJustRecentlyLightened();
     }
 
 }
