@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
      * Android logging tag for this class
      */
     private static final String TAG = MainActivity.class.getName();
+    private Intent mPollingServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
                 new IntentFilter(Constants.Broadcast.UPDATED_DATA)
         );
 
-        Intent pollingServiceIntent = new Intent(this, PollingService.class);
-        startService(pollingServiceIntent);
+        mPollingServiceIntent = new Intent(this, PollingService.class);
+        startService(mPollingServiceIntent);
     }
 
     @Override
@@ -82,4 +83,9 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        stopService(mPollingServiceIntent);
+        super.onDestroy();
+    }
 }
