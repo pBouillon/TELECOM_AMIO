@@ -51,17 +51,18 @@ public class SmtpNotifier extends EmailNotifier {
      * Forge the email to be sent with SMTP
      *
      * @param session  Opened SMTP connection to use
-     * @param sender   sender's email address
-     * @param receiver reciever email address
+     * @param sender   Sender's email address
+     * @param receiver Receiver email address
+     * @param source Mote from which the alert has been emitted
      * @return The forged message, along with its recipients, sender and content
      * @throws MessagingException If any error occurs while forging the mail
      */
-    private Message forgeMessage(Session session, String sender, String receiver) throws MessagingException {
+    private Message forgeMessage(Session session, String sender, String receiver, Mote source)
+            throws MessagingException {
         // Create a default MimeMessage object.
         Message message = new MimeMessage(session);
 
-        message.setFrom(
-                new InternetAddress(sender));
+        message.setFrom(new InternetAddress(sender));
 
         message.setRecipients(
                 Message.RecipientType.TO,
@@ -69,10 +70,10 @@ public class SmtpNotifier extends EmailNotifier {
                         receiver));
 
         // Set Subject: header field
-        message.setSubject(
-                Constants.Mail.SUBJECT);
+        message.setSubject(Constants.Mail.SUBJECT);
 
         // Now set the actual message
+        String content = String.format(Constants.Mail.Content.AUTOMATED, source.getName());
         message.setContent(Constants.Mail.Content.AUTOMATED, "text/html");
 
         return message;
@@ -80,6 +81,7 @@ public class SmtpNotifier extends EmailNotifier {
 
     /**
      * Generate all properties in order to establish the connection with the SMTP server
+     *
      * @param host SMTP server's name
      * @param port SMTP port number
      * @param timeout in ms, the time allowed to get a response from the server
@@ -155,7 +157,7 @@ public class SmtpNotifier extends EmailNotifier {
         String receiver = getParameterStringFromResourceId(androidContext, resource, R.string.mail_to_address_key, "");
 
         try {
-            Message message = forgeMessage(session, sender, receiver);
+            Message message = forgeMessage(session, sender, receiver, source);
             Log.d(TAG, "Email generated");
 
             Transport.send(message);

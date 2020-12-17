@@ -41,7 +41,7 @@
     <string name="channel_name" translatable="false">IoTLab</string>
     <string name="channel_description" translatable="false">IotLab notification channel</string>
     <string name="notification_title">Abnormal activity detected</string>
-    <string name="notification_content">An abnormal activity has been detected, tap to see the details</string>
+    <string name="notification_content">An abnormal activity has been detected by the sensor %s, tap to see the details</string>
     <string name="toast_test_mail_success">Email send</string>
     <string name="toast_test_mail_fail">An error occurred</string>
     <string name="smtp_timeout">Timeout (in ms)</string>

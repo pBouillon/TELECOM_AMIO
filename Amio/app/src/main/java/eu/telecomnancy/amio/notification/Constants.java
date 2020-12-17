@@ -28,7 +28,7 @@ public final class Constants {
                     + "<html>"
                     + "     <body>"
                     + "          <h1 style=\"color: #DF4554\">"
-                    + "               A sensor is detecting a light on"
+                    + "               The sensor %s is detecting a light on"
                     + "          </h1>"
                     + ""
                     + "          "
