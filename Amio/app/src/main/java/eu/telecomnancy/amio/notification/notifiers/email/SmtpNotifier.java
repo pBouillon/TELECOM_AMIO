@@ -66,15 +66,14 @@ public class SmtpNotifier extends EmailNotifier {
 
         message.setRecipients(
                 Message.RecipientType.TO,
-                InternetAddress.parse(
-                        receiver));
+                InternetAddress.parse(receiver));
 
         // Set Subject: header field
         message.setSubject(Constants.Mail.SUBJECT);
 
         // Now set the actual message
         String content = String.format(Constants.Mail.Content.AUTOMATED, source.getName());
-        message.setContent(Constants.Mail.Content.AUTOMATED, "text/html");
+        message.setContent(content, "text/html");
 
         return message;
     }
@@ -103,7 +102,7 @@ public class SmtpNotifier extends EmailNotifier {
      * Generate the SMTP session to further send emails from a set of properties
      *
      * @param properties SMTP properties used for the session configuration
-     * @param login SMTP usename
+     * @param login SMTP username
      * @param password SMTP password
      * @return An opened session with the SMTP server
      */
