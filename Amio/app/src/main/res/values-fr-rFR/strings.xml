@@ -10,7 +10,7 @@
     <string name="light_text_holder">Luminosité: %1$s</string>
     <string name="temperature_text_holder">Température: %1$s</string>
     <string name="notification_title">Activité anormale détectée</string>
-    <string name="notification_content">Une activité anormale a été détectée, cliquez pour afficher les détails</string>
+    <string name="notification_content">Une activité anormale a été détectée par le capteur %s, cliquez pour afficher les détails</string>
     <string name="mail_to_address">Adresse mail à notifier</string>
     <string name="mail_from_address">Adresse mail de l\'émetteur</string>
     <string name="smtp_port">Port</string>

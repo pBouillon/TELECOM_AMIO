@@ -13,6 +13,7 @@ import java.util.Date;
 
 import eu.telecomnancy.amio.MainActivity;
 import eu.telecomnancy.amio.R;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.notification.Constants;
 import eu.telecomnancy.amio.notification.annotations.EventNotifier;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
@@ -45,15 +46,19 @@ public class PushNotifier extends AndroidNotifier {
     /**
      * Create the notification from the current context
      *
+     * @param source Mote from which the notification has been emitted
      * @return The build notification
      */
-    private Notification createNotification() {
+    private Notification createNotification(Mote source) {
         // Retrieve the Android context from the notification context
         Context androidContext = payload.eventContext.pollingContext.androidContext;
 
         // Retrieve the notification content
         String title = androidContext.getString(R.string.notification_title);
         String content = androidContext.getString(R.string.notification_content);
+
+        // Format the content
+        content = String.format(content, source.getName());
 
         // Create an intent to open the main activity of the application when the user tap
         // on the notification
@@ -78,9 +83,12 @@ public class PushNotifier extends AndroidNotifier {
                 .build();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void sendNotification() {
-        Notification notification = createNotification();
+    public void sendNotification(Mote source) {
+        Notification notification = createNotification(source);
         int notificationId = (int) new Date().getTime();
 
         NotificationManagerCompat.from(

@@ -14,6 +14,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import java.util.concurrent.Executors;
 
 import eu.telecomnancy.amio.R;
+import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.notification.contexts.EventContext;
 import eu.telecomnancy.amio.notification.contexts.NotificationContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
@@ -74,7 +75,8 @@ public class SettingsSmtpFragment extends PreferenceFragmentCompat {
 
         // Send the notification
         try {
-            notifier.sendNotification();
+            Mote testMote = new Mote("Test mote");
+            notifier.sendNotification(testMote);
         } catch (Throwable e) {
             isMailSuccessfullySent = false;
         }

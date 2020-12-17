@@ -8,14 +8,10 @@ import java.util.stream.Stream;
 
 import eu.telecomnancy.amio.notification.contexts.EventContext;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
-import eu.telecomnancy.amio.notification.conditions.motes.IsAnyNewLightOn;
+import eu.telecomnancy.amio.notification.conditions.motes.IsLightNewlyOn;
 import eu.telecomnancy.amio.notification.conditions.time.IsEvening;
 import eu.telecomnancy.amio.notification.conditions.time.IsWeekEnd;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
-import eu.telecomnancy.amio.persistence.IotLabDatabase;
-import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
-import eu.telecomnancy.amio.persistence.entities.RecordAndMote;
-import eu.telecomnancy.amio.polling.PollingService;
 
 /**
  * Rule to be activated when a new light is turned on on the week-end's evening
@@ -39,12 +35,13 @@ public class NewLightOnWeekEndEveningRule extends RuleBase {
         long currentTime = context.currentTime;
 
         boolean isActive = Stream.of(
-                new IsAnyNewLightOn(context.consecutiveMoteMeasuresPairs),
+                new IsLightNewlyOn(context.consecutiveMoteMeasuresPair),
                 new IsWeekEnd(currentTime),
                 new IsEvening(currentTime))
                 .allMatch(ICondition::evaluate);
 
-        Log.d(TAG, "Rule evaluated to " + isActive);
+        Log.d(TAG, "Rule evaluated to " + isActive + " for the mote "
+                + context.consecutiveMoteMeasuresPair.mostRecent.getName());
 
         return isActive;
     }
