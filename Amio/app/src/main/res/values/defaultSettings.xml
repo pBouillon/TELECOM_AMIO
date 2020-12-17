@@ -13,6 +13,11 @@
     <string name="smtp_password_key" translatable="false">smtp_password</string>
     <string name="smtp_try_it_key" translatable="false">try_it</string>
     <string name="enable_mail_notification_key" translatable="false">enable_mail_notification</string>
+    <string name="start_time_week_mail_notification_key" translatable="false">start_time_week_mail_notification</string>
+    <string name="end_time_week_mail_notification_key" translatable="false">end_time_week_mail_notification</string>
+    <string name="start_time_weekend_mail_notification_key" translatable="false">start_time_weekend_mail_notification</string>
+    <string name="end_time_weekend_mail_notification_key" translatable="false">end_time_weekend_mail_notification</string>
+
 
     <!-- Settings default values-->
     <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
@@ -22,5 +27,10 @@
     <string name="default_smtp_port" translatable="false">587</string>
     <string name="default_smtp_host" translatable="false">smtp.gmail.com</string>
     <string name="default_smtp_timeout" translatable="false">5000</string>
+    <string name="default_start_time_week_mail_notification" translatable="false">23:00</string>
+    <string name="default_end_time_week_mail_notification" translatable="false">6:00</string>
+    <string name="default_start_time_weekend_mail_notification" translatable="false">19:00</string>
+    <string name="default_end_time_weekend_mail_notification" translatable="false">23:00</string>
+
 
 </resources>

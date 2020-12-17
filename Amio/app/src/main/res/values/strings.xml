@@ -12,6 +12,8 @@
     <string name="smtp_address_title">Address</string>
     <string name="smtp_credentials_title">Credentials</string>
     <string name="smtp_try_it_title">Try it</string>
+    <string name="week_mail_notification_title">Mail notification time span (week days)</string>
+    <string name="weekend_mail_notification_title">Mail notification time span (weekend only)</string>
 
     <!-- API Preferences -->
     <string name="iot_lab_address">Web API address</string>
@@ -48,5 +50,9 @@
     <string name="credits_icon8">https://icons8.com</string>
     <string name="credits_icon8_text">Icons by Icons8</string>
     <string name="credits_title">Credits</string>
+    <string name="start_time_week_mail_notification">Start time</string>
+    <string name="end_time_week_mail_notification">End time</string>
+    <string name="start_time_weekend_mail_notification">Start time</string>
+    <string name="end_time_weekend_mail_notification">End time</string>
 
 </resources>
