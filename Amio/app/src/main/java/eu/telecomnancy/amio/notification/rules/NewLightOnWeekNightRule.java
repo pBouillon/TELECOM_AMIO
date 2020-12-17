@@ -43,7 +43,7 @@ public class NewLightOnWeekNightRule extends RuleBase {
         Log.d(TAG, "Rule evaluated to " + isActive + " for the mote "
                 + context.consecutiveMoteMeasuresPair.mostRecent.getName());
 
-        return true; //isActive;
+        return isActive;
     }
 
 }
