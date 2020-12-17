@@ -37,10 +37,9 @@ public class IsAnyNewLightOnTest {
         Mote oldest = _factory.generate(brightRoom, 1);
         Mote recent = _factory.generate(brightRoom, 2, oldest.getName());
 
-        List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
-        records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
+        ConsecutiveMoteMeasuresPair record = new ConsecutiveMoteMeasuresPair(recent, oldest);
 
-        ICondition condition = new IsLightNewlyOn(records);
+        ICondition condition = new IsLightNewlyOn(record);
 
         // Act
         boolean isConditionMet = condition.evaluate();
@@ -61,10 +60,9 @@ public class IsAnyNewLightOnTest {
         Mote oldest = _factory.generate(darkRoom, 1);
         Mote recent = _factory.generate(darkRoom, 2, oldest.getName());
 
-        List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
-        records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
+        ConsecutiveMoteMeasuresPair record = new ConsecutiveMoteMeasuresPair(recent, oldest);
 
-        ICondition condition = new IsLightNewlyOn(records);
+        ICondition condition = new IsLightNewlyOn(record);
 
         // Act
         boolean isConditionMet = condition.evaluate();
@@ -86,10 +84,9 @@ public class IsAnyNewLightOnTest {
         Mote oldest = _factory.generate(brightRoom, 1);
         Mote recent = _factory.generate(darkRoom, 2, oldest.getName());
 
-        List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
-        records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
+        ConsecutiveMoteMeasuresPair record = new ConsecutiveMoteMeasuresPair(recent, oldest);
 
-        ICondition condition = new IsLightNewlyOn(records);
+        ICondition condition = new IsLightNewlyOn(record);
 
         // Act
         boolean isConditionMet = condition.evaluate();
@@ -111,10 +108,9 @@ public class IsAnyNewLightOnTest {
         Mote oldest = _factory.generate(darkRoom, 1);
         Mote recent = _factory.generate(brightRoom, 2, oldest.getName());
 
-        List<ConsecutiveMoteMeasuresPair> records = new ArrayList<>();
-        records.add(new ConsecutiveMoteMeasuresPair(recent, oldest));
+        ConsecutiveMoteMeasuresPair record = new ConsecutiveMoteMeasuresPair(recent, oldest);
 
-        ICondition condition = new IsLightNewlyOn(records);
+        ICondition condition = new IsLightNewlyOn(record);
 
         // Act
         boolean isConditionMet = condition.evaluate();
