@@ -8,7 +8,7 @@ import eu.telecomnancy.amio.iotlab.models.ConsecutiveMoteMeasuresPair;
 public class IsLightNewlyOn extends MotesCondition {
 
     /**
-     * Collection of the new motes and their previous retrieved values
+     * Pair of the two latest records of the mote
      */
     private final ConsecutiveMoteMeasuresPair _comparedRecord;
 
