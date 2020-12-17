@@ -3,6 +3,7 @@ package eu.telecomnancy.amio.ui.settings.components.timepicker;
 import android.annotation.SuppressLint;
 
 import java.time.DateTimeException;
+import java.util.Calendar;
 
 public abstract class Util {
     @SuppressLint("DefaultLocale")
@@ -19,5 +20,13 @@ public abstract class Util {
         int hours = Integer.parseInt(tab[0]);
         int minutes = Integer.parseInt(tab[1]);
         return hours * 60 + minutes;
+    }
+
+    public static boolean isTimeBetween2MinuteFromMidnight(int timeInMillisecond, int startMinutesFromMidnight, int endMinutesFromMidnight) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeInMillisecond);
+        int currentTime = calendar.get(Calendar.HOUR) * 60 + calendar.get(Calendar.MINUTE);
+        return (startMinutesFromMidnight < currentTime && currentTime < endMinutesFromMidnight) ||
+                (startMinutesFromMidnight > endMinutesFromMidnight && (startMinutesFromMidnight < currentTime || currentTime < endMinutesFromMidnight));
     }
 }
