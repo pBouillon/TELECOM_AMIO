@@ -12,7 +12,7 @@
     <string name="smtp_username_key" translatable="false">smtp_username</string>
     <string name="smtp_password_key" translatable="false">smtp_password</string>
     <string name="smtp_try_it_key" translatable="false">try_it</string>
-    <string name="enable_mail_notification_key" translatable="false">try_it</string>
+    <string name="enable_mail_notification_key" translatable="false">enable_mail_notification</string>
 
     <!-- Settings default values-->
     <string name="default_api_address" translatable="false">http://iotlab.telecomnancy.eu:8080/iotlab</string>
