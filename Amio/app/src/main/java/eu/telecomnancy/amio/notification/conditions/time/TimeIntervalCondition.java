@@ -4,21 +4,21 @@ import java.time.LocalTime;
 import java.util.Calendar;
 
 /**
- * TODO: doc
+ * Condition template for all condition that will depend on the current time and a time interval
  */
 public abstract class TimeIntervalCondition extends CurrentTimeCondition {
 
     /**
-     * TODO: doc
+     * Timestamp representing the end of the interval
+     * Use only Hour and Minutes from this timestamp
      */
-    // FIXME: this can be private
-    protected final long endTimeInMillis;
+    private final long endTimeInMillis;
 
     /**
-     * TODO: doc
+     * Timestamp representing the start of the interval
+     * Use only Hour and Minutes from this timestamp
      */
-    // FIXME: this can be private
-    protected final long startTimeInMillis;
+    private final long startTimeInMillis;
 
     /**
      * Create the condition
@@ -34,27 +34,22 @@ public abstract class TimeIntervalCondition extends CurrentTimeCondition {
         this.endTimeInMillis = endTimeInMillis;
     }
 
+    private static LocalTime getLocalTimeForMillis(long millis) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        return LocalTime.of(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+    }
+
     /**
-     * TODO: doc
-     *
-     * @return
+     * @return true if the current time is in the time range. It takes care of time span that start on evening and end the next day morning
      */
     public boolean isCurrentTimeBetweenBounds() {
-        // A static method may be extracted here, e.g: private static LocalTime getLocalTimeForMillis(int millis)
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(startTimeInMillis);
-        LocalTime start = LocalTime.of(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
-        calendar.setTimeInMillis(endTimeInMillis);
-        LocalTime end = LocalTime.of(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
-        calendar.setTimeInMillis(currentTimeInMillis);
-        LocalTime current = LocalTime.of(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
+        LocalTime start = getLocalTimeForMillis(startTimeInMillis);
+        LocalTime end = getLocalTimeForMillis(endTimeInMillis);
+        LocalTime current = getLocalTimeForMillis(currentTimeInMillis);
 
-        // FIXME: this may be split in several bool & methods; e.g:
-        //          - private boolean isCurrentTimeWithinRange()
-        //          - etc.
-        //        you can then merge this to make it more explanatory:
-        //        return isCurrentTimeWithinRange()
-        //              && isYourOtherTimeSpanCheckMethod();
+        // First part handle the case when start < end (both time on the same day)
+        // Second part handle the case when start > end (ending time set to the next day morning)
         return (start.isBefore(current) && current.isBefore(end)) ||
                 (end.isBefore(start) && (start.isBefore(current) || current.isBefore(end)));
     }

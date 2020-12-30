@@ -11,25 +11,25 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 import java.util.Calendar;
 
 /**
- * TODO: add documentation
+ * This class represent the UI of the time picker dialog. {@see TimePickerPreference}
  */
 public class TimePickerPreferenceDialog extends PreferenceDialogFragmentCompat {
 
     /**
-     * TODO: add documentation
+     * The time picker shown in the dialog
      */
     private TimePicker timePicker;
 
     /**
-     * TODO: add documentation
+     * The preference storage logic of this component
      */
     private TimePickerPreference timePickerPreference;
 
     /**
-     * TODO: add documentation
+     * Used by the fragment manager to create the UI
      *
-     * @param key
-     * @return
+     * @param key key of the related parameter
+     * @return a new instance of this fragment
      */
     public static TimePickerPreferenceDialog newInstance(String key) {
         TimePickerPreferenceDialog fragment = new TimePickerPreferenceDialog();
@@ -42,47 +42,28 @@ public class TimePickerPreferenceDialog extends PreferenceDialogFragmentCompat {
         return fragment;
     }
 
-    /**
-     * TODO: add documentation
-     *
-     * @param view
-     */
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
         timePickerPreference = ((TimePickerPreference) (this.getPreference()));
 
-        // FIXME: extract method ? e.g.: private void configureTimePickerForCurrentTime()
         String time = timePickerPreference.getPersistedTime();
         long timestamp = TimePickerPreference.timeToTimestamp(time);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp);
 
-        // FIXME: move this to onCreateDialogView ?
-        timePicker.setIs24HourView(true);
-
         timePicker.setHour(calendar.get(Calendar.HOUR_OF_DAY));
         timePicker.setMinute(calendar.get(Calendar.MINUTE));
     }
 
-    /**
-     * TODO: add documentation
-     *
-     * @param context
-     * @return
-     */
     @Override
     protected View onCreateDialogView(Context context) {
         timePicker = new TimePicker(context);
+        timePicker.setIs24HourView(true);
         return timePicker;
     }
 
-    /**
-     * TODO: add documentation
-     *
-     * @param positiveResult
-     */
     @SuppressLint("DefaultLocale")
     @Override
     public void onDialogClosed(boolean positiveResult) {
@@ -90,7 +71,6 @@ public class TimePickerPreferenceDialog extends PreferenceDialogFragmentCompat {
             return;
         }
 
-        // FIXME: extract a method ? e.g.: private String getFormattedTime() ?
         String minutes = timePicker.getMinute() / 10 == 0
                 ? String.format("0%d", timePicker.getMinute())
                 : String.valueOf(timePicker.getMinute());

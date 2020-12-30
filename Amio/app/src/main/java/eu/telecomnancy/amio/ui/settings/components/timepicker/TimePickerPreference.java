@@ -20,80 +20,31 @@ public class TimePickerPreference extends DialogPreference {
      * Default time used for the {@link android.widget.TimePicker}
      */
     private static final String DEFAULT_TIME = "00:00";
+    public static final String TIME_SEPARATOR = ":";
 
     /**
      * Used when no default value is set
      */
-    // FIXME: find a more self-explanatory name ?
-    private String value = DEFAULT_TIME;
+    private String currentSelectedTime = DEFAULT_TIME;
 
     /**
-     * TODO
+     * Default constructor matching the parent constructor
      *
-     * @param context
-     * @param attrs
+     * @param context {@see DialogPreference}
+     * @param attrs   {@see DialogPreference}
      */
     public TimePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     /**
-     * Get saved preference value
+     * Convert a time string into a timestamp
      *
-     * @return TODO
-     */
-    public String getPersistedTime() {
-        return getPersistedString(value);
-    }
-
-    /**
-     * Save preference
-     *
-     * @param time TODO
-     */
-    public void persistTime(String time) {
-        this.persistString(time);
-        value = time;
-        updateSummary();
-    }
-
-    /**
-     * TODO
-     *
-     * @param a
-     * @param index
-     * @return
-     */
-    @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getString(index);
-    }
-
-    /**
-     * TODO
-     *
-     * @param defaultValue
-     */
-    @Override
-    protected void onSetInitialValue(@Nullable Object defaultValue) {
-        boolean isInitialTimeSet = getPersistedString("").isEmpty();
-
-        String initialValue = isInitialTimeSet
-                ? (String) defaultValue
-                : getPersistedString(value);
-
-        persistTime(initialValue);
-    }
-
-    /**
-     * TODO
-     *
-     * @param time
-     * @return
+     * @param time time string to convert
+     * @return a timestamp that correspond to the time (use only for Hour and Minutes)
      */
     public static long timeToTimestamp(String time) {
-        // FIXME: create a constant for the ":"
-        String[] tab = time.split(":");
+        String[] tab = time.split(TIME_SEPARATOR);
         if (tab.length != 2) {
             throw new DateTimeException("Time string must be %d:%d");
         }
@@ -101,13 +52,50 @@ public class TimePickerPreference extends DialogPreference {
         int hours = Integer.parseInt(tab[0]);
         int minutes = Integer.parseInt(tab[1]);
 
-        // FIXME: extract a method ? e.g.: private static long getTimestampFromTime(int hours, int minutes)
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, minutes);
 
         return calendar.getTimeInMillis();
     }
+
+    /**
+     * Get saved preference value
+     *
+     * @return The persisted time
+     */
+    public String getPersistedTime() {
+        return getPersistedString(currentSelectedTime);
+    }
+
+    @Override
+    protected Object onGetDefaultValue(TypedArray a, int index) {
+        return a.getString(index);
+    }
+
+    /**
+     * Save preference
+     *
+     * @param time time to save in the preference manager
+     */
+    public void persistTime(String time) {
+        this.persistString(time);
+        currentSelectedTime = time;
+        updateSummary();
+    }
+
+    @Override
+    protected void onSetInitialValue(@Nullable Object defaultValue) {
+        boolean isInitialTimeSet = getPersistedString("").isEmpty();
+
+        String initialValue = isInitialTimeSet
+                ? (String) defaultValue
+                : getPersistedString(currentSelectedTime);
+
+        persistTime(initialValue);
+    }
+
+
 
     /**
      * TODO
