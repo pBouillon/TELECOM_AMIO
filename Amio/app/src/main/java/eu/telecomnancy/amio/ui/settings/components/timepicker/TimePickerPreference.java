@@ -20,7 +20,7 @@ public class TimePickerPreference extends DialogPreference {
         super(context, attrs);
     }
 
-    static long timeToTimestamp(String time) {
+    public static long timeToTimestamp(String time) {
         String[] tab = time.split(":");
         if (tab.length != 2) {
             throw new DateTimeException("Time string must be %d:%d");

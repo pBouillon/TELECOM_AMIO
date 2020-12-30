@@ -12,8 +12,8 @@
     <string name="smtp_address_title">Address</string>
     <string name="smtp_credentials_title">Credentials</string>
     <string name="smtp_try_it_title">Try it</string>
-    <string name="week_mail_notification_title">Mail notification time span (week days)</string>
-    <string name="weekend_mail_notification_title">Mail notification time span (weekend only)</string>
+    <string name="week_mail_notification_title">Night time span</string>
+    <string name="weekend_mail_notification_title">Evening time span</string>
 
     <!-- API Preferences -->
     <string name="iot_lab_address">Web API address</string>

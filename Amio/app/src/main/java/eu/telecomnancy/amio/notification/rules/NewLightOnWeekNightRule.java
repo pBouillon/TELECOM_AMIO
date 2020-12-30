@@ -6,12 +6,14 @@ import org.jeasy.rules.annotation.Rule;
 
 import java.util.stream.Stream;
 
-import eu.telecomnancy.amio.notification.contexts.EventContext;
+import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
 import eu.telecomnancy.amio.notification.conditions.motes.IsLightNewlyOn;
 import eu.telecomnancy.amio.notification.conditions.time.IsNight;
 import eu.telecomnancy.amio.notification.conditions.time.IsNotWeekEnd;
+import eu.telecomnancy.amio.notification.contexts.EventContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
+import eu.telecomnancy.amio.ui.settings.components.timepicker.TimePickerPreference;
 
 /**
  * Rule to be activated when a new light is turned on on the week's night
@@ -34,10 +36,15 @@ public class NewLightOnWeekNightRule extends RuleBase {
     public boolean isActiveWhen(EventContext context) {
         long currentTime = context.currentTime;
 
-        boolean isActive =  Stream.of(
+        String startTime = getPreferenceValue(context.pollingContext.androidContext, R.string.start_time_week_mail_notification_key, R.string.default_start_time_week_mail_notification);
+        String endTime = getPreferenceValue(context.pollingContext.androidContext, R.string.end_time_week_mail_notification_key, R.string.default_end_time_week_mail_notification);
+        long startTimestamp = TimePickerPreference.timeToTimestamp(startTime);
+        long endTimestamp = TimePickerPreference.timeToTimestamp(endTime);
+
+        boolean isActive = Stream.of(
                 new IsLightNewlyOn(context.consecutiveMoteMeasuresPair),
                 new IsNotWeekEnd(currentTime),
-                new IsNight(currentTime))
+                new IsNight(currentTime, startTimestamp, endTimestamp))
                 .allMatch(ICondition::evaluate);
 
         Log.d(TAG, "Rule evaluated to " + isActive + " for the mote "
