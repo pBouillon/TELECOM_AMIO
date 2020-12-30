@@ -1,12 +1,14 @@
 package eu.telecomnancy.amio.ui.settings.components.timepicker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 
 import androidx.preference.PreferenceDialogFragmentCompat;
+
+import java.util.Calendar;
 
 public class TimePickerPreferenceDialog extends PreferenceDialogFragmentCompat {
 
@@ -32,18 +34,21 @@ public class TimePickerPreferenceDialog extends PreferenceDialogFragmentCompat {
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
         preference = ((TimePickerPreference) (this.getPreference()));
-        int minAfterMidnight = preference.getPersistedMinutesFromMidnight();
+        String time = preference.getPersistedTime();
+        long timestamp = TimePickerPreference.timeToTimestamp(time);
         timePicker.setIs24HourView(true);
-        Log.e("", minAfterMidnight + "");
-        timePicker.setHour(minAfterMidnight / 60);
-        timePicker.setMinute(minAfterMidnight % 60);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        timePicker.setHour(calendar.get(Calendar.HOUR_OF_DAY));
+        timePicker.setMinute(calendar.get(Calendar.MINUTE));
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
-            int minAfterMidnight = timePicker.getHour() * 60 + timePicker.getMinute();
-            preference.persistMinutesFromMidnight(minAfterMidnight);
+            String minutes = timePicker.getMinute() / 10 == 0 ? String.format("0%d", timePicker.getMinute()) : String.valueOf(timePicker.getMinute());
+            preference.persistTime(String.format("%d:%s", timePicker.getHour(), minutes));
         }
     }
 }
