@@ -95,10 +95,8 @@ public class TimePickerPreference extends DialogPreference {
         persistTime(initialValue);
     }
 
-
-
     /**
-     * TODO
+     * Update the text shown in the preference screen
      */
     private void updateSummary() {
         this.setSummary(getPersistedTime());
