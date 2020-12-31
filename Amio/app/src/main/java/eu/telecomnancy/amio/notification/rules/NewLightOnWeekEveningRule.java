@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.notification.conditions.ICondition;
 import eu.telecomnancy.amio.notification.conditions.motes.IsLightNewlyOn;
-import eu.telecomnancy.amio.notification.conditions.time.IsEvening;
 import eu.telecomnancy.amio.notification.conditions.time.IsNotWeekEnd;
+import eu.telecomnancy.amio.notification.conditions.time.IsTimeWithinInterval;
 import eu.telecomnancy.amio.notification.contexts.EventContext;
 import eu.telecomnancy.amio.notification.flags.NotificationType;
 import eu.telecomnancy.amio.ui.settings.components.timepicker.TimePickerPreference;
@@ -44,7 +44,7 @@ public class NewLightOnWeekEveningRule extends RuleBase {
         boolean isActive = Stream.of(
                 new IsLightNewlyOn(context.consecutiveMoteMeasuresPair),
                 new IsNotWeekEnd(currentTime),
-                new IsEvening(currentTime, startTimestamp, endTimestamp))
+                new IsTimeWithinInterval(currentTime, startTimestamp, endTimestamp))
                 .allMatch(ICondition::evaluate);
 
         Log.d(TAG, "Rule evaluated to " + isActive + " for the mote "
