@@ -85,6 +85,18 @@ public class Record {
         this.temperature = temperature;
     }
 
+    /**
+     * Create a new record from the raw mote measured by the IoTLab
+     *
+     * @param moteId Id of the mote in the database
+     * @param mote Raw measure from the IoTLab
+     * @return The associated record created
+     */
+    public static Record fromMote(long moteId, Mote mote) {
+        return new Record(moteId, mote.getBrightness(), mote.getHumidity(),
+                mote.getBattery(), mote.getTimestamp(), mote.getTemperature());
+    }
+
     @NotNull
     @Override
     public String toString() {

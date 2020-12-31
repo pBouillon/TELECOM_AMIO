@@ -27,6 +27,11 @@
             app:fragment="eu.telecomnancy.amio.ui.settings.SettingsSmtpFragment"
             app:singleLineTitle="true" />
 
+        <Preference
+            android:title="@string/time_spans"
+            app:fragment="eu.telecomnancy.amio.ui.settings.SettingsTimeSpanFragment"
+            app:singleLineTitle="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/api_title">

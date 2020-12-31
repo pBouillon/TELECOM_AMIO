@@ -1,5 +1,6 @@
 package eu.telecomnancy.amio.polling;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -18,6 +19,9 @@ import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 import eu.telecomnancy.amio.iotlab.models.collections.MoteCollection;
 import eu.telecomnancy.amio.notification.dispatchers.EventDispatcher;
+import eu.telecomnancy.amio.persistence.IotLabDatabase;
+import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
+import eu.telecomnancy.amio.persistence.utils.IoTLabPersistenceUtils;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
@@ -94,18 +98,29 @@ public abstract class PollingTaskBase extends TimerTask {
         // Retrieve the latest data from the motes
         Log.i(TAG, "Retrieving motes latest data");
         IMoteCollection _motes = getLatestMotes();
+        List<Mote> moteList = _motes.toList();
 
-        // Call the used-defined callback
-        Log.i(TAG, "Calling the callback with the retrieved motes");
-        callback(_motes.toList());
+        // Checking if the measure contains any new mote
+        IotLabDatabase database = IotLabDatabaseProvider
+                .getOrCreateInstance(_context.androidContext);
 
-        // Fire notifications
-        if (!_motes.isEmpty()) {
+        // This boolean MUST be evaluated *before* calling the callback
+        // Once the callback is called, the database may have been altered and the following result
+        // may now be true anymore
+        boolean isAnyNewMeasure = IoTLabPersistenceUtils.isAnyNonStoredRecordFromRawMotes(
+                moteList, database.moteDao(), database.recordDao());
+
+        // Fire notifications if their is any mote that contains a new measure
+        if (!_motes.isEmpty() && isAnyNewMeasure) {
             Log.i(TAG, "Dispatching notification for the retrieved motes");
             _dispatcher.dispatchNotificationFor(_motes);
         } else {
-            Log.w(TAG, "No mote retrieved, skipping the notification dispatch");
+            Log.w(TAG, "No new motes or measures retrieved, skipping the notifications dispatching");
         }
+
+        // Call the used-defined callback
+        Log.i(TAG, "Calling the callback with the retrieved motes");
+        callback(moteList);
 
         Log.d(TAG, "Polling task executed");
     }
