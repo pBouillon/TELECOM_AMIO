@@ -2,6 +2,7 @@ package eu.telecomnancy.amio.persistence.utils;
 
 import android.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +61,29 @@ public final class IoTLabPersistenceUtils {
                                 -> record.retrievedAt == previousRecordTimestamp))
                 // Return the filtered list of records
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Check whether or not any of the raw records held by the Mote is not known by the database
+     *
+     * @param motes Raw measures to be checked
+     * @param moteDao The mote DAO
+     * @param recordDao The record DAO
+     * @return true if any of the raw records held by the Mote is not known by the database; false
+     *         otherwise
+     */
+    public static boolean isAnyNonStoredRecordFromRawMotes(
+            List<Mote> motes, MoteDao moteDao, RecordDao recordDao) {
+        List<Record> newRecords = new ArrayList<>();
+
+        // A NullPointerException occurs if the following method attempts to create a record from
+        // an unknown mote. If this is the case, it means that the application does not know the
+        // mote yet; thus their is a new record
+        try {
+            newRecords = getNonStoredRecordsFromRawMotes(motes, moteDao, recordDao);
+        } catch (NullPointerException ignored) { }
+
+        return !newRecords.isEmpty();
     }
 
 }

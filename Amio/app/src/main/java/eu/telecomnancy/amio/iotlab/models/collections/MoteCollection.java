@@ -38,8 +38,6 @@ public class MoteCollection implements IMoteCollection {
         //
         // Note: Retrieving the mote after its creation in the worst case does not affect performances
         // since HashMap.get is O(1)
-        //
-        // noinspection ConstantConditions
         _moteMap.get(identifier)
                 // Since we updated the object reference, we do not need to put the updated object
                 // back in the map
