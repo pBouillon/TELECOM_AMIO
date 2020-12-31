@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.util.Pair;
 
 import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
@@ -15,7 +14,6 @@ import androidx.preference.PreferenceManager;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Timer;
-import java.util.stream.Collectors;
 
 import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.iotlab.models.Mote;
@@ -24,7 +22,7 @@ import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
 import eu.telecomnancy.amio.persistence.daos.MoteDao;
 import eu.telecomnancy.amio.persistence.daos.RecordDao;
 import eu.telecomnancy.amio.persistence.entities.Record;
-import eu.telecomnancy.amio.persistence.entities.RecordAndMote;
+import eu.telecomnancy.amio.persistence.utils.IoTLabPersistenceUtils;
 import eu.telecomnancy.amio.polling.contexts.PollingContext;
 
 /**
@@ -195,11 +193,15 @@ public class PollingService extends Service {
     private void storeNewMotes(List<Mote> motes) {
         MoteDao moteDao = _database.moteDao();
 
-        // Register all the missing motes in the database
-        motes.stream()
-                // Filtering only the ones not existing in the database
-                .filter(mote
-                        -> !moteDao.exists(mote.getName()))
+        List<Mote> newMotes = IoTLabPersistenceUtils.getNonStoredMotes(motes, moteDao);
+
+        if (newMotes.isEmpty()) {
+            Log.d(TAG, "All queried motes are already stored in the database, " +
+                    "no additional one will be tracked");
+            return;
+        }
+
+        newMotes.stream()
                 // Converting the provided mote to its database representation
                 .map(mote
                         -> new eu.telecomnancy.amio.persistence.entities.Mote(mote.getName()))
@@ -211,64 +213,37 @@ public class PollingService extends Service {
     }
 
     /**
+     * Add all records not already tracked in the database
+     *
+     * @param motes The list of motes from which the records will be created
+     */
+    private void storeNewMotesRecord(List<Mote> motes) {
+        MoteDao moteDao = _database.moteDao();
+        RecordDao recordDao = _database.recordDao();
+
+        List<Record> newRecords = IoTLabPersistenceUtils
+                .getNonStoredRecordsFromRawMotes(motes, moteDao, recordDao);
+
+        if (newRecords.isEmpty()) {
+            Log.d(TAG, "No new measures has been received, skipping their storage");
+            return;
+        }
+
+        newRecords.forEach(record -> {
+            record.recordId = recordDao.insert(record);
+            Log.d(TAG, "New record added in the database: " + record);
+        });
+    }
+
+    /**
      * Given a list of motes, add all the ones not already registered in the database and their
      * associated values
      *
      * @param motes Received payload of motes
      */
     private void storeRecords(List<Mote> motes) {
-        // Register all the missing motes in the database
         storeNewMotes(motes);
-
-        // Register the data retrieved
-        motes.forEach(mote -> {
-            // Retrieve the corresponding mote in the database for this raw measurement
-            long moteId = _database.moteDao()
-                    .getByName(mote.getName())
-                    .moteId;
-
-            // Store the mote's record
-            storeRecord(moteId, mote);
-        });
-    }
-
-    /**
-     * Store the record associated to a raw mote measurement in the database
-     *
-     * If the record has already been stored, based on the time it has been measured
-     *
-     * @param moteId Id of the matching mote entity in the database
-     * @param rawMeasure Raw measure of a mote, as received from the API and digested by the app
-     *
-     * @see Mote
-     */
-    private void storeRecord(long moteId, Mote rawMeasure) {
-        RecordDao recordDao = _database.recordDao();
-
-        // Create the record from the mote id and the data originally retrieved
-        Record record = new Record(moteId, rawMeasure.getBrightness(),
-                rawMeasure.getHumidity(), rawMeasure.getBattery(), rawMeasure.getTimestamp(),
-                rawMeasure.getTemperature());
-
-        // Retrieve the previous record of the provided mote
-        boolean isNewRecord = recordDao.getLatestRecordAndMotePairById(moteId, 1)
-                .stream()
-                .map(recordAndMote
-                        -> recordAndMote.record)
-                .noneMatch(fetchedRecord
-                        -> fetchedRecord.retrievedAt == record.retrievedAt);
-
-        if (!isNewRecord) {
-            Log.d(TAG,
-                    "The measured record is the same as the previous one recorded, " +
-                    "skipping its storage in the database");
-            return;
-        }
-
-        // Insert the newly created record
-        record.recordId = recordDao.insert(record);
-
-        Log.d(TAG, "New record added in the database: " + record);
+        storeNewMotesRecord(motes);
     }
 
     /**

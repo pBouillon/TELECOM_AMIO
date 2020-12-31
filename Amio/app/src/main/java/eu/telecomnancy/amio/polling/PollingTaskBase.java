@@ -41,20 +41,13 @@ public abstract class PollingTaskBase extends TimerTask {
     private final EventDispatcher _dispatcher;
 
     /**
-     * Context wrapping the polling data and ecosystem
-     */
-    private final PollingContext _context;
-
-    /**
      * Create a new polling task
      *
      * @param context Context wrapping the polling data and ecosystem
      */
     public PollingTaskBase(PollingContext context) {
-        _context = context;
-
-        _aggregator = new IotLabAggregator(_context);
-        _dispatcher = new EventDispatcher(_context);
+        _aggregator = new IotLabAggregator(context);
+        _dispatcher = new EventDispatcher(context);
     }
 
     /**
@@ -104,7 +97,7 @@ public abstract class PollingTaskBase extends TimerTask {
             Log.i(TAG, "Dispatching notification for the retrieved motes");
             _dispatcher.dispatchNotificationFor(_motes);
         } else {
-            Log.w(TAG, "No mote retrieved, skipping the notification dispatch");
+            Log.w(TAG, "No new motes retrieved, skipping the notifications dispatching");
         }
 
         Log.d(TAG, "Polling task executed");
