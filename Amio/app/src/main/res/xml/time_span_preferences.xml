@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/week_mail_notification_title">
+
+        <eu.telecomnancy.amio.ui.settings.components.timepicker.TimePickerPreference
+            android:defaultValue="@string/default_start_time_week_mail_notification"
+            android:key="@string/start_time_week_mail_notification_key"
+            android:title="@string/start_time_week_mail_notification" />
+
+        <eu.telecomnancy.amio.ui.settings.components.timepicker.TimePickerPreference
+            android:defaultValue="@string/default_end_time_week_mail_notification"
+            android:key="@string/end_time_week_mail_notification_key"
+            android:title="@string/end_time_week_mail_notification" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/weekend_mail_notification_title">
+
+        <eu.telecomnancy.amio.ui.settings.components.timepicker.TimePickerPreference
+            android:defaultValue="@string/default_start_time_weekend_mail_notification"
+            android:key="@string/start_time_weekend_mail_notification_key"
+            android:title="@string/start_time_weekend_mail_notification" />
+
+        <eu.telecomnancy.amio.ui.settings.components.timepicker.TimePickerPreference
+            android:defaultValue="@string/default_end_time_weekend_mail_notification"
+            android:key="@string/end_time_weekend_mail_notification_key"
+            android:title="@string/end_time_weekend_mail_notification" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
