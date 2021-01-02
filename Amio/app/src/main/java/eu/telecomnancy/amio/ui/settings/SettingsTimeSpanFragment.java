@@ -21,7 +21,7 @@ public class SettingsTimeSpanFragment extends PreferenceFragmentCompat {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(getResources().getString(R.string.title_activity_smtp));
+        getActivity().setTitle(getResources().getString(R.string.title_activity_time_span));
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
