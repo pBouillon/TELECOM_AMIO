@@ -52,13 +52,13 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
 
         mPollingServiceIntent = new Intent(this, PollingService.class);
         startService(mPollingServiceIntent);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater()
                 .inflate(R.menu.main_app_bar_menu, menu);
-
         return true;
     }
 
@@ -87,5 +87,11 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
     protected void onDestroy() {
         stopService(mPollingServiceIntent);
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
