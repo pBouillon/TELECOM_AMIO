@@ -38,4 +38,5 @@
     <string name="end_time_weekend_mail_notification">Fin</string>
     <string name="time_spans">Configurer les intervalles de temps</string>
     <string name="title_activity_time_span">Intervalles de temps</string>
+    <string name="mote_prefered_name_hint">Nom affiché du mote</string>
 </resources>

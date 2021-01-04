@@ -1,15 +1,22 @@
 package eu.telecomnancy.amio.ui.main.mote.information;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import eu.telecomnancy.amio.MainActivity;
 import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.iotlab.models.Mote;
+import eu.telecomnancy.amio.persistence.IotLabDatabaseProvider;
+import eu.telecomnancy.amio.persistence.daos.MoteDao;
+import eu.telecomnancy.amio.persistence.utils.IoTLabPersistenceUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +28,6 @@ public class MoteInformationFragment extends Fragment {
     // the fragment initialization parameter key
     private static final String ARG_PARAM1 = "mote";
 
-    // TODO: Rename and change types of parameters
     private Mote mMote;
 
     public MoteInformationFragment() {
@@ -35,7 +41,6 @@ public class MoteInformationFragment extends Fragment {
      * @param mote the mote to display information
      * @return A new instance of fragment MoteInformationFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MoteInformationFragment newInstance(Mote mote) {
         MoteInformationFragment fragment = new MoteInformationFragment();
         Bundle args = new Bundle();
@@ -55,9 +60,30 @@ public class MoteInformationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        return inflater.inflate(R.layout.fragment_mote_information, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_mote_information, container, false);
+        TextView moteIdTv = view.findViewById(R.id.moteInformationID);
+        moteIdTv.setText(mMote.getName());
+
+        EditText motePreferredName = view.findViewById(R.id.motePreferredName);
+        motePreferredName.setText(mMote.getPreferredName());
+        motePreferredName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                MoteDao moteDao = IotLabDatabaseProvider.getOrCreateInstance(getContext()).moteDao();
+                IoTLabPersistenceUtils.changeMotePreferredName(mMote, moteDao, charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+        return view;
     }
 
     @Override

@@ -35,6 +35,11 @@ public class MoteViewHolder extends RecyclerView.ViewHolder {
     public final TextView nameView;
 
     /**
+     * id of the mote
+     */
+    public final TextView idView;
+
+    /**
      * Temperature measured
      */
     public final TextView temperatureView;
@@ -52,7 +57,8 @@ public class MoteViewHolder extends RecyclerView.ViewHolder {
         this.view = view;
         lightBulb = view.findViewById(R.id.light_bulb_icon);
         lightView = view.findViewById(R.id.light);
-        nameView = view.findViewById(R.id.moteId);
+        nameView = view.findViewById(R.id.moteName);
+        idView = view.findViewById(R.id.moteId);
         temperatureView = view.findViewById(R.id.humidity);
     }
 

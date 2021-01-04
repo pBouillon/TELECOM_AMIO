@@ -61,8 +61,14 @@ public class MoteRecyclerViewAdapter
         holder.item = mote;
 
         // Bind the texts to the view
-        holder.nameView.setText(
-                _context.getString(R.string.sensor_id_text_holder, mote.getName()));
+        if (mote.getPreferredName().isEmpty() || mote.getName().equals(mote.getPreferredName())) {
+            holder.nameView.setText(_context.getString(R.string.sensor_id_text_holder, mote.getName()));
+            holder.idView.setText(null);
+        } else {
+            holder.nameView.setText(mote.getPreferredName());
+            holder.idView.setText(mote.getName());
+        }
+
 
         holder.lightView.setText(
                 _context.getString(R.string.light_text_holder, brightnessText));

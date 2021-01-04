@@ -35,6 +35,11 @@ public class Mote implements Serializable {
     private final String _name;
 
     /**
+     * Mote's display name
+     */
+    private String _preferredName;
+
+    /**
      * Temperature value retrieved by the mote
      */
     private float _temperature;
@@ -51,6 +56,7 @@ public class Mote implements Serializable {
      */
     public Mote(String name) {
         _name = name;
+        _preferredName = name;
     }
 
     /**
@@ -69,6 +75,7 @@ public class Mote implements Serializable {
         _brightness = brightness;
         _humidity = humidity;
         _name = name;
+        _preferredName = name;
         _temperature = temperature;
         _timestamp = timestamp;
     }
@@ -99,6 +106,7 @@ public class Mote implements Serializable {
 
     /**
      * Getter for the name
+     *
      * @return The mote's name
      */
     public String getName() {
@@ -106,7 +114,26 @@ public class Mote implements Serializable {
     }
 
     /**
+     * Getter for the preferredName
+     *
+     * @return the mote's preferred name
+     */
+    public String getPreferredName() {
+        return _preferredName;
+    }
+
+    /**
+     * Setter for the preferredName
+     *
+     * @param _preferredName the new preferred name
+     */
+    public void setPreferredName(String _preferredName) {
+        this._preferredName = _preferredName;
+    }
+
+    /**
      * Getter for the temperature
+     *
      * @return The temperature measured by the mote
      */
     public float getTemperature() {

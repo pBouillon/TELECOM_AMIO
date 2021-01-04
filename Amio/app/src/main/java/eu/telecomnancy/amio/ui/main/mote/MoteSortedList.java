@@ -21,7 +21,7 @@ public class MoteSortedList extends SortedList<Mote> {
         super(Mote.class, new Callback<Mote>() {
             @Override
             public int compare(Mote o1, Mote o2) {
-                return o1.getName().compareTo(o2.getName());
+                return o1.getPreferredName().compareTo(o2.getPreferredName());
             }
 
             @Override

@@ -47,6 +47,15 @@ public class Mote {
         preferredName = name;
     }
 
+    /**
+     * Setter for the mote preferred name
+     *
+     * @param preferredName new preferred name
+     */
+    public void setPreferredName(String preferredName) {
+        this.preferredName = preferredName;
+    }
+
     @NotNull
     @Override
     public String toString() {

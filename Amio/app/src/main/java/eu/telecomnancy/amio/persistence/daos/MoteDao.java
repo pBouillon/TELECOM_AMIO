@@ -10,6 +10,8 @@ import java.util.List;
 import eu.telecomnancy.amio.persistence.entities.Mote;
 import eu.telecomnancy.amio.persistence.entities.MoteWithRecords;
 
+import static androidx.room.OnConflictStrategy.REPLACE;
+
 /**
  * Mote data access object, exposing methods to interact with the entity in the database
  *
@@ -43,7 +45,7 @@ public interface MoteDao {
      * @return The mote which name is the same as the provided one
      */
     @Query("SELECT * FROM mote WHERE name = :moteName")
-   Mote getByName(String moteName);
+    Mote getByName(String moteName);
 
     /**
      * Get all records of a mote
@@ -60,7 +62,7 @@ public interface MoteDao {
      *
      * @param mote The mote to be inserted
      */
-    @Insert
+    @Insert(onConflict = REPLACE)
     long insert(Mote mote);
 
 }
