@@ -69,7 +69,6 @@ public class MoteRecyclerViewAdapter
             holder.idView.setText(mote.getName());
         }
 
-
         holder.lightView.setText(
                 _context.getString(R.string.light_text_holder, brightnessText));
 

@@ -54,12 +54,17 @@ import eu.telecomnancy.amio.persistence.utils.IoTLabPersistenceUtils;
  */
 public class MoteInformationFragment extends Fragment {
 
-    // the fragment initialization parameter key
+    /**
+     * The fragment initialization parameter key
+     */
     private static final String ARG_PARAM1 = "mote";
 
-    private LineChart chart;
+    /**
+     * Mote displayed in this frame
+     */
+    private Mote _Mote;
 
-    private Mote mMote;
+    private LineChart chart;
     private int mSize = 120;
 
     public MoteInformationFragment() {
@@ -75,6 +80,7 @@ public class MoteInformationFragment extends Fragment {
      */
     public static MoteInformationFragment newInstance(Mote mote) {
         MoteInformationFragment fragment = new MoteInformationFragment();
+
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM1, mote);
         fragment.setArguments(args);
@@ -84,36 +90,41 @@ public class MoteInformationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
-            mMote = (Mote) getArguments().getSerializable(ARG_PARAM1);
+            _Mote = (Mote) getArguments().getSerializable(ARG_PARAM1);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity) getActivity())
+                .getSupportActionBar()
+                .setDisplayHomeAsUpEnabled(true);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mote_information, container, false);
         TextView moteIdTv = view.findViewById(R.id.moteInformationID);
-        moteIdTv.setText(mMote.getName());
+        moteIdTv.setText(_Mote.getName());
 
         EditText motePreferredName = view.findViewById(R.id.motePreferredName);
-        motePreferredName.setText(mMote.getPreferredName());
+        motePreferredName.setText(_Mote.getPreferredName());
+
         motePreferredName.addTextChangedListener(new TextWatcher() {
+
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 MoteDao moteDao = IotLabDatabaseProvider.getOrCreateInstance(getContext()).moteDao();
-                IoTLabPersistenceUtils.changeMotePreferredName(mMote, moteDao, charSequence.toString());
+                IoTLabPersistenceUtils.changeMotePreferredName(_Mote, moteDao, charSequence.toString());
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-            }
+            public void afterTextChanged(Editable editable) { }
+
         });
 
         updateLineChart(view);
@@ -283,7 +294,10 @@ public class MoteInformationFragment extends Fragment {
 
     @Override
     public void onStop() {
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        ((MainActivity) getActivity())
+                .getSupportActionBar()
+                .setDisplayHomeAsUpEnabled(false);
+
         super.onStop();
     }
 

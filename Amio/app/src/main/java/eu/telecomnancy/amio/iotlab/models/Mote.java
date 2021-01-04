@@ -125,10 +125,10 @@ public class Mote implements Serializable {
     /**
      * Setter for the preferredName
      *
-     * @param _preferredName the new preferred name
+     * @param preferredName the new preferred name
      */
-    public void setPreferredName(String _preferredName) {
-        this._preferredName = _preferredName;
+    public void setPreferredName(String preferredName) {
+        _preferredName = preferredName;
     }
 
     /**
