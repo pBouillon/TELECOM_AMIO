@@ -1,6 +1,6 @@
 package eu.telecomnancy.amio.persistence.utils;
 
-import android.util.Pair;
+import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +84,39 @@ public final class IoTLabPersistenceUtils {
         } catch (NullPointerException ignored) { }
 
         return !newRecords.isEmpty();
+    }
+
+    /**
+     * Update the preferred names of a mote list
+     *
+     * @param motes   The list of motes to be updated
+     * @param moteDao The mote DAO
+     */
+    public static void updateMotePreferredName(List<Mote> motes, MoteDao moteDao) {
+        motes.forEach(mote -> {
+            String motePreferredName = moteDao.getByName(mote.getName()).preferredName;
+            mote.setPreferredName(motePreferredName);
+        });
+    }
+
+    /**
+     * Change the preferred names of one mote
+     *
+     * @param mote    The list of motes to be updated
+     * @param moteDao The mote DAO
+     */
+    public static void changeMotePreferredName(Mote mote, MoteDao moteDao, String newName) {
+        new AsyncTask<Void, Void, Mote>() {
+            @Override
+            protected Mote doInBackground(Void... voids) {
+                eu.telecomnancy.amio.persistence.entities.Mote dbMote = moteDao.getByName(mote.getName());
+                dbMote.setPreferredName(newName);
+                moteDao.insert(dbMote);
+                mote.setPreferredName(newName);
+                return mote;
+            }
+        }
+        .execute();
     }
 
 }

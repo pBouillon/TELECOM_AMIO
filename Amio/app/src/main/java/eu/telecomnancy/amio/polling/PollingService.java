@@ -70,18 +70,27 @@ public class PollingService extends Service {
                 motes.forEach(mote
                         -> Log.d(TAG, mote.toString()));
 
+                // Store the received motes
+                storeRecords(motes);
+
+                // Update the display name of the motes
+                updateMotePreferedName(motes);
+
                 // Broadcast the new data to the UI
                 sendBroadcastMessage(motes);
 
-                // Store the received motes
-                storeRecords(motes);
             }
         };
     }
 
+    private void updateMotePreferedName(List<Mote> motes) {
+        MoteDao moteDao = _database.moteDao();
+        IoTLabPersistenceUtils.updateMotePreferredName(motes, moteDao);
+    }
+
     /**
      * Initialize the notification channel to allow the task to further send push notifications
-      */
+     */
     private void initializeNotificationChannel() {
         // Retrieve channel details
         CharSequence name = getString(R.string.channel_name);

@@ -23,7 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 import eu.telecomnancy.amio.R;
-import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.ui.main.Constants;
 import eu.telecomnancy.amio.ui.main.MainViewModel;
 
@@ -139,7 +138,7 @@ public class MoteListFragment extends Fragment {
 
         // Set the adapter
         updateRecyclerLayer();
-        _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<>(), getContext());
+        _moteRecyclerViewAdapter = new MoteRecyclerViewAdapter(new ArrayList<>(), this);
         _recyclerView.setAdapter(_moteRecyclerViewAdapter);
 
         FloatingActionButton mailFab = view.findViewById(R.id.mail_fab);

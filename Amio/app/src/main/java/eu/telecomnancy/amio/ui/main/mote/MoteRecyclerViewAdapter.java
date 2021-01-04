@@ -1,11 +1,11 @@
 package eu.telecomnancy.amio.ui.main.mote;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.List;
 import eu.telecomnancy.amio.R;
 import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.ui.commons.FormatProvider;
+import eu.telecomnancy.amio.ui.main.mote.information.MoteInformationFragment;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Mote}.
@@ -23,7 +24,7 @@ public class MoteRecyclerViewAdapter
     /**
      * Context to access the parametrized string resource
      */
-    private final Context _context;
+    private final Fragment _context;
 
     /**
      * List of the motes that are shown
@@ -33,7 +34,7 @@ public class MoteRecyclerViewAdapter
     /**
      * Default constructor for the MoteRecyclerViewAdapter
      */
-    public MoteRecyclerViewAdapter(List<Mote> items, Context context) {
+    public MoteRecyclerViewAdapter(List<Mote> items, Fragment context) {
         _motes = new MoteSortedList(this);
         _motes.addAll(items);
         _context = context;
@@ -60,8 +61,13 @@ public class MoteRecyclerViewAdapter
         holder.item = mote;
 
         // Bind the texts to the view
-        holder.nameView.setText(
-                _context.getString(R.string.sensor_id_text_holder, mote.getName()));
+        if (mote.getPreferredName().isEmpty() || mote.getName().equals(mote.getPreferredName())) {
+            holder.nameView.setText(_context.getString(R.string.sensor_id_text_holder, mote.getName()));
+            holder.idView.setText(null);
+        } else {
+            holder.nameView.setText(mote.getPreferredName());
+            holder.idView.setText(mote.getName());
+        }
 
         holder.lightView.setText(
                 _context.getString(R.string.light_text_holder, brightnessText));
@@ -75,6 +81,14 @@ public class MoteRecyclerViewAdapter
                         ? R.drawable.light_on
                         : R.drawable.light_off
         );
+
+        holder.view.setOnClickListener(view -> {
+            _context.getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, MoteInformationFragment.newInstance(mote))
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 
     @NonNull

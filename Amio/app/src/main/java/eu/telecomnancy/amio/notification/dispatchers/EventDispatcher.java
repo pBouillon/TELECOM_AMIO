@@ -1,7 +1,5 @@
 package eu.telecomnancy.amio.notification.dispatchers;
 
-import android.util.Log;
-
 import org.jeasy.rules.api.Facts;
 import org.jeasy.rules.api.Rules;
 import org.jeasy.rules.api.RulesEngine;
@@ -16,9 +14,6 @@ import eu.telecomnancy.amio.iotlab.models.Mote;
 import eu.telecomnancy.amio.iotlab.models.ConsecutiveMoteMeasuresPair;
 import eu.telecomnancy.amio.iotlab.models.collections.IMoteCollection;
 import eu.telecomnancy.amio.notification.contexts.EventContext;
-import eu.telecomnancy.amio.notification.contexts.NotificationContext;
-import eu.telecomnancy.amio.notification.flags.NotificationType;
-import eu.telecomnancy.amio.notification.notifiers.android.PushNotifier;
 import eu.telecomnancy.amio.notification.rules.IRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEndEveningRule;
 import eu.telecomnancy.amio.notification.rules.NewLightOnWeekEveningRule;
