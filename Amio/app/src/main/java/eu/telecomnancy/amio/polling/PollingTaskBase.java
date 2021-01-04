@@ -97,8 +97,8 @@ public abstract class PollingTaskBase extends TimerTask {
 
         // Retrieve the latest data from the motes
         Log.i(TAG, "Retrieving motes latest data");
-        IMoteCollection _motes = getLatestMotes();
-        List<Mote> moteList = _motes.toList();
+        IMoteCollection motes = getLatestMotes();
+        List<Mote> moteList = motes.toList();
 
         // Checking if the measure contains any new mote
         IotLabDatabase database = IotLabDatabaseProvider
@@ -111,9 +111,9 @@ public abstract class PollingTaskBase extends TimerTask {
                 moteList, database.moteDao(), database.recordDao());
 
         // Fire notifications if their is any mote that contains a new measure
-        if (!_motes.isEmpty() && isAnyNewMeasure) {
+        if (!motes.isEmpty() && isAnyNewMeasure) {
             Log.i(TAG, "Dispatching notification for the retrieved motes");
-            _dispatcher.dispatchNotificationFor(_motes);
+            _dispatcher.dispatchNotificationFor(motes);
         } else {
             Log.w(TAG, "No new motes or measures retrieved, skipping the notifications dispatching");
         }
