@@ -84,6 +84,11 @@ public class EventDispatcher {
      * @see EventContext
      */
     public void dispatchNotificationFor(IMoteCollection fetchedMotes) {
+        // Does not perform any calculation when the collection does not contain any data
+        if (fetchedMotes.isEmpty()) {
+            return;
+        }
+
         // Create the event context from the provided motes
         List<ConsecutiveMoteMeasuresPair> pairs
                 = generateConsecutiveMoteMeasuresPairs(fetchedMotes);
