@@ -34,7 +34,7 @@ public interface IMoteCollection {
     /**
      * Whether or not the collection is holding any Mote
      *
-     * @return true if the collection does not contains any Mote; false otherwise
+     * @return true if the collection does not contain any Mote; false otherwise
      */
     boolean isEmpty();
 

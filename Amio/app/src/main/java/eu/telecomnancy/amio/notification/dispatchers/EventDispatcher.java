@@ -84,7 +84,7 @@ public class EventDispatcher {
      * @see EventContext
      */
     public void dispatchNotificationFor(IMoteCollection fetchedMotes) {
-        // Does not perform any calculation when the collection does not contains any data
+        // Does not perform any calculation when the collection does not contain any data
         if (fetchedMotes.isEmpty()) {
             return;
         }
