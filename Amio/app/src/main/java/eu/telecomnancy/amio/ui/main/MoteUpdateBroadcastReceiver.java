@@ -3,6 +3,9 @@ package eu.telecomnancy.amio.ui.main;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -30,6 +33,23 @@ public class MoteUpdateBroadcastReceiver extends BroadcastReceiver {
         _moteUpdateAware = moteUpdateAware;
     }
 
+    private void createAlertToast(Context context) {
+        // Create the toast
+        String message = "No motes were received, please check your internet connection";
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+
+        // Create the layout to center the text
+        TextView v = toast.getView()
+                .findViewById(android.R.id.message);
+
+        if( v != null) {
+            v.setGravity(Gravity.CENTER);
+        }
+
+        // Display the toast
+        toast.show();
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // noinspection unchecked
@@ -37,6 +57,11 @@ public class MoteUpdateBroadcastReceiver extends BroadcastReceiver {
                 = (List<Mote>) intent
                 .getBundleExtra(Constants.Broadcast.BUNDLE_IDENTIFIER)
                 .getSerializable(Constants.Broadcast.IDENTIFIER);
+
+        if (motes.isEmpty()) {
+            createAlertToast(context);
+            return;
+        }
 
         // Trigger the custom function on the object that need an update
         _moteUpdateAware.onMotesUpdate(motes);
