@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
      * Android logging tag for this class
      */
     private static final String TAG = MainActivity.class.getName();
-    private Intent mPollingServiceIntent;
+
+    private Intent pollingServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,8 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
                 new IntentFilter(Constants.Broadcast.UPDATED_DATA)
         );
 
-        mPollingServiceIntent = new Intent(this, PollingService.class);
-        startService(mPollingServiceIntent);
-
+        pollingServiceIntent = new Intent(this, PollingService.class);
+        startService(pollingServiceIntent);
     }
 
     @Override
@@ -60,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
         getMenuInflater()
                 .inflate(R.menu.main_app_bar_menu, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(pollingServiceIntent);
+        super.onDestroy();
     }
 
     @Override
@@ -84,14 +90,9 @@ public class MainActivity extends AppCompatActivity implements IMoteUpdateWatche
     }
 
     @Override
-    protected void onDestroy() {
-        stopService(mPollingServiceIntent);
-        super.onDestroy();
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
+
 }

@@ -81,8 +81,7 @@ public final class IoTLabPersistenceUtils {
         // mote yet; thus their is a new record
         try {
             newRecords = getNonStoredRecordsFromRawMotes(motes, moteDao, recordDao);
-        } catch (NullPointerException ignored) {
-        }
+        } catch (NullPointerException ignored) { }
 
         return !newRecords.isEmpty();
     }
@@ -116,8 +115,8 @@ public final class IoTLabPersistenceUtils {
                 mote.setPreferredName(newName);
                 return mote;
             }
-        }.execute();
+        }
+        .execute();
     }
-
 
 }
