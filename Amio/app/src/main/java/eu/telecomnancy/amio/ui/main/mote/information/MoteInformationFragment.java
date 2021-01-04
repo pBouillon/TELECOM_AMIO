@@ -210,7 +210,7 @@ public class MoteInformationFragment extends Fragment {
                 protected List<RecordAndMote> doInBackground(Void... voids) {
                     MoteDao moteDao = IotLabDatabaseProvider.getOrCreateInstance(getContext()).moteDao();
                     RecordDao recordDao = IotLabDatabaseProvider.getOrCreateInstance(getContext()).recordDao();
-                    long moteId = moteDao.getByName(mMote.getName()).moteId;
+                    long moteId = moteDao.getByName(_Mote.getName()).moteId;
                     return recordDao.getLatestRecordAndMotePairById(moteId, mSize);
                 }
             }.execute().get());
@@ -307,7 +307,7 @@ public class MoteInformationFragment extends Fragment {
         protected List<RecordAndMote> doInBackground(Void... voids) {
             MoteDao moteDao = IotLabDatabaseProvider.getOrCreateInstance(getContext()).moteDao();
             RecordDao recordDao = IotLabDatabaseProvider.getOrCreateInstance(getContext()).recordDao();
-            long moteId = moteDao.getByName(mMote.getName()).moteId;
+            long moteId = moteDao.getByName(_Mote.getName()).moteId;
             return recordDao.getLatestRecordAndMotePairById(moteId, mSize);
         }
     }
